@@ -69,6 +69,10 @@
             "defaultValue": "10.132.232.0/28",
             "type": "String"
         },
+        "NATIPWhitelistCIDR": {
+            "defaultValue": "0.0.0.0/0",
+            "type": "string"
+        },
         "SiteCode": {
             "type": "string",
             "defaultValue": "<SITE_CODE>",
@@ -189,6 +193,9 @@
                     "networkSecurityGroups_NSG_HUB_WAN_name":{
                         
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
+                    },
+                    "NATIPWhitelistCIDR": {
+                        "value": "[parameters('NATIPWhitelistCIDR')]"
                     }
 
 

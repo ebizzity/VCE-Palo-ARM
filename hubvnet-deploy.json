@@ -44,11 +44,81 @@
         },
         "networkSecurityGroups_NSG_HUB_WAN_name": {
             "type": "string"
+        },
+        "NATIPWhitelistCIDR": {
+            "type": "string"
         }
     },
     "functions": [],
     "variables": {},
     "resources": [
+        
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('networkSecurityGroups_NSG_HUB_MGMT_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Management",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 600,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [
+                                "22",
+                                "443",
+                                "3389"
+                            ],
+                            "sourceAddressPrefixes": [
+                                "[parameters('NATIPWhitelistCIDR')]"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('networkSecurityGroups_NSG_HUB_WAN_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "VCMP",
+                        "properties": {
+                            "protocol": "UDP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "2426",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 600,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": []
+                        }
+                    }
+                ]
+            }
+        },
+        
+        
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-09-01",
@@ -85,7 +155,7 @@
                     {
                         "name": "[parameters('TRANS1-subnet-name')]",
                         "properties": {
-                            "addressPrefix": "[parameters('TRANS1-subnet-address-space')]",
+                            "addressPrefix": "[parameters('TRANS1-address-space')]",
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -102,7 +172,7 @@
                     {
                         "name": "[parameters('TRANS2-subnet-name')]",
                         "properties": {
-                            "addressPrefix": "[parameters('TRANS2-subnet-address-space')]",
+                            "addressPrefix": "[parameters('TRANS2-address-space')]",
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
