@@ -18,69 +18,215 @@
             "defaultValue": "10.132.232.20",
             "type": "String"
         },
-        "SN_HUB_LAN_Name": {
-            "defaultValue": "SUB-<SITE_CODE>-HUB-LAN",
-            "type": "String"
+        "SN_HUB_TRANS1_Address_Space": {
+            "defaultValue": "<TRANS1_Address Space>",
+            "type": "string"
         },
-        "SN_HUB_WAN_Name": {
-            "defaultValue": "SUB-<SITE_CODE>-HUB-WAN",
-            "type": "String"
+        "SN_HUB_TRANS2_Address_Space": {
+            "defaultValue": "<TRANS2_Address Space>",
+            "type": "string"
         },
-        "SN_HUB_MGMT_Name": {
-            "defaultValue": "SUB-<SITE_CODE>-HUB-MGMT",
-            "type": "String"
+        "username": {
+            "defaultValue": "azureadmin",
+            "type": "string"
         },
         "SSH_Key": {
             "type": "SecureString"
         },
-        "virtualMachines_VCE01_name": {
-            "defaultValue": "<SITE_CODE>SV-VCE01",
+       
+        "VCE-Vnet-RG": {
+            "defaultValue": "<VNETRG>",
             "type": "String"
+        },
+        "VNETOption": {
+            "type": "string",
+            "defaultValue": "Create new VNET",
+            "allowedValues": [
+                "Create new VNET",
+                "Use existing VNET"
+            ],
+            "metadata": {
+                "description": "If creating a new VNET, anything not specified in the template will be deleted."
+            }
+        },
+        "VNETName": {
+            "type": "string", 
+            "defaultValue": "<VCE-HUB-VNET>",
+            "metadata": {
+                "description": "Hub VNET name"
+            }
+        },
+        "VN_HUB_Address_Space": {
+            "defaultValue": "10.132.232.0/24",
+            "type": "String"
+        },
+        "SN_HUB_LAN_Address_Space": {
+            "defaultValue": "10.132.232.64/28",
+            "type": "String"
+        },
+        "SN_HUB_WAN_Address_Space": {
+            "defaultValue": "10.132.232.16/28",
+            "type": "String"
+        },
+        "SN_HUB_MGMT_Address_Space": {
+            "defaultValue": "10.132.232.0/28",
+            "type": "String"
+        },
+        "SiteCode": {
+            "type": "string",
+            "defaultValue": "<SITE_CODE>",
+            "metadata": {
+                "description": "Site Code for naming"
+            }
         },
         "storageAccounts_diagnostics_name": {
-            "defaultValue": "<NAME_FOR_STORAGE_ACCOUNT>",
-            "type": "String"
+            "type": "string",
+            "defaultValue": "<DiagStorageacctName>",
+            "metadata": {
+                "description": "Storage account used for VM Diagnostics"
+            }
         },
-        "networkInterfaces_NIC_VCE_LAN_name": {
-            "defaultValue": "NIC-<SITE_CODE>SV-VCE-LAN",
-            "type": "String"
-        },
-        "networkInterfaces_NIC_VCE_WAN_name": {
-            "defaultValue": "NIC-<SITE_CODE>SV-VCE-WAN",
-            "type": "String"
-        },
-        "networkInterfaces_vce_MGMT_name": {
-            "defaultValue": "<SITE_CODE>sv-vce01746",
-            "type": "String"
-        },
-        "virtualNetworks_VN_HUB_name": {
-            "defaultValue": "VN-<SITE_CODE>-132.232-HUB",
-            "type": "String"
-        },
-         "networkSecurityGroups_NSG_HUB_WAN_name": {
-            "defaultValue": "NSG-<SITE_CODE>-HUB-WAN",
-            "type": "String"
-        },
-        "networkSecurityGroups_NSG_HUB_MGMT_name": {
-            "defaultValue": "NSG-<SITE_CODE>-HUB-MGMT",
-            "type": "String"
-        },
-        "publicIPAddresses_VCE01_ip_name": {
-            "defaultValue": "<SITE_CODE>SV-VCE01-ip",
-            "type": "String"
+        "(opt.) AppendStringToResources": {
+            "type": "string",
+            "defaultValue": "",
+            "metadata": {
+                "description": "If the NAME and CONFIGURATION of the created LBs/NSGs/VMs/AVSET/VNET match an existing LBs/NSGs/VMs/AVSET/VNET in the SAME resource group, the template will its skip creation.  If the new resource NAME matches, but the resource CONFIGURATION does not, the template will fail or will overwrite the existing resource."
+            }
         }
 
     },
     "functions": [],
-    "variables": {},
+    "variables": {
+        "global_var_resource_group": "[resourceGroup().name]",
+        "global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
+        "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat(parameters('VNETName'), variables('global_var_appendedString')), ' ', ''), 64))]",
+        "global_vnet_resource_group": "[if(equals(parameters('VCE-Vnet-RG'), ''), variables('global_var_resource_group'), parameters('VCE-Vnet-RG'))]",
+        "global_vnet_option": "[parameters('VNETOption')]",
+        "global_SN_HUB_LAN_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-LAN'), ' ', ''), 80)]",
+        "global_SN_HUB_WAN_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-WAN'), ' ', ''), 80)]",
+        "global_SN_HUB_MGMT_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS1_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-TRANS1'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS2_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-TRANS2'), ' ', ''), 80)]",
+        "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-LAN'), ' ', ''), 80)]",
+        "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-WAN'), ' ', ''), 80)]",
+        "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-MGMT'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-WAN'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
+        "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE-ip'), ' ', ''), 80)]",
+        "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE'), ' ', ''), 80)]",
+        "global_storageAccounts_diagnostics_name": "[take(replace(variables('global_storageAccounts_diagnostics_name'), ' ', ''), 80)]",
+        "global_vm_adminUsername": "[parameters('username')]",
+        "global_vm_SSHKey": "[parameters('SSH_Key')]",
+        "HubVNETTemplateUri": ""
+
+    },
     "resources": [
+        
         {
+            "comments": "Create Hub Virtual Network",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_HUB_VNET",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "condition": "[equals(variables('global_vnet_option'), 'Create new VNET')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('HubVNETTemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+                    "location": {
+                        "type": "string",
+                        "value": "[parameters('resource_location')]"
+                    },
+                    "VNET_NAME": {
+                        "type": "string",
+                        "value": "[variables('global_vnet_name')]"
+                    },
+                    "address-space": {
+                        "type": "string",
+                        "value": "[parameters('VN_HUB_Address_Space')]"
+                    },
+                    "LAN-subnet-name": {
+                        "type": "string",
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "LAN-subnet-address-space": {
+                        "type": "string",
+                        "value": "[parameters('SN_HUB_LAN_Address_Space')]"
+                    },
+                    "WAN-subnet-name": {
+                        "type": "string",
+                        "value": "[variables('global_SN_HUB_WAN_Name')]"
+                    },
+                    "WAN-subnet-address-space": {
+                        "type": "string",
+                        "value": "[parameters('SN_HUB_WAN_Address_Space')]"
+                    },
+                    "MGMT-subnet-name": {
+                        "type": "string",
+                        "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                    },
+                    "MGMT-subnet-address-space": {
+                        "type": "string",
+                        "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
+                    },
+                    "TRANS1-subnet-name":{
+                        "type": "string",
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "TRANS1-address-space":{
+                        "type": "string",
+                        "value": "[parameters('SN_HUB_TRANS1_Address_Space')]"
+                    },
+                    "TRANS2-subnet-name":{
+                        "type": "string",
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "TRANS2-address-space":{
+                        "type": "string",
+                        "value": "[parameters('SN_HUB_TRANS2_Address_Space')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_MGMT_name":{
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_WAN_name":{
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
+                    }
+
+
+                }
+            }
+        }//,
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+ /*        {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-09-01",
-            "name": "[parameters('networkInterfaces_NIC_VCE_LAN_name')]",
+            "name": "[variables('global_NIC_VCE_LAN_name')]",
             "location": "[parameters('resource_location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VN_HUB_name'), parameters('SN_HUB_LAN_Name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_LAN_Name'))]"
+
             ],
             "properties": {
                 "ipConfigurations": [
@@ -90,7 +236,7 @@
                             "privateIPAddress": "[parameters('VCE_LAN_Static_IP')]",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VN_HUB_name'), parameters('SN_HUB_LAN_Name'))]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_LAN_Name'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -108,11 +254,11 @@
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-09-01",
-            "name": "[parameters('networkInterfaces_vce_MGMT_name')]",
+            "name": "[variables('global_NIC_VCE_MGMT_name')]",
             "location": "[parameters('resource_location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VN_HUB_name'), parameters('SN_HUB_MGMT_Name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_MGMT_Name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_networkSecurityGroups_NSG_HUB_MGMT_name'))]"
             ],
             "tags": {
 
@@ -125,7 +271,7 @@
                             "privateIPAddress": "[parameters('VCE_MGMT_Static_IP')]",
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VN_HUB_name'), parameters('SN_HUB_MGMT_Name'))]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_MGMT_Name'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -138,18 +284,18 @@
                 "enableAcceleratedNetworking": false,
                 "enableIPForwarding": false,
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_networkSecurityGroups_NSG_HUB_MGMT_name'))]"
                 }
             }
         },
         {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-09-01",
-            "name": "[parameters('networkInterfaces_NIC_VCE_WAN_name')]",
+            "name": "[variables('global_NIC_VCE_WAN_name')]",
             "location": "[parameters('resource_location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_VCE01_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VN_HUB_name'), parameters('SN_HUB_WAN_Name'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('global_publicIPAddresses_VCE01_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_WAN_Name'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -159,10 +305,10 @@
                             "privateIPAddress": "[parameters('VCE_WAN_Static_IP')]",
                             "privateIPAllocationMethod": "Static",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_VCE01_ip_name'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('global_publicIPAddresses_VCE01_ip_name'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_VN_HUB_name'), parameters('SN_HUB_WAN_Name'))]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_WAN_Name'))]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -180,13 +326,13 @@
         {
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
-            "name": "[parameters('virtualMachines_VCE01_name')]",
+            "name": "[variables('global_virtualMachines_VCE01_name')]",
             "location": "[parameters('resource_location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vce_MGMT_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_NIC_VCE_WAN_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_NIC_VCE_LAN_name'))]",
-                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('storageAccounts_diagnostics_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_MGMT_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_WAN_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_LAN_name'))]",
+                "[resourceId('Microsoft.Storage/StorageAccounts', variables('global_storageAccounts_diagnostics_name'))]"
             ],
             "tags": {
 
@@ -209,7 +355,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(parameters('virtualMachines_VCE01_name'), '_OsDisk_1')]",
+                        "name": "[concat(variables('global_virtualMachines_VCE01_name'), '_OsDisk_1')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -220,7 +366,7 @@
                     "dataDisks": []
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachines_VCE01_name')]",
+                    "computerName": "[variables('global_virtualMachines_VCE01_name')]",
                     "adminUsername": "appadmin",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
@@ -240,19 +386,19 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vce_MGMT_name'))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_MGMT_name'))]",
                             "properties": {
                                 "primary": true
                             }
                         },
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_NIC_VCE_WAN_name'))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_WAN_name'))]",
                             "properties": {
                                 "primary": false
                             }
                         },
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_NIC_VCE_LAN_name'))]",
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_LAN_name'))]",
                             "properties": {
                                 "primary": false
                             }
@@ -262,11 +408,11 @@
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[concat('https://', parameters('storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
+                        "storageUri": "[concat('https://', variables('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
                     }
                 }
             }
-        }
+        } */
     ],
     "outputs": {}
 }

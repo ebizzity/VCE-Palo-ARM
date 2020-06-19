@@ -1,0 +1,168 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "address-space": {
+            "type": "string"
+        },
+        "LAN-subnet-name": {
+            "type": "string"
+        },
+        "LAN-subnet-address-space": {
+            "type": "string"
+        },
+        "WAN-subnet-name": {
+            "type": "string"
+        },
+        "WAN-subnet-address-space": {
+            "type": "string"
+        },
+        "MGMT-subnet-name": {
+            "type": "string"
+        },
+        "MGMT-subnet-address-space": {
+            "type": "string"
+        },
+        "TRANS1-subnet-name": {
+            "type": "string"
+        },
+        "TRANS1-subnet-address-space": {
+            "type": "string"
+        },
+        "TRANS2-subnet-name": {
+            "type": "string"
+        },
+        "TRANS2-subnet-address-space": {
+            "type": "string"
+        },
+        "VNET_NAME": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_MGMT_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_WAN_name": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('VNET_NAME')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[parameters('address-space')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('LAN-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('LAN-subnet-address-space')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[parameters('location')]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('TRANS1-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('TRANS1-subnet-address-space')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[parameters('location')]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('TRANS2-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('TRANS2-subnet-address-space')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[parameters('location')]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('MGMT-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('MGMT-subnet-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[parameters('location')]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('WAN-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('WAN-subnet-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[parameters('location')]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "enableDdosProtection": false,
+                "enableVmProtection": false
+            }
+        }
+    ],
+    "outputs": {}
+}
