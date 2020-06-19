@@ -99,7 +99,7 @@
     "variables": {
         "global_var_resource_group": "[resourceGroup().name]",
         "global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
-        "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat(parameters('VNETName'), variables('global_var_appendedString')), ' ', ''), 64))]",
+        "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat('VN-',parameters('SiteCode'),'-HUB', variables('global_var_appendedString')), ' ', ''), 64))]",
         "global_vnet_resource_group": "[if(equals(parameters('VCE-Vnet-RG'), ''), variables('global_var_resource_group'), parameters('VCE-Vnet-RG'))]",
         "global_vnet_option": "[parameters('VNETOption')]",
         "global_SN_HUB_LAN_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-LAN'), ' ', ''), 80)]",
