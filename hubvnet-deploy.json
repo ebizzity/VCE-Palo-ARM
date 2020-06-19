@@ -27,13 +27,13 @@
         "TRANS1-subnet-name": {
             "type": "string"
         },
-        "TRANS1-subnet-address-space": {
+        "TRANS1-address-space": {
             "type": "string"
         },
         "TRANS2-subnet-name": {
             "type": "string"
         },
-        "TRANS2-subnet-address-space": {
+        "TRANS2-address-space": {
             "type": "string"
         },
         "VNET_NAME": {
