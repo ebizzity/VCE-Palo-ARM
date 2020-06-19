@@ -30,7 +30,7 @@
         "SSH_Key": {
             "type": "SecureString"
         },
-       
+
         "VCE-Vnet-RG": {
             "defaultValue": "<VNETRG>",
             "type": "String"
@@ -58,7 +58,7 @@
             }
         },
         "VNETName": {
-            "type": "string", 
+            "type": "string",
             "defaultValue": "<VCE-HUB-VNET>",
             "metadata": {
                 "description": "Hub VNET name"
@@ -107,7 +107,8 @@
         }
 
     },
-    "functions": [],
+    "functions": [
+    ],
     "variables": {
         "global_var_resource_group": "[resourceGroup().name]",
         "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master/",
@@ -137,7 +138,7 @@
 
     },
     "resources": [
-        
+
         {
             "comments": "Create Hub Virtual Network",
             "type": "Microsoft.Resources/deployments",
@@ -157,60 +158,60 @@
                         "value": "[variables('global_vnet_name')]"
                     },
                     "address-space": {
-                        
+
                         "value": "[parameters('VN_HUB_Address_Space')]"
                     },
                     "LAN-subnet-name": {
-                        
+
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
                     "LAN-subnet-address-space": {
-                        
+
                         "value": "[parameters('SN_HUB_LAN_Address_Space')]"
                     },
                     "WAN-subnet-name": {
-                        
+
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
                     "WAN-subnet-address-space": {
-                        
+
                         "value": "[parameters('SN_HUB_WAN_Address_Space')]"
                     },
                     "MGMT-subnet-name": {
-                        
+
                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
                     },
                     "MGMT-subnet-address-space": {
-                        
+
                         "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
                     },
-                    "TRANS1-subnet-name":{
-                        
+                    "TRANS1-subnet-name": {
+
                         "value": "[variables('global_SN_HUB_TRANS1_Name')]"
                     },
-                    "TRANS1-address-space":{
-                        
+                    "TRANS1-address-space": {
+
                         "value": "[parameters('SN_HUB_TRANS1_Address_Space')]"
                     },
-                    "TRANS2-subnet-name":{
-                        
+                    "TRANS2-subnet-name": {
+
                         "value": "[variables('global_SN_HUB_TRANS2_Name')]"
                     },
-                    "TRANS2-address-space":{
-                        
+                    "TRANS2-address-space": {
+
                         "value": "[parameters('SN_HUB_TRANS2_Address_Space')]"
                     },
-                    "networkSecurityGroups_NSG_HUB_MGMT_name":{
-                        
+                    "networkSecurityGroups_NSG_HUB_MGMT_name": {
+
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
                     },
-                    "networkSecurityGroups_NSG_HUB_WAN_name":{
-                        
+                    "networkSecurityGroups_NSG_HUB_WAN_name": {
+
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
                     },
                     "NATIPWhitelistCIDR": {
                         "value": "[parameters('NATIPWhitelistCIDR')]"
-                    },  
+                    },
                     "routeTables_RT_HUB_name": {
                         "value": "[variables('global_RT_HUB_name')]"
                     },
@@ -222,8 +223,8 @@
                 }
             }
         },
-        
-       /*  
+
+        /*  
         {
             "comments": "Create VCEs - Greenfield",
             "type": "Microsoft.Resources/deployments",
@@ -246,7 +247,7 @@
         }
     }, */
 
-    {
+        {
             "comments": "Create VCEs - Retrofit",
             "type": "Microsoft.Resources/deployments",
             "name": "CREATE_VCEs",
@@ -263,76 +264,77 @@
                     "contentVersion": "1.0.0.0"
 
                 },
-            "parameters": {
-                
-                "global_NIC_VCE_LAN_name": {
-                    "value": "[variables('global_NIC_VCE_LAN_name')]"
-                },
-                "global_vnet_name": {
-                    "value": "[variables('global_vnet_name')]"
-                },
-                "global_SN_HUB_LAN_Name": {
-                    "value": "[variables('global_SN_HUB_LAN_Name')]"
-                },
-                "VCE_LAN_Static_IP": {
-                    "value": "[parameters('VCE_LAN_Static_IP')]"
-                },
-                "global_NIC_VCE_MGMT_name": {
-                    "value": "[variables('global_NIC_VCE_MGMT_name')]"
-                },
-                "global_SN_HUB_MGMT_Name": {
-                    "value": "[variables('global_SN_HUB_MGMT_Name')]"
-                },
-                "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
-                    "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
-                },
-                "global_publicIPAddresses_VCE01_ip_name": {
-                    "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
-                },
-                "global_SN_HUB_WAN_Name": {
-                    "value": "[variables('global_SN_HUB_WAN_Name')]"
-                },
-                "VCE_MGMT_Static_IP": {
-                    "value": "[parameters('VCE_MGMT_Static_IP')]"
-                },
-                "VCE_WAN_Static_IP": {
-                    "value": "[parameters('VCE_WAN_Static_IP')]"
-                },
-                "global_NIC_VCE_WAN_name": {
-                    "value": "[variables('global_NIC_VCE_WAN_name')]"
-                },
-                "global_storageAccounts_diagnostics_name": {
-                    "value": "[variables('global_storageAccounts_diagnostics_name')]"
-                },
-                "global_virtualMachines_VCE01_name": {
-                    "value": "[variables('global_virtualMachines_VCE01_name')]"
-                },
-                "SSH_Key": {
-                    "value": "[parameters('SSH_Key')]"
-                },
-                "global_vnet_resource_group": {
-                    "value": "[variables('global_vnet_resource_group')]"
+                "parameters": {
+
+                    "global_NIC_VCE_LAN_name": {
+                        "value": "[variables('global_NIC_VCE_LAN_name')]"
+                    },
+                    "global_vnet_name": {
+                        "value": "[variables('global_vnet_name')]"
+                    },
+                    "global_SN_HUB_LAN_Name": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "VCE_LAN_Static_IP": {
+                        "value": "[parameters('VCE_LAN_Static_IP')]"
+                    },
+                    "global_NIC_VCE_MGMT_name": {
+                        "value": "[variables('global_NIC_VCE_MGMT_name')]"
+                    },
+                    "global_SN_HUB_MGMT_Name": {
+                        "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                    },
+                    "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
+                    },
+                    "global_publicIPAddresses_VCE01_ip_name": {
+                        "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
+                    },
+                    "global_SN_HUB_WAN_Name": {
+                        "value": "[variables('global_SN_HUB_WAN_Name')]"
+                    },
+                    "VCE_MGMT_Static_IP": {
+                        "value": "[parameters('VCE_MGMT_Static_IP')]"
+                    },
+                    "VCE_WAN_Static_IP": {
+                        "value": "[parameters('VCE_WAN_Static_IP')]"
+                    },
+                    "global_NIC_VCE_WAN_name": {
+                        "value": "[variables('global_NIC_VCE_WAN_name')]"
+                    },
+                    "global_storageAccounts_diagnostics_name": {
+                        "value": "[variables('global_storageAccounts_diagnostics_name')]"
+                    },
+                    "global_virtualMachines_VCE01_name": {
+                        "value": "[variables('global_virtualMachines_VCE01_name')]"
+                    },
+                    "SSH_Key": {
+                        "value": "[parameters('SSH_Key')]"
+                    },
+                    "global_vnet_resource_group": {
+                        "value": "[variables('global_vnet_resource_group')]"
+                    }
+
+
                 }
 
 
             }
-        
-                  
         }
-    }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
     ],
-    "outputs": {}
+    "outputs": {
+    }
 }
