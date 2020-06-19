@@ -46,6 +46,17 @@
                 "description": "If creating a new VNET, anything not specified in the template will be deleted."
             }
         },
+        "DeploymentOption": {
+            "type": "string",
+            "defaultValue": "Greenfield",
+            "allowedValues": [
+                "Greenfield",
+                "Retrofit"
+            ],
+            "metadata": {
+                "description": "Retrofit existing environment with missing pieces, or greenfield which deploys everything"
+            }
+        },
         "VNETName": {
             "type": "string", 
             "defaultValue": "<VCE-HUB-VNET>",
@@ -112,14 +123,18 @@
         "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-LAN'), ' ', ''), 80)]",
         "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-WAN'), ' ', ''), 80)]",
         "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-MGMT'), ' ', ''), 80)]",
+        "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-WAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
         "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE-ip'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE'), ' ', ''), 80)]",
-        //"global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
+        "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
         "global_vm_adminUsername": "[parameters('username')]",
         "global_vm_SSHKey": "[parameters('SSH_Key')]",
-        "HubVNETTemplateUri": "[concat(variables('globalTemplateUriBase'),'hubvnet-deploy.json')]"
+        "HubVNETTemplateUri": "[concat(variables('globalTemplateUriBase'),'hubvnet-deploy.json')]",
+        "VCEgreenfieldtemplateUri": "[concat(variables('globalTemplateUriBase'),'vce-greenfield.json')]",
+        "VCEretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'vce-retrofit.json')]"
+
 
     },
     "resources": [
@@ -196,223 +211,126 @@
                     },
                     "NATIPWhitelistCIDR": {
                         "value": "[parameters('NATIPWhitelistCIDR')]"
+                    },  
+                    "routeTables_RT_HUB_name": {
+                        "value": "[variables('global_RT_HUB_name')]"
+                    },
+                    "VCE_LAN_Static_IP": {
+                        "value": "[parameters('VCE_LAN_Static_IP')]"
                     }
 
 
                 }
             }
-        }//,
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
- /*        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2019-09-01",
-            "name": "[variables('global_NIC_VCE_LAN_name')]",
-            "location": "[parameters('resource_location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_LAN_Name'))]"
-
-            ],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "[parameters('VCE_LAN_Static_IP')]",
-                            "privateIPAllocationMethod": "Static",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_LAN_Name'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": true
-            }
         },
-
+        
+       /*  
         {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2019-09-01",
-            "name": "[variables('global_NIC_VCE_MGMT_name')]",
-            "location": "[parameters('resource_location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_MGMT_Name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_networkSecurityGroups_NSG_HUB_MGMT_name'))]"
-            ],
-            "tags": {
-
-            },
+            "comments": "Create VCEs - Greenfield",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_VCEs",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
             "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "[parameters('VCE_MGMT_Static_IP')]",
-                            "privateIPAllocationMethod": "Dynamic",
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_MGMT_Name'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('VCEgreenfieldtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
                 },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_networkSecurityGroups_NSG_HUB_MGMT_name'))]"
+            "parameters": {
+
+            }
+        
+                  
+        }
+    }, */
+
+    {
+            "comments": "Create VCEs - Retrofit",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_VCEs",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('VCEretrofittemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+            "parameters": {
+                
+                "global_NIC_VCE_LAN_name": {
+                    "value": "[variables('global_NIC_VCE_LAN_name')]"
+                },
+                "global_vnet_name": {
+                    "value": "[variables('global_vnet_name')]"
+                },
+                "global_SN_HUB_LAN_Name": {
+                    "value": "[variables('global_SN_HUB_LAN_Name')]"
+                },
+                "VCE_LAN_Static_IP": {
+                    "value": "[parameters('VCE_LAN_Static_IP')]"
+                },
+                "global_NIC_VCE_MGMT_name": {
+                    "value": "[variables('global_NIC_VCE_MGMT_name')]"
+                },
+                "global_SN_HUB_MGMT_Name": {
+                    "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                },
+                "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
+                    "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
+                },
+                "global_publicIPAddresses_VCE01_ip_name": {
+                    "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
+                },
+                "global_SN_HUB_WAN_Name": {
+                    "value": "[variables('global_SN_HUB_WAN_Name')]"
+                },
+                "VCE_MGMT_Static_IP": {
+                    "value": "[parameters('VCE_MGMT_Static_IP')]"
+                },
+                "VCE_WAN_Static_IP": {
+                    "value": "[parameters('VCE_WAN_Static_IP')]"
+                },
+                "global_NIC_VCE_WAN_name": {
+                    "value": "[variables('global_NIC_VCE_WAN_name')]"
+                },
+                "global_storageAccounts_diagnostics_name": {
+                    "value": "[variables('global_storageAccounts_diagnostics_name')]"
+                },
+                "global_virtualMachines_VCE01_name": {
+                    "value": "[variables('global_virtualMachines_VCE01_name')]"
+                },
+                "SSH_Key": {
+                    "value": "[parameters('SSH_Key')]"
+                },
+                "global_vnet_resource_group": {
+                    "value": "[variables('global_vnet_resource_group')]"
                 }
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkInterfaces",
-            "apiVersion": "2019-09-01",
-            "name": "[variables('global_NIC_VCE_WAN_name')]",
-            "location": "[parameters('resource_location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('global_publicIPAddresses_VCE01_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_WAN_Name'))]"
-            ],
-            "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAddress": "[parameters('VCE_WAN_Static_IP')]",
-                            "privateIPAllocationMethod": "Static",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('global_publicIPAddresses_VCE01_ip_name'))]"
-                            },
-                            "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', variables('global_vnet_name'), variables('global_SN_HUB_WAN_Name'))]"
-                            },
-                            "primary": true,
-                            "privateIPAddressVersion": "IPv4"
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableAcceleratedNetworking": false,
-                "enableIPForwarding": true
-            }
-        },
 
-        {
-            "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2019-03-01",
-            "name": "[variables('global_virtualMachines_VCE01_name')]",
-            "location": "[parameters('resource_location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_MGMT_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_WAN_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_LAN_name'))]",
-                "[resourceId('Microsoft.Storage/StorageAccounts', variables('global_storageAccounts_diagnostics_name'))]"
-            ],
-            "tags": {
 
-            },
-            "plan": {
-                "name": "velocloud-virtual-edge-3x",
-                "product": "velocloud-virtual-edge-3x",
-                "publisher": "velocloud"
-            },
-            "properties": {
-                "hardwareProfile": {
-                    "vmSize": "Standard_DS3_v2"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "velocloud",
-                        "offer": "velocloud-virtual-edge-3x",
-                        "sku": "velocloud-virtual-edge-3x",
-                        "version": "3.0.0"
-                    },
-                    "osDisk": {
-                        "osType": "Linux",
-                        "name": "[concat(variables('global_virtualMachines_VCE01_name'), '_OsDisk_1')]",
-                        "createOption": "FromImage",
-                        "caching": "ReadWrite",
-                        "managedDisk": {
-                            "storageAccountType": "Premium_LRS"
-                        },
-                        "diskSizeGB": 32
-                    },
-                    "dataDisks": []
-                },
-                "osProfile": {
-                    "computerName": "[variables('global_virtualMachines_VCE01_name')]",
-                    "adminUsername": "appadmin",
-                    "linuxConfiguration": {
-                        "disablePasswordAuthentication": true,
-                        "ssh": {
-                            "publicKeys": [
-                                {
-                                    "path": "/home/appadmin/.ssh/authorized_keys",
-                                    "keyData": "[parameters('SSH_Key')]"
-                                }
-                            ]
-                        },
-                        "provisionVMAgent": true
-                    },
-                    "secrets": [],
-                    "allowExtensionOperations": true
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_MGMT_name'))]",
-                            "properties": {
-                                "primary": true
-                            }
-                        },
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_WAN_name'))]",
-                            "properties": {
-                                "primary": false
-                            }
-                        },
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('global_NIC_VCE_LAN_name'))]",
-                            "properties": {
-                                "primary": false
-                            }
-                        }
-                    ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true,
-                        "storageUri": "[concat('https://', variables('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
-                    }
-                }
             }
-        } */
+        
+                  
+        }
+    }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+ 
     ],
     "outputs": {}
 }
