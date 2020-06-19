@@ -107,6 +107,9 @@
         }
 
     },
+
+//TODO: Add Parameters for VCE2 Static IPs, Username/Password for Palos
+
     "functions": [
     ],
     "variables": {
