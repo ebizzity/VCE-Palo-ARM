@@ -136,59 +136,58 @@
                 },
                 "parameters": {
                     "VNET_NAME": {
-                        "type": "string",
                         "value": "[variables('global_vnet_name')]"
                     },
                     "address-space": {
-                        "type": "string",
+                        
                         "value": "[parameters('VN_HUB_Address_Space')]"
                     },
                     "LAN-subnet-name": {
-                        "type": "string",
+                        
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
                     "LAN-subnet-address-space": {
-                        "type": "string",
+                        
                         "value": "[parameters('SN_HUB_LAN_Address_Space')]"
                     },
                     "WAN-subnet-name": {
-                        "type": "string",
+                        
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
                     "WAN-subnet-address-space": {
-                        "type": "string",
+                        
                         "value": "[parameters('SN_HUB_WAN_Address_Space')]"
                     },
                     "MGMT-subnet-name": {
-                        "type": "string",
+                        
                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
                     },
                     "MGMT-subnet-address-space": {
-                        "type": "string",
+                        
                         "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
                     },
                     "TRANS1-subnet-name":{
-                        "type": "string",
+                        
                         "value": "[variables('global_SN_HUB_TRANS1_Name')]"
                     },
                     "TRANS1-address-space":{
-                        "type": "string",
+                        
                         "value": "[parameters('SN_HUB_TRANS1_Address_Space')]"
                     },
                     "TRANS2-subnet-name":{
-                        "type": "string",
+                        
                         "value": "[variables('global_SN_HUB_TRANS2_Name')]"
                     },
                     "TRANS2-address-space":{
-                        "type": "string",
+                        
                         "value": "[parameters('SN_HUB_TRANS2_Address_Space')]"
                     },
                     "networkSecurityGroups_NSG_HUB_MGMT_name":{
-                        "type": "string",
+                        
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_WAN_name":{
-                        "type": "string",
+                        
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
                     }
 
