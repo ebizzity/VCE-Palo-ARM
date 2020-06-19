@@ -114,7 +114,7 @@
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
         "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE-ip'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE'), ' ', ''), 80)]",
-        "global_storageAccounts_diagnostics_name": "[take(replace(variables('global_storageAccounts_diagnostics_name'), ' ', ''), 80)]",
+        "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
         "global_vm_adminUsername": "[parameters('username')]",
         "global_vm_SSHKey": "[parameters('SSH_Key')]",
         "HubVNETTemplateUri": ""
