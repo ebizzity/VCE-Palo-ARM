@@ -130,10 +130,9 @@
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
         "global_vm_adminUsername": "[parameters('username')]",
-        "global_vm_SSHKey": "[parameters('SSH_Key')]",
-        "HubVNETTemplateUri": "[concat(variables('globalTemplateUriBase'),'hubvnet-deploy.json')]",
-        "VCEgreenfieldtemplateUri": "[concat(variables('globalTemplateUriBase'),'vce-greenfield.json')]",
-        "VCEretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'vce-retrofit.json')]"
+        "HubVNETTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','hubvnet-deploy.json')]",
+        "VCEgreenfieldtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-greenfield.json')]",
+        "VCEretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-retrofit.json')]"
 
 
     },
