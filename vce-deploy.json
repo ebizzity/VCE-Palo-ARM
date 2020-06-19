@@ -138,10 +138,6 @@
 
                 },
                 "parameters": {
-                    "location": {
-                        "type": "string",
-                        "value": "[parameters('resource_location')]"
-                    },
                     "VNET_NAME": {
                         "type": "string",
                         "value": "[variables('global_vnet_name')]"

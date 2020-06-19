@@ -2,8 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "location": {
-            "type": "string"
+        "resource_location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]"            
         },
         "address-space": {
             "type": "string"
@@ -55,7 +56,7 @@
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2019-09-01",
             "name": "[parameters('VNET_NAME')]",
-            "location": "[parameters('location')]",
+            "location": "[parameters('resource_location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]",
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]"
@@ -75,7 +76,7 @@
                                 {
                                     "service": "Microsoft.Storage",
                                     "locations": [
-                                        "[parameters('location')]"
+                                        "[parameters('resource_location')]"
                                     ]
                                 }
                             ],
@@ -92,7 +93,7 @@
                                 {
                                     "service": "Microsoft.Storage",
                                     "locations": [
-                                        "[parameters('location')]"
+                                        "[parameters('resource_location')]"
                                     ]
                                 }
                             ],
@@ -109,7 +110,7 @@
                                 {
                                     "service": "Microsoft.Storage",
                                     "locations": [
-                                        "[parameters('location')]"
+                                        "[parameters('resource_location')]"
                                     ]
                                 }
                             ],
@@ -129,7 +130,7 @@
                                 {
                                     "service": "Microsoft.Storage",
                                     "locations": [
-                                        "[parameters('location')]"
+                                        "[parameters('resource_location')]"
                                     ]
                                 }
                             ],
@@ -149,7 +150,7 @@
                                 {
                                     "service": "Microsoft.Storage",
                                     "locations": [
-                                        "[parameters('location')]"
+                                        "[parameters('resource_location')]"
                                     ]
                                 }
                             ],
