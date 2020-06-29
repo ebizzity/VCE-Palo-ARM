@@ -448,7 +448,6 @@
 
                 },
                 "parameters": {
-
                     "VNETOption": {
                         "value": "[variables('global_vnet_option')]"
                     },
@@ -502,7 +501,6 @@
                     },
                     "FW1-Name": {
                         "value": "[variables('global_palo-fw1-name')]"
-                        //"value": "vmseries-fw-vm1"
                     },
                     "FW1-IPManagement": {
                         "value": "[parameters('Palo_Alto_FW1-MGMT-IP')]"
@@ -564,8 +562,6 @@
                     "password": {
                         "value":"[parameters('paloPassword')]"
                     }
-
-
                 }
 
 
@@ -590,26 +586,131 @@
                 },
                 "parameters": {
 
-                    
-
-
+                    "VNETOption": {
+                        "value": "[variables('global_vnet_option')]"
+                    },
+                    "VNETResourceGroup": {
+                        "value": "[variables('global_vnet_resource_group')]"
+                    },
+                    "VNETName": {
+                        "value": "[variables('global_vnet_name')]"
+                    },
+                    "VNETPrefix": {
+                        "value": "[parameters('VN_HUB_Address_Space')]"
+                    },
+                    "subnetName-Management": {
+                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                    },
+                    "subnetName-Dataplane1": {
+                        "value": "[variables('global_SN_HUB_WAN_Name')]"
+                    },
+                    "subnetName-Dataplane2": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "subnetName-InternalLB": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "subnetPrefix-Management": {
+                        "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
+                    },
+                    "subnetPrefix-Dataplane1": {
+                         "value": "[parameters('SN_HUB_WAN_Address_Space')]"
+                    },
+                    "subnetPrefix-Dataplane2": {
+                        "value": "[parameters('SN_HUB_LAN_Address_Space')]"
+                    },
+                    "subnetPrefix-InternalLB": {
+                        "value": "[parameters('SN_HUB_LAN_Address_Space')]"
+                    },
+                    "publicLBName": {
+                        "value": "[variables('global_plb_name')]"
+                    },
+                    "publicLBAllowedPorts": {
+                        "value": "[parameters('publicLBAllowedPorts')]"
+                    },
+                    "internalLBName": {
+                        "value": "[variables('global_ilb_name')]"
+                    },
+                    "internalLBAddress": {
+                        "value": "[parameters('Palo_Alto_ILB-IP')]"
+                    },
+                    "healthProbePort": {
+                        "value": "22"
+                    },
+                    "FW1-Name": {
+                        "value": "[variables('global_palo-fw1-name')]"
+                    },
+                    "FW1-IPManagement": {
+                        "value": "[parameters('Palo_Alto_FW1-MGMT-IP')]"
+                    },
+                    "FW1-IPDataplane1": {
+                        "value": "[parameters('Palo_Alto_FW1-WAN-IP')]"
+                    },
+                    "FW1-IPDataplane2": {
+                        "value": "[parameters('Palo_Alto_FW1-LAN-IP')]"
+                    },
+                    "FW2-Name": {
+                        "value": "[variables('global_palo-fw2-name')]"
+                    },
+                    "FW2-IPManagement": {
+                        "value": "[parameters('Palo_Alto_FW2-MGMT-IP')]"
+                    },
+                    "FW2-IPDataplane1": {
+                        "value": "[parameters('Palo_Alto_FW2-WAN-IP')]"
+                    },
+                    "FW2-IPDataplane2": {
+                        "value": "[parameters('Palo_Alto_FW2-LAN-IP')]"
+                    },
+                    "licenseType": {
+                        "value": "byol"
+                    },
+                    "PANOSVersion": {
+                        "value": "latest"
+                    },
+                    "VMSize": {
+                        "value": "Standard_DS3_v2"
+                    },
+                    "OSDiskType": {
+                        "value": "Standard_LRS"
+                    },
+                    "availabilitySetOption": {
+                        "value": "Create new availability set"
+                    },
+                    "availabilitySetName": {
+                        "value": "[variables('global_paloASName')]"
+                    },
+                    "acceleratedNetworking": {
+                        "value": "disable"
+                    },
+                    "applyPublicIPToManagement": {
+                        "value": "Yes"
+                    },
+                    "applyPublicIPToDataplane1": {
+                        "value": "No"
+                    },
+                    "NSGName": {
+                        "value": "[variables('global_paloNSGName')]"
+                    },
+                    "NSGSourcePrefix": {
+                        "value": "[parameters('PaloMGMTNSGAllowFrom')]"
+                    },
+                    "username": {
+                        "value": "[variables('global_vm_adminUsername')]"
+                    },
+                    "password": {
+                        "value": "[parameters('paloPassword')]"
+                    },
+                    "FW1-Zone": {
+                        "value": "1"
+                    },
+                    "FW2-Zone": {
+                        "value": "2"
+                    }
                 }
 
 
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
     ],
     "outputs": {
