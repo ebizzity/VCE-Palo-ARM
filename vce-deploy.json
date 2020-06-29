@@ -57,6 +57,17 @@
                 "description": "Retrofit existing environment with missing pieces, or greenfield which deploys everything"
             }
         },
+        "NVADeploymentOption": {
+            "type": "string",
+            "defaultValue": "Availability Set",
+            "allowedValues": [
+                "Availability Set",
+                "Availability Zone"
+            ],
+            "metadata": {
+                "description": "Leverage Availability Sets or Availability Zones for Deployment of NVAs"
+            }
+        },
         "VNETName": {
             "type": "string",
             "defaultValue": "<VCE-HUB-VNET>",
@@ -136,8 +147,9 @@
         "global_vm_adminUsername": "[parameters('username')]",
         "HubVNETTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','hubvnet-deploy.json')]",
         "VCEgreenfieldtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-greenfield.json')]",
-        "VCEretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-retrofit.json')]"
-
+        "VCEretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-retrofit.json')]",
+        "PaloAStemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','Palo-deploy-as.json')]",
+        "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','Palo-deploy-az.json')]"
 
     },
     "resources": [
@@ -225,31 +237,75 @@
 
                 }
             }
-        },
-
-        /*  
+        },    
         {
-            "comments": "Create VCEs - Greenfield",
-            "type": "Microsoft.Resources/deployments",
-            "name": "CREATE_VCEs",
-            "apiVersion": "2019-07-01",
-            "resourceGroup": "[variables('global_vnet_resource_group')]",
-            "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('VCEgreenfieldtemplateUri')]",
-                    "contentVersion": "1.0.0.0"
+                "comments": "Create VCEs - Greenfield",
+                "type": "Microsoft.Resources/deployments",
+                "name": "CREATE_VCEs",
+                "apiVersion": "2019-07-01",
+                "resourceGroup": "[variables('global_vnet_resource_group')]",
+                "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
+                "properties": {
+                    "mode": "Incremental",
+                    "templateLink": {
+                        "uri": "[variables('VCEgreenfieldtemplateUri')]",
+                        "contentVersion": "1.0.0.0"
 
-                },
-            "parameters": {
-
-            }
+                    },
+                "parameters": {
+                    "global_NIC_VCE_LAN_name": {
+                        "value": "[variables('global_NIC_VCE_LAN_name')]"
+                    },
+                    "global_vnet_name": {
+                        "value": "[variables('global_vnet_name')]"
+                    },
+                    "global_SN_HUB_LAN_Name": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "VCE_LAN_Static_IP": {
+                        "value": "[parameters('VCE_LAN_Static_IP')]"
+                    },
+                    "global_NIC_VCE_MGMT_name": {
+                        "value": "[variables('global_NIC_VCE_MGMT_name')]"
+                    },
+                    "global_SN_HUB_MGMT_Name": {
+                        "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                    },
+                    "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
+                    },
+                    "global_publicIPAddresses_VCE01_ip_name": {
+                        "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
+                    },
+                    "global_SN_HUB_WAN_Name": {
+                        "value": "[variables('global_SN_HUB_WAN_Name')]"
+                    },
+                    "VCE_MGMT_Static_IP": {
+                        "value": "[parameters('VCE_MGMT_Static_IP')]"
+                    },
+                    "VCE_WAN_Static_IP": {
+                        "value": "[parameters('VCE_WAN_Static_IP')]"
+                    },
+                    "global_NIC_VCE_WAN_name": {
+                        "value": "[variables('global_NIC_VCE_WAN_name')]"
+                    },
+                    "global_storageAccounts_diagnostics_name": {
+                        "value": "[variables('global_storageAccounts_diagnostics_name')]"
+                    },
+                    "global_virtualMachines_VCE01_name": {
+                        "value": "[variables('global_virtualMachines_VCE01_name')]"
+                    },
+                    "SSH_Key": {
+                        "value": "[parameters('SSH_Key')]"
+                    },
+                    "global_vnet_resource_group": {
+                        "value": "[variables('global_vnet_resource_group')]"
+                    }
+                }
         
                   
-        }
-    }, */
-
+            }
+        }, 
         {
             "comments": "Create VCEs - Retrofit",
             "type": "Microsoft.Resources/deployments",
@@ -317,6 +373,60 @@
                     "global_vnet_resource_group": {
                         "value": "[variables('global_vnet_resource_group')]"
                     }
+
+
+                }
+
+
+            }
+        },
+        {
+            "comments": "Create Palos AS-Option",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_Palos-AS",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Set')]",
+            "dependsOn": [
+                "CREATE_HUB_VNET"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('PaloAStemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+
+                    
+
+
+                }
+
+
+            }
+        },
+        {
+            "comments": "Create Palos AZ-Option",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_Palos-AS",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Zone')]",
+            "dependsOn": [
+                "CREATE_HUB_VNET"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('PaloAZtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+
+                    
 
 
                 }
