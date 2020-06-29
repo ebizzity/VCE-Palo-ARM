@@ -15,6 +15,18 @@
             "defaultValue": "10.132.232.20",
             "type": "String"
         },
+        "VCE02_LAN_Static_IP": {
+            "defaultValue": "10.132.232.69",
+            "type": "String"
+        },
+        "VCE02_MGMT_Static_IP": {
+            "defaultValue": "10.132.232.6",
+            "type": "String"
+        },
+        "VCE02_WAN_Static_IP": {
+            "defaultValue": "10.132.232.21",
+            "type": "String"
+        },
         "Palo_Alto_ILB-IP": {
             "type": "string",
             "metadata": {
@@ -315,6 +327,9 @@
                     "VCE_LAN_Static_IP": {
                         "value": "[parameters('VCE_LAN_Static_IP')]"
                     },
+                    "VCE02_LAN_Static_IP": {
+                        "value": "[parameters('VCE02_LAN_Static_IP')]"
+                    },
                     "global_NIC_VCE_MGMT_name": {
                         "value": "[variables('global_NIC_VCE_MGMT_name')]"
                     },
@@ -335,6 +350,12 @@
                     },
                     "VCE_WAN_Static_IP": {
                         "value": "[parameters('VCE_WAN_Static_IP')]"
+                    },
+                    "VCE02_MGMT_Static_IP": {
+                        "value": "[parameters('VCE02_MGMT_Static_IP')]"
+                    },
+                    "VCE02_WAN_Static_IP": {
+                        "value": "[parameters('VCE02_WAN_Static_IP')]"
                     },
                     "global_NIC_VCE_WAN_name": {
                         "value": "[variables('global_NIC_VCE_WAN_name')]"
