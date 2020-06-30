@@ -303,7 +303,7 @@
         {
                 "comments": "Create VCEs - Greenfield",
                 "type": "Microsoft.Resources/deployments",
-                "name": "CREATE_VCEs",
+                "name": "CREATE_VCEs-gf",
                 "apiVersion": "2019-07-01",
                 "resourceGroup": "[variables('global_vnet_resource_group')]",
                 "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
@@ -380,7 +380,7 @@
         {
             "comments": "Create VCEs - Retrofit",
             "type": "Microsoft.Resources/deployments",
-            "name": "CREATE_VCEs",
+            "name": "CREATE_VCEs-rtro",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[variables('global_vnet_resource_group')]",
             "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
@@ -460,7 +460,7 @@
             "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Set')]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
-                "CREATE_VCEs"
+                "CREATE_VCEs-gf"
             ],
             "properties": {
                 "mode": "Incremental",
