@@ -210,8 +210,8 @@
         "HubVNETTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','hubvnet-deploy.json')]",
         "VCEgreenfieldtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-greenfield.json')]",
         "VCEretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-retrofit.json')]",
-        "PaloAStemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','Palo-deploy-as.json')]",
-        "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','Palo-deploy-az.json')]"
+        "PaloAStemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-as.json')]",
+        "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az.json')]"
 
     },
     "resources": [
