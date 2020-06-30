@@ -180,7 +180,7 @@
     ],
     "variables": {
         "global_var_resource_group": "[resourceGroup().name]",
-        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master/",
+        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master",
         "global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
         "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat('VN-',parameters('SiteCode'),'-HUB', variables('global_var_appendedString')), ' ', ''), 64))]",
         "global_vnet_resource_group": "[if(equals(parameters('VCE-Vnet-RG'), ''), variables('global_var_resource_group'), parameters('VCE-Vnet-RG'))]",
