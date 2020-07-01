@@ -307,6 +307,9 @@
                 "apiVersion": "2019-07-01",
                 "resourceGroup": "[variables('global_vnet_resource_group')]",
                 "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
+                "dependsOn": [
+                "CREATE_HUB_VNET"
+                ],
                 "properties": {
                     "mode": "Incremental",
                     "templateLink": {
