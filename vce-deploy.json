@@ -395,7 +395,7 @@
                 "templateLink": {
                     "uri": "[variables('VCEretrofittemplateUri')]",
                     "contentVersion": "1.0.0.0"
-
+//
                 },
                 "parameters": {
 
