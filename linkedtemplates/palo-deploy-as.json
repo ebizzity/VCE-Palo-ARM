@@ -674,7 +674,6 @@
       "apiVersion": "[variables('global_var_apiVersion')]",
       "resourceGroup": "[variables('internalLb_resource_group')]",
       "dependsOn": [
-        "CREATE_VNET"
       ],
       "properties": {
         "mode": "Incremental",
@@ -787,7 +786,6 @@
       "apiVersion": "[variables('global_var_apiVersion')]",
       "resourceGroup": "[resourceGroup().name]",
       "dependsOn": [
-        "CREATE_VNET",
         "CREATE_AVSET",
         "CREATE_NSGS",
         "CREATE_INTERNALLB",
