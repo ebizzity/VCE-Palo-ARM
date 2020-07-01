@@ -598,8 +598,8 @@
             "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Zone')]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
-                "CREATE_VCEs"
-
+                "CREATE_VCEs-gf"
+//
             ],
             "properties": {
                 "mode": "Incremental",
