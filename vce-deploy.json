@@ -415,7 +415,7 @@
                 "parameters": {
 
                     "global_NIC_VCE_LAN_name": {
-                        "value": "[variables('global_NIC_VCE_LAN_name')]"
+                        "value": "[replace(variables('global_NIC_VCE_LAN_name'),'VCE01', 'VCE02')]"
                     },
                     "global_vnet_name": {
                         "value": "[variables('global_vnet_name')]"
@@ -424,37 +424,37 @@
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
                     "VCE_LAN_Static_IP": {
-                        "value": "[parameters('VCE_LAN_Static_IP')]"
+                        "value": "[parameters('VCE02_LAN_Static_IP')]"
                     },
                     "global_NIC_VCE_MGMT_name": {
-                        "value": "[variables('global_NIC_VCE_MGMT_name')]"
+                        "value": "[replace(variables('global_NIC_VCE_MGMT_name'),'VCE01', 'VCE02')]"
                     },
                     "global_SN_HUB_MGMT_Name": {
-                        "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                        "value": "[replace(variables('global_SN_HUB_MGMT_Name'),'VCE01', 'VCE02')]"
                     },
                     "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
                     },
                     "global_publicIPAddresses_VCE01_ip_name": {
-                        "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
+                        "value": "[replace(variables('global_publicIPAddresses_VCE01_ip_name'),'VCE01', 'VCE02')]"
                     },
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
                     "VCE_MGMT_Static_IP": {
-                        "value": "[parameters('VCE_MGMT_Static_IP')]"
+                        "value": "[parameters('VCE02_MGMT_Static_IP')]"
                     },
                     "VCE_WAN_Static_IP": {
-                        "value": "[parameters('VCE_WAN_Static_IP')]"
+                        "value": "[parameters('VCE02_WAN_Static_IP')]"
                     },
                     "global_NIC_VCE_WAN_name": {
-                        "value": "[variables('global_NIC_VCE_WAN_name')]"
+                        "value": "[replace(variables('global_NIC_VCE_WAN_name'),'VCE01', 'VCE02')]"
                     },
                     "global_storageAccounts_diagnostics_name": {
                         "value": "[variables('global_storageAccounts_diagnostics_name')]"
                     },
                     "global_virtualMachines_VCE01_name": {
-                        "value": "[variables('global_virtualMachines_VCE01_name')]"
+                        "value": "[replace(variables('global_virtualMachines_VCE01_name'),'VCE01', 'VCE02')]"
                     },
                     "SSH_Key": {
                         "value": "[parameters('SSH_Key')]"
