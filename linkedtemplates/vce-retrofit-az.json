@@ -297,16 +297,16 @@
                         }
                     ]
                 },
-                "zones": [
-                    "[parameters('vce2_zone')]"
-                ],
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
                         "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
                     }
                 }
-            }
+            },
+            "zones": [
+                    "[parameters('vce2_zone')]"
+            ]
         } 
 
     ],
