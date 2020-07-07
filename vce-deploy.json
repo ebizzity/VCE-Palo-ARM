@@ -559,10 +559,10 @@
                         "value": "[variables('global_vnet_resource_group')]"
                     },
                     "vce1_zone": {
-                        "value": 1
+                        "value": "1"
                     },
                     "vce2_zone": {
-                        "value": 2
+                        "value": "2"
                     }
                 }
         
@@ -637,7 +637,7 @@
                         "value": "[variables('global_vnet_resource_group')]"
                     },
                     "vce2_zone": {
-                        "value": 2
+                        "value": "2"
                     }
 
 
