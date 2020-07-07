@@ -190,14 +190,14 @@
         "global_SN_HUB_MGMT_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS1_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-TRANS1'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS2_Name": "[take(replace(concat(parameters('SiteCode'),'-HUB-TRANS2'), ' ', ''), 80)]",
-        "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-LAN'), ' ', ''), 80)]",
-        "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-WAN'), ' ', ''), 80)]",
-        "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE-MGMT'), ' ', ''), 80)]",
+        "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-LAN'), ' ', ''), 80)]",
+        "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-WAN'), ' ', ''), 80)]",
+        "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-MGMT'), ' ', ''), 80)]",
         "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-WAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
-        "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE-ip'), ' ', ''), 80)]",
-        "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE'), ' ', ''), 80)]",
+        "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE01-ip'), ' ', ''), 80)]",
+        "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE01'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
         "global_plb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-PLB'), ' ', ''), 80)]",
         "global_ilb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-ILB'), ' ', ''), 80)]",
@@ -321,6 +321,9 @@
                     "global_NIC_VCE_LAN_name": {
                         "value": "[variables('global_NIC_VCE_LAN_name')]"
                     },
+                    "global_NIC_VCE02_LAN_name": {
+                        "value": "[replace(variables('global_NIC_VCE_LAN_name'),'VCE01', 'VCE02')]"
+                    },
                     "global_vnet_name": {
                         "value": "[variables('global_vnet_name')]"
                     },
@@ -336,6 +339,9 @@
                     "global_NIC_VCE_MGMT_name": {
                         "value": "[variables('global_NIC_VCE_MGMT_name')]"
                     },
+                    "global_NIC_VCE02_MGMT_name": {
+                        "value": "[replace(variables('global_NIC_VCE_MGMT_name'),'VCE01', 'VCE02')]"
+                    },
                     "global_SN_HUB_MGMT_Name": {
                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
                     },
@@ -344,6 +350,9 @@
                     },
                     "global_publicIPAddresses_VCE01_ip_name": {
                         "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
+                    },
+                    "global_publicIPAddresses_VCE02_ip_name": {
+                        "value": "[replace(variables('global_publicIPAddresses_VCE01_ip_name'),'VCE01', 'VCE02')]"
                     },
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
@@ -363,11 +372,17 @@
                     "global_NIC_VCE_WAN_name": {
                         "value": "[variables('global_NIC_VCE_WAN_name')]"
                     },
+                    "global_NIC_VCE02_WAN_name": {
+                        "value": "[replace(variables('global_NIC_VCE_WAN_name'),'VCE01', 'VCE02')]"
+                    },
                     "global_storageAccounts_diagnostics_name": {
                         "value": "[variables('global_storageAccounts_diagnostics_name')]"
                     },
                     "global_virtualMachines_VCE01_name": {
                         "value": "[variables('global_virtualMachines_VCE01_name')]"
+                    },
+                    "global_virtualMachines_VCE02_name": {
+                        "value": "[replace(variables('global_virtualMachines_VCE01_name'),'VCE01', 'VCE02')]"
                     },
                     "SSH_Key": {
                         "value": "[parameters('SSH_Key')]"
