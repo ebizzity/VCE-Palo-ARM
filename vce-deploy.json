@@ -305,7 +305,7 @@
                 "name": "CREATE_VCEs-gf",
                 "apiVersion": "2019-07-01",
                 "resourceGroup": "[variables('global_vnet_resource_group')]",
-                "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
+                "condition": "[and(equals(parameters('DeploymentOption'), 'Greenfield'),equals(parameters('NVADeploymentOption'), 'Availability Set'))]",
                 "dependsOn": [
                 "CREATE_HUB_VNET"
                 ],
@@ -400,7 +400,7 @@
             "name": "CREATE_VCEs-rtro",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[variables('global_vnet_resource_group')]",
-            "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
+            "condition": "[and(equals(parameters('DeploymentOption'), 'Retrofit'),equals(parameters('NVADeploymentOption'), 'Availability Set'))]",
             "dependsOn": [
                 "CREATE_HUB_VNET"
             ],
