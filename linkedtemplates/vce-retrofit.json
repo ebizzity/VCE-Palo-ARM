@@ -99,7 +99,7 @@
             "name": "[parameters('global_publicIPAddresses_VCE01_ip_name')]",
             "location": "[resourceGroup().location]",
             "sku": {
-                "name": "Basic"
+                "name": "Standard"
             },
             "properties": {
                 "publicIPAddressVersion": "IPv4",
