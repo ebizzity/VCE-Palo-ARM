@@ -174,8 +174,6 @@
         }
     },
 
-//TODO: Add Parameters for VCE2 Static IPs, Username/Password for Palos
-
     "functions": [
     ],
     "variables": {
@@ -202,7 +200,6 @@
         "global_plb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-PLB'), ' ', ''), 80)]",
         "global_ilb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-ILB'), ' ', ''), 80)]",
         "global_paloASName": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-AS'), ' ', ''), 80)]",
-        "global_paloAZName": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-AZ'), ' ', ''), 80)]",
         "global_palo-fw1-name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-1'), ' ', ''), 80)]",
         "global_palo-fw2-name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-2'), ' ', ''), 80)]",
         "global_paloNSGName": "[take(replace(concat('NSG-',parameters('SiteCode'),'HUB-PALOS'), ' ', ''), 80)]",
@@ -478,7 +475,8 @@
             "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Set')]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
-                "CREATE_VCEs-gf"
+                "CREATE_VCEs-gf",
+                "CREATE_VCEs-rtro"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -616,7 +614,8 @@
             "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Zone')]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
-                "CREATE_VCEs-gf"
+                "CREATE_VCEs-gf",
+                "CREATE_VCEs-rtro"
 //
             ],
             "properties": {
@@ -714,12 +713,6 @@
                     },
                     "OSDiskType": {
                         "value": "Standard_LRS"
-                    },
-                    "availabilitySetOption": {
-                        "value": "Create new availability set"
-                    },
-                    "availabilitySetName": {
-                        "value": "[variables('global_paloASName')]"
                     },
                     "acceleratedNetworking": {
                         "value": "disable"
