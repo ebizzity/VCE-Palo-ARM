@@ -269,6 +269,7 @@
         "global_plb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-PLB'), ' ', ''), 80)]",
         "global_ilb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-ILB'), ' ', ''), 80)]",
         "global_paloASName": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-AS'), ' ', ''), 80)]",
+        "global_VCEASName": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE-AS'), ' ', ''), 80)]",
         "global_palo-fw1-name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-1'), ' ', ''), 80)]",
         "global_palo-fw2-name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-2'), ' ', ''), 80)]",
         "global_paloNSGName": "[take(replace(concat('NSG-',parameters('SiteCode'),'HUB-PALOS'), ' ', ''), 80)]",
@@ -494,6 +495,9 @@
                     },
                     "global_vnet_resource_group": {
                         "value": "[variables('global_vnet_resource_group')]"
+                    },
+                    "availabilitySetName": {
+                        "type": "[variables('global_VCEASName')]"
                     }
                 }
         
