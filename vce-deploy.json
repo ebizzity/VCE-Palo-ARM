@@ -519,7 +519,6 @@
                 "templateLink": {
                     "uri": "[variables('VCEretrofittemplateUri')]",
                     "contentVersion": "1.0.0.0"
-//
                 },
                 "parameters": {
 
@@ -570,6 +569,9 @@
                     },
                     "global_vnet_resource_group": {
                         "value": "[variables('global_vnet_resource_group')]"
+                    },
+                    "availabilitySetName": {
+                        "value": "[variables('global_VCEASName')]"
                     }
 
 

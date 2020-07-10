@@ -49,16 +49,36 @@
         },
         "global_vnet_resource_group": {
             "type": "string"
+        },
+                "availabilitySetName": {
+            "type": "string"
         }
 
     },
     "functions": [],
-    "variables": {},
+    "variables": {
+        "global_var_apiVersion": "2018-06-01",
+        "global_fw_avset_name": "[take(replace(parameters('availabilitySetName'), ' ', ''), 80)]",
+        "avset_sku": "Aligned",
+        "avset_platformUpdateDomainCount": 5,
+        "avset_platformFaultDomainCount": 2
+    },
     "resources": [
 
-//TODO: Check VCE01 vs. VCE02 naming as this is retrofit.
- 
- {
+{
+            "type": "Microsoft.Compute/availabilitySets",
+            "sku": {
+            "name": "[variables('avset_sku')]"
+            },
+            "name": "[variables('global_fw_avset_name')]",
+            "apiVersion": "[variables('global_var_apiVersion')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+            "platformUpdateDomainCount": "[variables('avset_platformUpdateDomainCount')]",
+            "platformFaultDomainCount": "[variables('avset_platformFaultDomainCount')]"
+            }
+}, 
+{
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-04-01",
             "name": "[parameters('global_storageAccounts_diagnostics_name')]",
@@ -232,6 +252,9 @@
                 "publisher": "velocloud"
             },
             "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('global_fw_avset_name'))]"
+                },
                 "hardwareProfile": {
                     "vmSize": "Standard_DS3_v2"
                 },
