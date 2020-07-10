@@ -497,7 +497,7 @@
                         "value": "[variables('global_vnet_resource_group')]"
                     },
                     "availabilitySetName": {
-                        "type": "[variables('global_VCEASName')]"
+                        "value": "[variables('global_VCEASName')]"
                     }
                 }
         
