@@ -1243,7 +1243,9 @@
             "dependsOn": [
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf",
-                "CREATE_VCEs-rtro"
+                "CREATE_VCEs-rtro",
+                "CREATE_VCEs-gf-az",
+                "CREATE_VCEs-rtro-az"
             ],
             "properties": {
                 "mode": "Incremental",
