@@ -429,7 +429,7 @@
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_DS3_v2"
+                    "vmSize": "Standard_DS4_v2"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -658,7 +658,7 @@
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_DS3_v2"
+                    "vmSize": "Standard_DS4_v2"
                 },
                 "storageProfile": {
                     "imageReference": {
