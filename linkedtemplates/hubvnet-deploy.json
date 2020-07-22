@@ -439,7 +439,11 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS1_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS1a_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2a_name'))]"
             ],
             "properties": {
                 "addressSpace": {
@@ -584,7 +588,7 @@
             "name": "[parameters('virtualNetworks_VN_APP_name')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VNET_NAME'))]"
                 
             ],
             "properties": {
@@ -626,7 +630,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 
-                //"[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_VN_HUB_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VNET_NAME'))]"
             ],
             "properties": {
                 "addressSpace": {
@@ -667,7 +671,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 
-                //"[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_VN_HUB_name'))]"
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VNET_NAME'))]"
             ],
             "properties": {
                 "addressSpace": {
