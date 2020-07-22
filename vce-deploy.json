@@ -3,17 +3,29 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
 
-        "VCE_LAN_Static_IP": {
+        "VCE01_LAN_Static_IP": {
             "defaultValue": "10.132.232.68",
             "type": "String"
         },
-        "VCE_MGMT_Static_IP": {
+        "VCE01_MGMT_Static_IP": {
             "defaultValue": "10.132.232.5",
             "type": "String"
         },
-        "VCE_WAN_Static_IP": {
+        "VCE01_WAN_Static_IP": {
             "defaultValue": "10.132.232.20",
             "type": "String"
+        },
+        "VCE01_TRANS1_Static_IP": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "VCE01_TRANS1a_Static_IP": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
         },
         "VCE02_LAN_Static_IP": {
             "defaultValue": "10.132.232.69",
@@ -26,6 +38,18 @@
         "VCE02_WAN_Static_IP": {
             "defaultValue": "10.132.232.21",
             "type": "String"
+        },
+        "VCE02_TRANS2_Static_IP": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
+        },
+        "VCE02_TRANS2a_Static_IP": {
+            "type": "string",
+            "metadata": {
+                "description": "description"
+            }
         },
         "Palo_Alto_ILB-IP": {
             "type": "string",
@@ -42,6 +66,12 @@
         "Palo_Alto_FW1-LAN-IP": {
             "type": "string"
         },
+        "Palo_Alto_FW1-TRANS1-IP": {
+            "type": "string"
+        },
+        "Palo_Alto_FW1-TRANS1a-IP": {
+            "type": "string"
+        },
         "Palo_Alto_FW2-MGMT-IP": {
             "type": "string"
         },
@@ -51,11 +81,25 @@
         "Palo_Alto_FW2-LAN-IP": {
             "type": "string"
         },
+        "Palo_Alto_FW2-TRANS2-IP": {
+            "type": "string"
+        },
+        "Palo_Alto_FW2-TRANS2a-IP": {
+            "type": "string"
+        },
         "SN_HUB_TRANS1_Address_Space": {
             "defaultValue": "<TRANS1_Address Space>",
             "type": "string"
         },
         "SN_HUB_TRANS2_Address_Space": {
+            "defaultValue": "<TRANS2_Address Space>",
+            "type": "string"
+        },
+        "SN_HUB_TRANS1a_Address_Space": {
+            "defaultValue": "<TRANS1_Address Space>",
+            "type": "string"
+        },
+        "SN_HUB_TRANS2a_Address_Space": {
             "defaultValue": "<TRANS2_Address Space>",
             "type": "string"
         },
@@ -248,6 +292,8 @@
         "global_SN_HUB_MGMT_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS1_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS1'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS2_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS2'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS1a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS1a'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS2a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS2a'), ' ', ''), 80)]",
         "global_App_VNET_Name": "[take(replace(concat('VN-',parameters('SiteCode'),'-APP'), ' ', ''), 80)]",
         "global_App_Subnet_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-INT-APP'), ' ', ''), 80)]",
         "global_SQL_VNET_Name": "[take(replace(concat('VN-',parameters('SiteCode'),'-SQL'), ' ', ''), 80)]",
@@ -257,6 +303,10 @@
         "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-LAN'), ' ', ''), 80)]",
         "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-WAN'), ' ', ''), 80)]",
         "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-MGMT'), ' ', ''), 80)]",
+        "global_NIC_VCE01_TRANS1_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-TRANS1'), ' ', ''), 80)]",
+        "global_NIC_VCE01_TRANS1a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-TRANS1a'), ' ', ''), 80)]",
+        "global_NIC_VCE02_TRANS2_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-TRANS2'), ' ', ''), 80)]",
+        "global_NIC_VCE02_TRANS2a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-VCE01-TRANS2a'), ' ', ''), 80)]",
         "global_NIC_JMP01_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'-SV-JMP01-LAN'), ' ', ''), 80)]",
         "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-WAN'), ' ', ''), 80)]",
@@ -348,6 +398,22 @@
 
                         "value": "[parameters('SN_HUB_TRANS2_Address_Space')]"
                     },
+                    "TRANS1a-subnet-name": {
+
+                        "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1', 'TRANS1a')]"
+                    },
+                    "TRANS1a-address-space": {
+
+                        "value": "[parameters('SN_HUB_TRANS1a_Address_Space')]"
+                    },
+                    "TRANS2a-subnet-name": {
+
+                        "value": "[replace(variables('global_SN_HUB_TRANS2_Name'),'TRANS2', 'TRANS2a')]"
+                    },
+                    "TRANS2a-address-space": {
+
+                        "value": "[parameters('SN_HUB_TRANS2a_Address_Space')]"
+                    },
                     "networkSecurityGroups_NSG_HUB_MGMT_name": {
 
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
@@ -362,11 +428,47 @@
                     "routeTables_RT_HUB_name": {
                         "value": "[variables('global_RT_HUB_name')]"
                     },
-                    "VCE_LAN_Static_IP": {
-                        "value": "[parameters('VCE_LAN_Static_IP')]"
+                    "routeTables_TRANS1_name": {
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS1')]"
+                    },
+                    "routeTables_TRANS1a_name": {
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS1a')]"
+                    },
+                    "routeTables_TRANS2_name": {
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2')]"
+                    },
+                    "routeTables_TRANS2a_name": {
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2a')]"
                     },
                     "virtualNetworks_VN_APP_name": {
                         "value": "[variables('global_App_VNET_Name')]"
+                    },
+                    "Palo_ILB_Static_IP": {
+                        "value": "[parameters('Palo_Alto_ILB-IP')]"
+                    },
+                    "Palo_Alto_FW1-TRANS1-IP": {
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1-IP')]"
+                    },
+                    "VCE01_TRANS1_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1_Static_IP')]"
+                    },
+                    "Palo_Alto_FW1-TRANS1a-IP": {
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+                    },
+                    "VCE01_TRANS1a_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                    },
+                    "Palo_Alto_FW2-TRANS2-IP": {
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+                    },
+                    "VCE02_TRANS2_Static_IP": {
+                        "value": "[parameters('VCE02_TRANS2_Static_IP')]"
+                    },
+                    "Palo_Alto_FW2-TRANS2a-IP": {
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                    },
+                    "VCE02_TRANS2a_Static_IP":{
+                        "value": "[parameters('VCE02_TRANS2a_Static_IP')]"
                     },
                     "VN_APP_Address_Space": {
                         "value": "[parameters('APP_VNET_Address_Space')]"
@@ -436,8 +538,8 @@
                     "global_SN_HUB_LAN_Name": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
-                    "VCE_LAN_Static_IP": {
-                        "value": "[parameters('VCE_LAN_Static_IP')]"
+                    "VCE01_LAN_Static_IP": {
+                        "value": "[parameters('VCE01_LAN_Static_IP')]"
                     },
                     "VCE02_LAN_Static_IP": {
                         "value": "[parameters('VCE02_LAN_Static_IP')]"
@@ -463,11 +565,11 @@
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
-                    "VCE_MGMT_Static_IP": {
-                        "value": "[parameters('VCE_MGMT_Static_IP')]"
+                    "VCE01_MGMT_Static_IP": {
+                        "value": "[parameters('VCE01_MGMT_Static_IP')]"
                     },
-                    "VCE_WAN_Static_IP": {
-                        "value": "[parameters('VCE_WAN_Static_IP')]"
+                    "VCE01_WAN_Static_IP": {
+                        "value": "[parameters('VCE01_WAN_Static_IP')]"
                     },
                     "VCE02_MGMT_Static_IP": {
                         "value": "[parameters('VCE02_MGMT_Static_IP')]"
@@ -498,6 +600,42 @@
                     },
                     "availabilitySetName": {
                         "value": "[variables('global_VCEASName')]"
+                    },
+                    "VCE01_TRANS1_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS1_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "VCE01_TRANS1a_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS1a_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
+                    },
+                    "VCE02_TRANS2_Static_IP": {
+                        "value": "[parameters('VCE02_TRANS2_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS2_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "VCE02_TRANS2a_Static_IP": {
+                        "value": "[parameters('VCE02_TRANS2a_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS2a_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
+                    },
+                    "global_NIC_VCE01_TRANS1_name": {
+                        "value": "[variables('global_NIC_VCE01_TRANS1_name')]"
+                    },
+                    "global_NIC_VCE01_TRANS1a_name": {
+                        "value": "[variables('global_NIC_VCE01_TRANS1a_name')]"
+                    },
+                    "global_NIC_VCE02_TRANS2_name": {
+                        "value": "[variables('global_NIC_VCE02_TRANS2_name')]"
+                    },
+                    "global_NIC_VCE02_TRANS2a_name": {
+                        "value": "[variables('global_NIC_VCE02_TRANS2a_name')]"
                     }
                 }
         
@@ -531,7 +669,7 @@
                     "global_SN_HUB_LAN_Name": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
-                    "VCE_LAN_Static_IP": {
+                    "VCE01_LAN_Static_IP": {
                         "value": "[parameters('VCE02_LAN_Static_IP')]"
                     },
                     "global_NIC_VCE_MGMT_name": {
@@ -549,10 +687,10 @@
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
-                    "VCE_MGMT_Static_IP": {
+                    "VCE01_MGMT_Static_IP": {
                         "value": "[parameters('VCE02_MGMT_Static_IP')]"
                     },
-                    "VCE_WAN_Static_IP": {
+                    "VCE01_WAN_Static_IP": {
                         "value": "[parameters('VCE02_WAN_Static_IP')]"
                     },
                     "global_NIC_VCE_WAN_name": {
@@ -610,8 +748,8 @@
                     "global_SN_HUB_LAN_Name": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
-                    "VCE_LAN_Static_IP": {
-                        "value": "[parameters('VCE_LAN_Static_IP')]"
+                    "VCE01_LAN_Static_IP": {
+                        "value": "[parameters('VCE01_LAN_Static_IP')]"
                     },
                     "VCE02_LAN_Static_IP": {
                         "value": "[parameters('VCE02_LAN_Static_IP')]"
@@ -637,11 +775,11 @@
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
-                    "VCE_MGMT_Static_IP": {
-                        "value": "[parameters('VCE_MGMT_Static_IP')]"
+                    "VCE01_MGMT_Static_IP": {
+                        "value": "[parameters('VCE01_MGMT_Static_IP')]"
                     },
-                    "VCE_WAN_Static_IP": {
-                        "value": "[parameters('VCE_WAN_Static_IP')]"
+                    "VCE01_WAN_Static_IP": {
+                        "value": "[parameters('VCE01_WAN_Static_IP')]"
                     },
                     "VCE02_MGMT_Static_IP": {
                         "value": "[parameters('VCE02_MGMT_Static_IP')]"
@@ -709,7 +847,7 @@
                     "global_SN_HUB_LAN_Name": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
-                    "VCE_LAN_Static_IP": {
+                    "VCE01_LAN_Static_IP": {
                         "value": "[parameters('VCE02_LAN_Static_IP')]"
                     },
                     "global_NIC_VCE_MGMT_name": {
@@ -727,10 +865,10 @@
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
-                    "VCE_MGMT_Static_IP": {
+                    "VCE01_MGMT_Static_IP": {
                         "value": "[parameters('VCE02_MGMT_Static_IP')]"
                     },
-                    "VCE_WAN_Static_IP": {
+                    "VCE01_WAN_Static_IP": {
                         "value": "[parameters('VCE02_WAN_Static_IP')]"
                     },
                     "global_NIC_VCE_WAN_name": {

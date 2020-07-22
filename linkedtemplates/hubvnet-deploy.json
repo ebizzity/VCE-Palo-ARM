@@ -36,6 +36,18 @@
         "TRANS2-address-space": {
             "type": "string"
         },
+        "TRANS1a-subnet-name": {
+            "type": "string"
+        },
+        "TRANS1a-address-space": {
+            "type": "string"
+        },
+        "TRANS2a-subnet-name": {
+            "type": "string"
+        },
+        "TRANS2a-address-space": {
+            "type": "string"
+        },
         "VNET_NAME": {
             "type": "string"
         },
@@ -51,7 +63,16 @@
         "routeTables_RT_HUB_name": {
             "type": "string"
         },
-        "VCE_LAN_Static_IP": {
+        "routeTables_TRANS1_name": {
+            "type": "string"
+        },
+        "routeTables_TRANS1a_name": {
+            "type": "string"
+        },
+        "routeTables_TRANS2_name": {
+            "type": "string"
+        },
+        "routeTables_TRANS2a_name": {
             "type": "string"
         },
         "virtualNetworks_VN_APP_name": {
@@ -89,7 +110,35 @@
         },
         "SN_WEB_Address_Space": {
             "type": "string"
+        },
+        "Palo_ILB_Static_IP": {
+            "type": "string"
+        },
+        "Palo_Alto_FW1-TRANS1-IP": {
+            "type": "string"
+        },
+        "VCE01_TRANS1_Static_IP": {
+            "type": "string"
+        },
+        "Palo_Alto_FW1-TRANS1a-IP": {
+            "type": "string"
+        },
+        "VCE01_TRANS1a_Static_IP": {
+            "type": "string"
+        },
+        "Palo_Alto_FW2-TRANS2-IP": {
+            "type": "string"
+        },
+        "VCE02_TRANS2_Static_IP": {
+            "type": "string"
+        },
+        "Palo_Alto_FW2-TRANS2a-IP": {
+            "type": "string"
+        },
+        "VCE02_TRANS2a_Static_IP":{
+            "type": "string"
         }
+
     },
     "functions": [],
     "variables": {},
@@ -108,10 +157,11 @@
                         "name": "Default",
                         "properties": {
                             "addressPrefix": "0.0.0.0/0",
-                            "nextHopType": "Internet"
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
-                    },
-                    {
+                    }//,
+                    /* {
                         "name": "RFC1918-1",
                         "properties": {
                             "addressPrefix": "10.0.0.0/8",
@@ -134,11 +184,187 @@
                             "nextHopType": "VirtualAppliance",
                             "nextHopIpAddress": "[parameters('VCE_LAN_Static_IP')]"
                         }
+                    } */
+                ]
+            }
+        },
+
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_TRANS1_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                "routes": [
+                    {
+                        "name": "Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_Alto_FW1-TRANS1-IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-1",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/8",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS1_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-2",
+                        "properties": {
+                            "addressPrefix": "172.16.0.0/12",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS1_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-3",
+                        "properties": {
+                            "addressPrefix": "192.168.0.0/16",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS1_Static_IP')]"
+                        }
                     }
                 ]
             }
         },
 
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_TRANS1a_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                "routes": [
+                    {
+                        "name": "Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-1",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/8",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-2",
+                        "properties": {
+                            "addressPrefix": "172.16.0.0/12",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-3",
+                        "properties": {
+                            "addressPrefix": "192.168.0.0/16",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                        }
+                    }
+                ]
+            }
+        },
+
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_TRANS2_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                "routes": [
+                    {
+                        "name": "Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-1",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/8",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS2_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-2",
+                        "properties": {
+                            "addressPrefix": "172.16.0.0/12",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS2_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-3",
+                        "properties": {
+                            "addressPrefix": "192.168.0.0/16",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS2_Static_IP')]"
+                        }
+                    }
+                ]
+            }
+        },
+
+
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_TRANS2a_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                "routes": [
+                    {
+                        "name": "Default",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-1",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/8",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS2a_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-2",
+                        "properties": {
+                            "addressPrefix": "172.16.0.0/12",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS2a_Static_IP')]"
+                        }
+                    },
+                    {
+                        "name": "RFC1918-3",
+                        "properties": {
+                            "addressPrefix": "192.168.0.0/16",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS2a_Static_IP')]"
+                        }
+                    }
+                ]
+            }
+        },
 
         {
             "type": "Microsoft.Network/networkSecurityGroups",
@@ -260,6 +486,40 @@
                         "name": "[parameters('TRANS2-subnet-name')]",
                         "properties": {
                             "addressPrefix": "[parameters('TRANS2-address-space')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('TRANS1a-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('TRANS1a-address-space')]",
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('TRANS2a-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('TRANS2a-address-space')]",
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
