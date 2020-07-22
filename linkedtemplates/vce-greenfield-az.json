@@ -190,7 +190,7 @@
                     {
                         "name": "ipconfig1",
                         "properties": {
-                            "privateIPAddress": "[parameters('VCE_LAN_Static_IP')]",
+                            "privateIPAddress": "[parameters('VCE01_LAN_Static_IP')]",
                             "privateIPAllocationMethod": "Static",
                             "subnet": {
                                 "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_LAN_Name'))]"
@@ -224,7 +224,7 @@
                     {
                         "name": "ipconfig1",
                         "properties": {
-                            "privateIPAddress": "[parameters('VCE_MGMT_Static_IP')]",
+                            "privateIPAddress": "[parameters('VCE01_MGMT_Static_IP')]",
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
                                 "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_MGMT_Name'))]"
@@ -258,7 +258,7 @@
                     {
                         "name": "ipconfig1",
                         "properties": {
-                            "privateIPAddress": "[parameters('VCE_WAN_Static_IP')]",
+                            "privateIPAddress": "[parameters('VCE01_WAN_Static_IP')]",
                             "privateIPAllocationMethod": "Static",
                             "publicIPAddress": {
                                 "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('global_publicIPAddresses_VCE01_ip_name'))]"
