@@ -1227,6 +1227,30 @@
                     },
                     "FW2-Zone": {
                         "value": "2"
+                    },
+                    "FW2-IPTRANS2": {
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+                    },
+                    "FW2-IPTRANS2a": {
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                    },
+                    "FW1-IPTRANS1": {
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1-IP')]"
+                    },
+                    "FW1-IPTRANS1a": {
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+                    },
+                    "subnetName-TRANS1": {
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "subnetName-TRANS1a": {
+                        "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
+                    },
+                    "subnetName-TRANS2": {
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "subnetName-TRANS2a": {
+                        "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
                     }
                 }
 

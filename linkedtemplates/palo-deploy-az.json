@@ -364,6 +364,30 @@
         "metadata": {
           "description": "If the NAME and CONFIGURATION of the created LBs/NSGs/VMs/VNET match an existing LBs/NSGs/VMs/VNET in the SAME resource group, the template will its skip creation.  If the new resource NAME matches, but the resource CONFIGURATION does not, the template will fail or will overwrite the existing resource."
         }
+      },
+      "FW2-IPTRANS2": {
+        "type": "string"
+      },
+      "FW2-IPTRANS2a": {
+        "type": "string"
+      },
+      "FW1-IPTRANS1": {
+        "type": "string",
+      },
+      "FW1-IPTRANS1a": {
+        "type": "string",
+      },
+      "subnetName-TRANS1": {
+        "type": "string"
+      },
+      "subnetName-TRANS1a": {
+        "type": "string"
+      },
+      "subnetName-TRANS2": {
+        "type": "string"
+      },
+      "subnetName-TRANS2a": {
+        "type": "string"
       }
     },
     "variables": {
@@ -383,6 +407,10 @@
       "global_vnet_subnet1_name": "[take(replace(parameters('subnetName-Dataplane1'), ' ', ''), 80)]",
       "global_vnet_subnet2_name": "[take(replace(parameters('subnetName-Dataplane2'), ' ', ''), 80)]",
       "global_vnet_subnet3_name": "[take(replace(parameters('subnetName-InternalLB'), ' ', ''), 80)]",
+      "global_vnet_subnet4_name": "[take(replace(parameters('subnetName-TRANS1'), ' ', ''), 80)]",
+      "global_vnet_subnet5_name": "[take(replace(parameters('subnetName-TRANS1a'), ' ', ''), 80)]",
+      "global_vnet_subnet6_name": "[take(replace(parameters('subnetName-TRANS2'), ' ', ''), 80)]",
+      "global_vnet_subnet7_name": "[take(replace(parameters('subnetName-TRANS2a'), ' ', ''), 80)]",
       "global_fw_mgmtnsg_name": "[take(replace(concat(parameters('NSGName'), '-mgmt', variables('global_var_appendedString')), ' ', ''), 80)]",
       "global_fw_dataNsg_name": "[take(replace(concat(parameters('NSGName'), '-data', variables('global_var_appendedString')), ' ', ''), 80)]",
       "global_fw_interface0_pip_option": "[parameters('applyPublicIPToManagement')]",
@@ -458,9 +486,13 @@
       "fw1_interface0_name": "[take(replace(concat(parameters('FW1-Name'), '-nic0', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw1_interface1_name": "[take(replace(concat(parameters('FW1-Name'), '-nic1', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw1_interface2_name": "[take(replace(concat(parameters('FW1-Name'), '-nic2', variables('global_var_appendedString')), ' ', ''), 80)]",
+      "fw1_interface3_name": "[take(replace(concat(parameters('FW1-Name'), '-nic3', variables('global_var_appendedString')), ' ', ''), 80)]",
+      "fw1_interface4_name": "[take(replace(concat(parameters('FW1-Name'), '-nic4', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw1_interface0_ip": "[parameters('FW1-IPManagement')]",
       "fw1_interface1_ip": "[parameters('FW1-IPDataplane1')]",
       "fw1_interface2_ip": "[parameters('FW1-IPDataplane2')]",
+      "fw1_interface3_ip": "[parameters('FW1-IPTRANS1')]",
+      "fw1_interface4_ip": "[parameters('FW1-IPTRANS1a')]",
       "fw1_interface0_pip_name": "[take(replace(concat(parameters('FW1-Name'), '-nic0-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw1_interface1_pip_name": "[take(replace(concat(parameters('FW1-Name'), '-nic1-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw1_interface0_pip_id": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('fw1_interface0_pip_name'))]" },
@@ -472,9 +504,13 @@
       "fw2_interface0_name": "[take(replace(concat(parameters('FW2-Name'), '-nic0', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw2_interface1_name": "[take(replace(concat(parameters('FW2-Name'), '-nic1', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw2_interface2_name": "[take(replace(concat(parameters('FW2-Name'), '-nic2', variables('global_var_appendedString')), ' ', ''), 80)]",
+      "fw2_interface3_name": "[take(replace(concat(parameters('FW2-Name'), '-nic3', variables('global_var_appendedString')), ' ', ''), 80)]",
+      "fw2_interface4_name": "[take(replace(concat(parameters('FW2-Name'), '-nic4', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw2_interface0_ip": "[parameters('FW2-IPManagement')]",
       "fw2_interface1_ip": "[parameters('FW2-IPDataplane1')]",
       "fw2_interface2_ip": "[parameters('FW2-IPDataplane2')]",
+      "fw2_interface3_ip": "[parameters('FW2-IPTRANS2')]",
+      "fw2_interface4_ip": "[parameters('FW2-IPTRANS2a')]",
       "fw2_interface0_pip_name": "[take(replace(concat(parameters('FW2-Name'),'-nic0-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw2_interface1_pip_name": "[take(replace(concat(parameters('FW2-Name'),'-nic1-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
       "fw2_interface0_pip_id": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('fw2_interface0_pip_name'))]" },
@@ -904,6 +940,64 @@
                 }
               },
               {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw1_interface3_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw1_interface3_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet4_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                      
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                },
+                "tapConfigurations": []
+              }
+              },
+              {
+                "type": "Microsoft.Network/networkInterfaces",
+                "name": "[variables('fw1_interface4_name')]",
+                "apiVersion": "[variables('global_var_apiVersion')]",
+                "location": "[resourceGroup().location]",
+                "properties": {
+                  "ipConfigurations": [
+                    {
+                      "name": "ipconfig1",
+                      "properties": {
+                        "privateIpAddress": "[variables('fw1_interface4_ip')]",
+                        "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                        "subnet": {
+                          "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet5_name'))]"
+                        },
+                        "primary": true,
+                        "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                        
+                      }
+                    }
+                  ],
+                  "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                  "enableIPForwarding": true,
+                  "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                  },
+                  "tapConfigurations": []
+                }
+              },
+              {
                 "type": "Microsoft.Compute/virtualMachines",
                 "name": "[variables('fw1_computerName')]",
                 "apiVersion": "[variables('global_var_apiVersion')]",
@@ -958,6 +1052,18 @@
                         "properties": {
                           "primary": false
                         }
+                      },
+                      {
+                      "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface3_name'))]",
+                      "properties": {
+                        "primary": false
+                      }
+                      },
+                      {
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface4_name'))]",
+                        "properties": {
+                          "primary": false
+                        }
                       }
                     ]
                   }
@@ -968,7 +1074,9 @@
                 "dependsOn": [
                   "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface0_name'))]",
                   "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface1_name'))]",
-                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface2_name'))]"
+                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface2_name'))]",
+                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface3_name'))]",
+                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface4_name'))]"
                 ]
               }
             ]
@@ -1128,6 +1236,64 @@
                 }
               },
               {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw2_interface3_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw2_interface3_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet6_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                      
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                },
+                "tapConfigurations": []
+              }
+            },
+            {
+                "type": "Microsoft.Network/networkInterfaces",
+                "name": "[variables('fw2_interface4_name')]",
+                "apiVersion": "[variables('global_var_apiVersion')]",
+                "location": "[resourceGroup().location]",
+                "properties": {
+                  "ipConfigurations": [
+                    {
+                      "name": "ipconfig1",
+                      "properties": {
+                        "privateIpAddress": "[variables('fw2_interface4_ip')]",
+                        "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                        "subnet": {
+                          "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet7_name'))]"
+                        },
+                        "primary": true,
+                        "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                        
+                      }
+                    }
+                  ],
+                  "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                  "enableIPForwarding": true,
+                  "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                  },
+                  "tapConfigurations": []
+              }
+            },
+              {
                 "type": "Microsoft.Compute/virtualMachines",
                 "name": "[variables('fw2_computerName')]",
                 "apiVersion": "[variables('global_var_apiVersion')]",
@@ -1182,6 +1348,18 @@
                         "properties": {
                           "primary": false
                         }
+                      },
+                      {
+                      "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface3_name'))]",
+                      "properties": {
+                        "primary": false
+                      }
+                      },
+                      {
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface4_name'))]",
+                        "properties": {
+                          "primary": false
+                        }
                       }
                     ]
                   }
@@ -1192,7 +1370,9 @@
                 "dependsOn": [
                   "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface0_name'))]",
                   "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface1_name'))]",
-                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface2_name'))]"
+                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface2_name'))]",
+                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface3_name'))]",
+                  "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface4_name'))]"
                 ]
               }
             ]
