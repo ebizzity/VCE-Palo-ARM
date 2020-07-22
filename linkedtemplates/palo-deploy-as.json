@@ -1133,8 +1133,8 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface0_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface1_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface2_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface3_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface4_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface3_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface4_name'))]"
               ]
             }
           ]
