@@ -311,12 +311,12 @@
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
-                        },
-                        "networkSecurityGroup": {
-                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
                         }
                     }
                 ],
+                "networkSecurityGroup": {
+                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
+                },
                 "dnsSettings": {
                     "dnsServers": []
                 },
@@ -672,12 +672,12 @@
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4",
-                        },
-                        "networkSecurityGroup": {
-                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
-                            }
+                        }
                     }
                 ],
+                "networkSecurityGroup": {
+                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
+                },
                 "dnsSettings": {
                     "dnsServers": []
                 },
