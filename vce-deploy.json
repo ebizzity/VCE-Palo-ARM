@@ -1006,10 +1006,10 @@
                     "FW2-IPDataplane2": {
                         "value": "[parameters('Palo_Alto_FW2-LAN-IP')]"
                     },
-                    "FW1-IPTRANS2":{
+                    "FW2-IPTRANS2":{
                         "value": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
                     },
-                    "FW1-IPTRANS2a":{
+                    "FW2-IPTRANS2a":{
                         "value": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
                     },
                     "licenseType": {
