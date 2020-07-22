@@ -275,6 +275,9 @@
             "metadata": {
                 "description": "description"
             }
+        },
+        "VCE_PUB_NSG_NAME": {
+            "type": "string"
         }
     },
 
@@ -636,6 +639,9 @@
                     },
                     "global_NIC_VCE02_TRANS2a_name": {
                         "value": "[variables('global_NIC_VCE02_TRANS2a_name')]"
+                    },
+                    "VCE_PUB_NSG_NAME":{
+                       "value": "[parameters('VCE_PUB_NSG_NAME')]"
                     }
                 }
         
