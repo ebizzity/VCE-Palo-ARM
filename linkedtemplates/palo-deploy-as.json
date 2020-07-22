@@ -66,6 +66,34 @@
         "description": "Enter the subnet name for the internal load balancer."
       }
     },
+    "subnetName-TRANS1": {
+      "type": "string",
+      "defaultValue": "lb-subnet",
+      "metadata": {
+        "description": "Enter the subnet name for the internal load balancer."
+      }
+    },
+    "subnetName-TRANS1a": {
+      "type": "string",
+      "defaultValue": "lb-subnet",
+      "metadata": {
+        "description": "Enter the subnet name for the internal load balancer."
+      }
+    },
+    "subnetName-TRANS2": {
+      "type": "string",
+      "defaultValue": "lb-subnet",
+      "metadata": {
+        "description": "Enter the subnet name for the internal load balancer."
+      }
+    },
+    "subnetName-TRANS2a": {
+      "type": "string",
+      "defaultValue": "lb-subnet",
+      "metadata": {
+        "description": "Enter the subnet name for the internal load balancer."
+      }
+    },
     "subnetPrefix-Management": {
       "type": "string",
       "defaultValue": "10.0.0.0/24",
@@ -162,6 +190,20 @@
         "description": "Enter a private IP address for firewall-1's second dataplane interface."
       }
     },
+    "FW1-IPTRANS1": {
+      "type": "string",
+      "defaultValue": "10.0.3.4",
+      "metadata": {
+        "description": "Enter a private IP address for firewall-1's second dataplane interface."
+      }
+    },
+    "FW1-IPTRANS1a": {
+      "type": "string",
+      "defaultValue": "10.0.4.4",
+      "metadata": {
+        "description": "Enter a private IP address for firewall-1's second dataplane interface."
+      }
+    },
     "FW2-Name": {
       "type": "string",
       "defaultValue": "vmseries-fw-vm2",
@@ -188,6 +230,20 @@
       "defaultValue": "10.0.2.5",
       "metadata": {
         "description": "Enter a private IP address for firewall-2's second dataplane interface."
+      }
+    },
+    "FW2-IPTRANS2": {
+      "type": "string",
+      "defaultValue": "10.0.5.4",
+      "metadata": {
+        "description": "Enter a private IP address for firewall-1's second dataplane interface."
+      }
+    },
+    "FW2-IPTRANS2a": {
+      "type": "string",
+      "defaultValue": "10.0.6.4",
+      "metadata": {
+        "description": "Enter a private IP address for firewall-1's second dataplane interface."
       }
     },
     "licenseType": {
@@ -378,6 +434,10 @@
     "global_vnet_subnet1_name": "[take(replace(parameters('subnetName-Dataplane1'), ' ', ''), 80)]",
     "global_vnet_subnet2_name": "[take(replace(parameters('subnetName-Dataplane2'), ' ', ''), 80)]",
     "global_vnet_subnet3_name": "[take(replace(parameters('subnetName-InternalLB'), ' ', ''), 80)]",
+    "global_vnet_subnet4_name": "[take(replace(parameters('subnetName-TRANS1'), ' ', ''), 80)]",
+    "global_vnet_subnet5_name": "[take(replace(parameters('subnetName-TRANS1a'), ' ', ''), 80)]",
+    "global_vnet_subnet6_name": "[take(replace(parameters('subnetName-TRANS2'), ' ', ''), 80)]",
+    "global_vnet_subnet7_name": "[take(replace(parameters('subnetName-TRANS2a'), ' ', ''), 80)]",
     "global_fw_mgmtnsg_name": "[take(replace(concat(parameters('NSGName'), '-mgmt', variables('global_var_appendedString')), ' ', ''), 80)]",
     "global_fw_dataNsg_name": "[take(replace(concat(parameters('NSGName'), '-data', variables('global_var_appendedString')), ' ', ''), 80)]",
     "global_fw_interface0_pip_option": "[parameters('applyPublicIPToManagement')]",
@@ -460,9 +520,13 @@
     "fw1_interface0_name": "[take(replace(concat(parameters('FW1-Name'), '-nic0', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface1_name": "[take(replace(concat(parameters('FW1-Name'), '-nic1', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface2_name": "[take(replace(concat(parameters('FW1-Name'), '-nic2', variables('global_var_appendedString')), ' ', ''), 80)]",
+    "fw1_interface3_name": "[take(replace(concat(parameters('FW1-Name'), '-nic3', variables('global_var_appendedString')), ' ', ''), 80)]",
+    "fw1_interface4_name": "[take(replace(concat(parameters('FW1-Name'), '-nic4', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface0_ip": "[parameters('FW1-IPManagement')]",
     "fw1_interface1_ip": "[parameters('FW1-IPDataplane1')]",
     "fw1_interface2_ip": "[parameters('FW1-IPDataplane2')]",
+    "fw1_interface3_ip": "[parameters('FW1-IPTRANS1')]",
+    "fw1_interface4_ip": "[parameters('FW1-IPTRANS1a')]",
     "fw1_interface0_pip_name": "[take(replace(concat(parameters('FW1-Name'), '-nic0-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface1_pip_name": "[take(replace(concat(parameters('FW1-Name'), '-nic1-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface0_pip_id": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('fw1_interface0_pip_name'))]" },
@@ -473,9 +537,13 @@
     "fw2_interface0_name": "[take(replace(concat(parameters('FW2-Name'), '-nic0', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface1_name": "[take(replace(concat(parameters('FW2-Name'), '-nic1', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface2_name": "[take(replace(concat(parameters('FW2-Name'), '-nic2', variables('global_var_appendedString')), ' ', ''), 80)]",
+    "fw2_interface3_name": "[take(replace(concat(parameters('FW1-Name'), '-nic3', variables('global_var_appendedString')), ' ', ''), 80)]",
+    "fw2_interface4_name": "[take(replace(concat(parameters('FW1-Name'), '-nic4', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface0_ip": "[parameters('FW2-IPManagement')]",
     "fw2_interface1_ip": "[parameters('FW2-IPDataplane1')]",
     "fw2_interface2_ip": "[parameters('FW2-IPDataplane2')]",
+    "fw2_interface3_ip": "[parameters('FW2-IPTRANS2')]",
+    "fw2_interface4_ip": "[parameters('FW2-IPTRANS2a')]",
     "fw2_interface0_pip_name": "[take(replace(concat(parameters('FW2-Name'),'-nic0-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface1_pip_name": "[take(replace(concat(parameters('FW2-Name'),'-nic1-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface0_pip_id": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('fw2_interface0_pip_name'))]" },
@@ -932,6 +1000,64 @@
               }
             },
             {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw1_interface3_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw1_interface3_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet4_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                      
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                },
+                "tapConfigurations": []
+              }
+            },
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw1_interface4_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw1_interface4_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet5_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                      
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                },
+                "tapConfigurations": []
+              }
+            },
+            {
               "type": "Microsoft.Compute/virtualMachines",
               "name": "[variables('fw1_computerName')]",
               "apiVersion": "[variables('global_var_apiVersion')]",
@@ -1142,6 +1268,64 @@
                           "id": "[concat(resourceId(variables('internalLb_resource_group'), 'Microsoft.Network/loadBalancers', variables('internalLb_name')), '/backendAddressPools/', variables('internalLb_pool_name'))]"
                         }
                       ]
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                },
+                "tapConfigurations": []
+              }
+            },
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw2_interface3_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw2_interface3_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet6_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                      
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "networkSecurityGroup": {
+                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
+                },
+                "tapConfigurations": []
+              }
+            },
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw2_interface4_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw2_interface4_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet7_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                      
                     }
                   }
                 ],

@@ -937,6 +937,18 @@
                     "subnetName-InternalLB": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
+                    "subnetName-TRANS1":{
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "subnetName-TRANS1a":{
+                        "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
+                    },
+                    "subnetName-TRANS2":{
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "subnetName-TRANS2a":{
+                        "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
+                    },
                     "subnetPrefix-Management": {
                         "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
                     },
@@ -976,6 +988,12 @@
                     "FW1-IPDataplane2": {
                         "value": "[parameters('Palo_Alto_FW1-LAN-IP')]"
                     },
+                    "FW1-IPTRANS1":{
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1-IP')]"
+                    },
+                    "FW1-IPTRANS1a":{
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+                    },
                     "FW2-Name": {
                         "value": "[variables('global_palo-fw2-name')]"
                     },
@@ -988,6 +1006,12 @@
                     "FW2-IPDataplane2": {
                         "value": "[parameters('Palo_Alto_FW2-LAN-IP')]"
                     },
+                    "FW1-IPTRANS2":{
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+                    },
+                    "FW1-IPTRANS2a":{
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                    },
                     "licenseType": {
                         "value": "byol"
                     },
@@ -995,7 +1019,7 @@
                         "value": "latest"
                     },
                     "VMSize": {
-                        "value": "Standard_DS3_v2"
+                        "value": "Standard_DS4_v2"
                     },
                     "OSDiskType": {
                         "value": "Standard_LRS"
@@ -1136,7 +1160,7 @@
                         "value": "latest"
                     },
                     "VMSize": {
-                        "value": "Standard_DS3_v2"
+                        "value": "Standard_DS4_v2"
                     },
                     "OSDiskType": {
                         "value": "Standard_LRS"
