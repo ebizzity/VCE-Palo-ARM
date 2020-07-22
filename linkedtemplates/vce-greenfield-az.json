@@ -14,7 +14,7 @@
         "global_SN_HUB_LAN_Name": {
             "type": "string"
         },
-        "VCE_LAN_Static_IP": {
+        "VCE01_LAN_Static_IP": {
             "type": "string"
         },
         "global_NIC_VCE_MGMT_name": {
@@ -38,10 +38,10 @@
         "global_SN_HUB_WAN_Name": {
             "type": "string"
         },
-        "VCE_MGMT_Static_IP": {
+        "VCE01_MGMT_Static_IP": {
             "type": "string"
         },
-        "VCE_WAN_Static_IP": {
+        "VCE01_WAN_Static_IP": {
             "type": "string"
         },
         "VCE02_MGMT_Static_IP": {
