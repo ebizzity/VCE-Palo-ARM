@@ -486,7 +486,8 @@
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS1_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS1a_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2_name'))]",
-                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2a_name'))]"
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2a_name'))]",
+                "CREATE_NATGW"
             ],
             "properties": {
                 "addressSpace": {
