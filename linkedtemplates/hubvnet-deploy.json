@@ -123,13 +123,13 @@
         "Palo_Alto_FW1-TRANS1a-IP": {
             "type": "string"
         },
-        "VCE01_TRANS1a_Static_IP": {
+        "VCE02_TRANS1a_Static_IP": {
             "type": "string"
         },
         "Palo_Alto_FW2-TRANS2-IP": {
             "type": "string"
         },
-        "VCE02_TRANS2_Static_IP": {
+        "VCE01_TRANS2_Static_IP": {
             "type": "string"
         },
         "Palo_Alto_FW2-TRANS2a-IP": {
