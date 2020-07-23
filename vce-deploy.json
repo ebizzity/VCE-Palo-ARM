@@ -747,9 +747,43 @@
                     },
                     "availabilitySetName": {
                         "value": "[variables('global_VCEASName')]"
+                    },
+                    "VCE01_TRANS1_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS1_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "VCE01_TRANS1a_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS1a_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
+                    },
+                    "VCE02_TRANS2_Static_IP": {
+                        "value": "[parameters('VCE02_TRANS2_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS2_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "VCE02_TRANS2a_Static_IP": {
+                        "value": "[parameters('VCE02_TRANS2a_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS2a_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
+                    },
+                    "global_NIC_VCE02_TRANS2_name": {
+                        "value": "[variables('global_NIC_VCE02_TRANS2_name')]"
+                    },
+                    "global_NIC_VCE02_TRANS2a_name": {
+                        "value": "[variables('global_NIC_VCE02_TRANS2a_name')]"
+                    },
+                    "global_NIC_VCE01_TRANS1_name": {
+                        "value": "[variables('global_NIC_VCE01_TRANS1_name')]"
+                    },
+                    "global_NIC_VCE01_TRANS1a_name": {
+                        "value": "[variables('global_NIC_VCE01_TRANS1a_name')]"
                     }
-
-
                 }
 
 
@@ -907,7 +941,6 @@
                 "templateLink": {
                     "uri": "[variables('VCEretrofit-aztemplateUri')]",
                     "contentVersion": "1.0.0.0"
-//
                 },
                 "parameters": {
 
@@ -961,6 +994,42 @@
                     },
                     "vce2_zone": {
                         "value": "2"
+                    },
+                     "VCE01_TRANS1_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS1_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "VCE01_TRANS1a_Static_IP": {
+                        "value": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS1a_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
+                    },
+                    "VCE02_TRANS2_Static_IP": {
+                        "value": "[parameters('VCE02_TRANS2_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS2_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "VCE02_TRANS2a_Static_IP": {
+                        "value": "[parameters('VCE02_TRANS2a_Static_IP')]"
+                    },
+                    "global_SN_HUB_TRANS2a_Name": {
+                        "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
+                    },
+                    "global_NIC_VCE02_TRANS2_name": {
+                        "value": "[variables('global_NIC_VCE02_TRANS2_name')]"
+                    },
+                    "global_NIC_VCE02_TRANS2a_name": {
+                        "value": "[variables('global_NIC_VCE02_TRANS2a_name')]"
+                    },
+                    "global_NIC_VCE01_TRANS1_name": {
+                        "value": "[variables('global_NIC_VCE01_TRANS1_name')]"
+                    },
+                    "global_NIC_VCE01_TRANS1a_name": {
+                        "value": "[variables('global_NIC_VCE01_TRANS1a_name')]"
                     }
 
                 }
