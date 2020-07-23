@@ -135,15 +135,57 @@
         "Palo_Alto_FW2-TRANS2a-IP": {
             "type": "string"
         },
-        "VCE02_TRANS2a_Static_IP":{
+        "VCE02_TRANS2a_Static_IP": {
+            "type": "string"
+        },
+        "global_vnet_resource_group": {
+            "type": "string"
+        },
+        "NATGWtemplateUri": {
+            "type": "string"
+        },
+        "publicprefixname": {
+            "type": "string"
+        },
+        "natgwname": {
+            "type": "string"
+        },
+        "Untrust-subnet-name": {
+            "type": "string"
+        },
+        "Untrust-subnet-address-space": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_Untrust_name": {
             "type": "string"
         }
-
     },
     "functions": [],
     "variables": {},
     "resources": [
-        
+        {
+            "comments": "Create NATGW",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_NATGW",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[parameters('global_vnet_resource_group')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('NATGWtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+
+                    "publicprefixname": {
+                        "value": "[parameters('publicprefixname')]"
+                    },
+                    "natgwname": {
+                        "value": "[parameters('natgwname')]"
+                    }
+                }
+            }
+        },
 
         {
             "type": "Microsoft.Network/routeTables",
@@ -400,10 +442,11 @@
                 ]
             }
         },
+
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-09-01",
-            "name": "[parameters('networkSecurityGroups_NSG_HUB_WAN_name')]",
+            "name": "[parameters('networkSecurityGroups_NSG_HUB_Untrust_name')]",
             "location": "[resourceGroup().location]",
             "tags": {
 
@@ -434,7 +477,7 @@
         
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2020-05-01",
             "name": "[parameters('VNET_NAME')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
@@ -576,6 +619,29 @@
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"
                         }
+                    },
+                    {
+                        "name": "[parameters('Untrust-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('Untrust-subnet-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_Untrust_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                }
+                            ],
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled",
+                            "natGateway": {
+                            "id": "[resourceId('Microsoft.Network/natGateways/',parameters('natgwname'))]"
+                            }
+                        }
                     }
                 ],
                 "enableDdosProtection": false,
@@ -584,7 +650,7 @@
         },
                 {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2020-05-01",
             "name": "[parameters('virtualNetworks_VN_APP_name')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
@@ -625,7 +691,7 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2020-05-01",
             "name": "[parameters('virtualNetworks_VN_SQL_name')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
@@ -666,7 +732,7 @@
         },
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2019-09-01",
+            "apiVersion": "2020-05-01",
             "name": "[parameters('virtualNetworks_VN_WEB_name')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [

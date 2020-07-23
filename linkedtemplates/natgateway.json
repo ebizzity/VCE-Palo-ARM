@@ -22,22 +22,36 @@
         "name": "[parameters('natgwname')]",
         "type": "Microsoft.Network/natGateways",
         "apiVersion": "2020-05-01",
-        "location": "string",
+        "location": "[resourceGroup().location]",
+        "tags": {},
+        "dependsOn": [
+            "[resourceId('Microsoft.Network/publicIPPrefixes/', parameters('publicprefixname'))]"
+        ],
+        "sku": {
+            "name": "Standard"
+        },
+        "properties": {
+            "publicIpPrefixes": [
+            {
+                "id": "[resourceId('Microsoft.Network/publicIPPrefixes/', parameters('publicprefixname'))]"
+            }
+            ]
+        }
+        },
+        {
+        "name": "[parameters('publicprefixname')]",
+        "type": "Microsoft.Network/publicIPPrefixes",
+        "apiVersion": "2020-05-01",
+        "location": "[resourceGroup().location]",
         "tags": {},
         "sku": {
             "name": "Standard"
         },
         "properties": {
-            "idleTimeoutInMinutes": "integer",
-            "publicIpPrefixes": [
-            {
-                "id": "string"
-            }
-            ]
-        },
-        "zones": [
-            "1,2"
-        ]
+            "publicIPAddressVersion": "IPv4",
+            "prefixLength": "30"
+        }
+
         }
     ],
     "outputs": {}

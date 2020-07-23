@@ -103,9 +103,16 @@
             "defaultValue": "<TRANS2_Address Space>",
             "type": "string"
         },
+        "SN_HUB_Untrust_Address_Space": {
+            "defaultValue": "Untrust_Address Space>",
+            "type": "string"
+        },
         "username": {
             "defaultValue": "azureadmin",
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Palo Username"
+            }
         },
         "SSH_Key": {
             "type": "SecureString"
@@ -275,9 +282,6 @@
             "metadata": {
                 "description": "description"
             }
-        },
-        "VCE_PUB_NSG_NAME": {
-            "type": "string"
         }
     },
 
@@ -297,6 +301,7 @@
         "global_SN_HUB_TRANS2_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS2'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS1a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS1a'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS2a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS2a'), ' ', ''), 80)]",
+        "global_SN_HUB_Untrust_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-Untrust'), ' ', ''), 80)]",
         "global_App_VNET_Name": "[take(replace(concat('VN-',parameters('SiteCode'),'-APP'), ' ', ''), 80)]",
         "global_App_Subnet_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-INT-APP'), ' ', ''), 80)]",
         "global_SQL_VNET_Name": "[take(replace(concat('VN-',parameters('SiteCode'),'-SQL'), ' ', ''), 80)]",
@@ -314,6 +319,8 @@
         "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-WAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_VCE_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-WAN2'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-HUB-Untrust'), ' ', ''), 80)]",
         "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE01-ip'), ' ', ''), 80)]",
         "global_publicIPAddresses_JMP01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-JMP01-ip'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE01'), ' ', ''), 80)]",
@@ -321,6 +328,8 @@
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
         "global_plb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-PLB'), ' ', ''), 80)]",
         "global_ilb_name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-ILB'), ' ', ''), 80)]",
+        "global_NAT_Gateway_Name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-NATGW'), ' ', ''), 80)]",
+        "global_publicIP_Prefix_Name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-PIPPFX'), ' ', ''), 80)]",
         "global_paloASName": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-AS'), ' ', ''), 80)]",
         "global_VCEASName": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE-AS'), ' ', ''), 80)]",
         "global_palo-fw1-name": "[take(replace(concat(parameters('SiteCode'),'-SV-PALO-1'), ' ', ''), 80)]",
@@ -334,7 +343,8 @@
         "VCEretrofit-aztemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-retrofit-az.json')]",
         "PaloAStemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-as.json')]",
         "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az.json')]",
-        "JumpboxTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','jumpboxes.json')]"
+        "JumpboxTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','jumpboxes.json')]",
+        "NATGWTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','natgateway.json')]"
 
     },
     "resources": [
@@ -416,6 +426,17 @@
                     "TRANS2a-address-space": {
 
                         "value": "[parameters('SN_HUB_TRANS2a_Address_Space')]"
+                    },
+                    "Untrust-subnet-name": {
+
+                        "value": "[variables('global_SN_HUB_Untrust_Name')]"
+                    },
+                    "Untrust-subnet-address-space": {
+
+                        "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_Untrust_name": {
+                        "type": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
                     },
                     "networkSecurityGroups_NSG_HUB_MGMT_name": {
 
@@ -505,9 +526,19 @@
                     },
                     "SN_WEB_Address_Space": {
                         "value": "[parameters('WEB_Subnet_Address_Space')]"
+                    },
+                    "global_vnet_resource_group": {
+                        "value": "[variables('global_vnet_resource_group')]"
+                    },
+                    "NATGWtemplateUri": {
+                        "value": "[variables('NATGWTemplateUri')]"
+                    },
+                    "publicprefixname": {
+                        "value": "[variables('global_publicIP_Prefix_Name')]"
+                    },
+                    "natgwname": {
+                        "value": "[variables('global_NAT_Gateway_Name')]"
                     }
-
-
                 }
             }
         },    
@@ -641,7 +672,7 @@
                         "value": "[variables('global_NIC_VCE02_TRANS2a_name')]"
                     },
                     "VCE_PUB_NSG_NAME":{
-                       "value": "[parameters('VCE_PUB_NSG_NAME')]"
+                       "value": "[variables('global_networkSecurityGroups_NSG_VCE_PUB_NSG_NAME')]"
                     }
                 }
         
