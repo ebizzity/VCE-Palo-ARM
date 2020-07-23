@@ -706,7 +706,7 @@
                     "global_SN_HUB_LAN_Name": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
-                    "VCE01_LAN_Static_IP": {
+                    "VCE_LAN_Static_IP": {
                         "value": "[parameters('VCE02_LAN_Static_IP')]"
                     },
                     "global_NIC_VCE_MGMT_name": {
@@ -724,10 +724,10 @@
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
-                    "VCE01_MGMT_Static_IP": {
+                    "VCE_MGMT_Static_IP": {
                         "value": "[parameters('VCE02_MGMT_Static_IP')]"
                     },
-                    "VCE01_WAN_Static_IP": {
+                    "VCE_WAN_Static_IP": {
                         "value": "[parameters('VCE02_WAN_Static_IP')]"
                     },
                     "global_NIC_VCE_WAN_name": {
@@ -953,7 +953,7 @@
                     "global_SN_HUB_LAN_Name": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
-                    "VCE01_LAN_Static_IP": {
+                    "VCE_LAN_Static_IP": {
                         "value": "[parameters('VCE02_LAN_Static_IP')]"
                     },
                     "global_NIC_VCE_MGMT_name": {
@@ -971,10 +971,10 @@
                     "global_SN_HUB_WAN_Name": {
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
-                    "VCE01_MGMT_Static_IP": {
+                    "VCE_MGMT_Static_IP": {
                         "value": "[parameters('VCE02_MGMT_Static_IP')]"
                     },
-                    "VCE01_WAN_Static_IP": {
+                    "VCE_WAN_Static_IP": {
                         "value": "[parameters('VCE02_WAN_Static_IP')]"
                     },
                     "global_NIC_VCE_WAN_name": {
