@@ -1026,7 +1026,7 @@
                         "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
                     },
                     "subnetPrefix-Dataplane1": {
-                         "value": "[parameters('SN_HUB_WAN_Address_Space')]"
+                         "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
                     },
                     "subnetPrefix-Dataplane2": {
                         "value": "[parameters('SN_HUB_LAN_Address_Space')]"
@@ -1140,7 +1140,6 @@
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf-az",
                 "CREATE_VCEs-rtro-az"
-//
             ],
             "properties": {
                 "mode": "Incremental",
@@ -1179,7 +1178,7 @@
                         "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
                     },
                     "subnetPrefix-Dataplane1": {
-                         "value": "[parameters('SN_HUB_WAN_Address_Space')]"
+                         "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
                     },
                     "subnetPrefix-Dataplane2": {
                         "value": "[parameters('SN_HUB_LAN_Address_Space')]"

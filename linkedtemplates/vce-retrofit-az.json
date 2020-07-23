@@ -52,6 +52,42 @@
         },
         "vce2_zone": {
             "type": "string"
+        },
+        "VCE01_TRANS1_Static_IP": {
+            "type": "string"
+        },
+        "global_SN_HUB_TRANS1_Name": {
+            "type": "string"
+        },
+        "VCE01_TRANS1a_Static_IP": {
+            "type": "string"
+        },
+        "global_SN_HUB_TRANS1a_Name": {
+            "type": "string"
+        },
+        "VCE02_TRANS2_Static_IP": {
+            "type": "string"
+        },
+        "global_SN_HUB_TRANS2_Name": {
+            "type": "string"
+        },
+        "VCE02_TRANS2a_Static_IP": {
+            "type": "string"
+        },
+        "global_SN_HUB_TRANS2a_Name": {
+            "type": "string"
+        },
+        "global_NIC_VCE02_TRANS2_name": {
+            "type": "string"
+        },
+        "global_NIC_VCE02_TRANS2a_name": {
+            "type": "string"
+        },
+        "global_NIC_VCE01_TRANS1_name": {
+            "type": "string"
+        },
+        "global_NIC_VCE01_TRANS1a_name": {
+            "type": "string"
         }
 
     },
@@ -59,8 +95,6 @@
     "variables": {},
     "resources": [
 
-//TODO: Check VCE01 vs. VCE02 naming as this is retrofit.
- 
  {
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2019-04-01",
@@ -215,6 +249,133 @@
                 "enableIPForwarding": true
             }
         },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('global_NIC_VCE02_TRANS2_name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                
+
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "[parameters('VCE02_TRANS2_Static_IP')]",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_TRANS2_Name'))]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": true
+            }
+        },
+
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('global_NIC_VCE02_TRANS2a_name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                
+
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "[parameters('VCE02_TRANS2a_Static_IP')]",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_TRANS2a_Name'))]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": true
+            }
+        },
+
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('global_NIC_VCE01_TRANS1_name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                
+
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "[parameters('VCE01_TRANS1_Static_IP')]",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_TRANS1_Name'))]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": true
+            }
+        },
+
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('global_NIC_VCE01_TRANS1a_name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                
+
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "[parameters('VCE01_TRANS1a_Static_IP')]",
+                            "privateIPAllocationMethod": "Static",
+                            "subnet": {
+                                "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_TRANS1a_Name'))]"
+                            },
+                            "primary": true,
+                            "privateIPAddressVersion": "IPv4"
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableAcceleratedNetworking": false,
+                "enableIPForwarding": true
+            }
+        },
 
         {
             "type": "Microsoft.Compute/virtualMachines",
@@ -225,6 +386,8 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_MGMT_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_WAN_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_LAN_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2a_name'))]",
                 "[resourceId('Microsoft.Storage/StorageAccounts', parameters('global_storageAccounts_diagnostics_name'))]"
             ],
             "tags": {
@@ -292,6 +455,18 @@
                         },
                         {
                             "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_LAN_name'))]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2_name'))]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2a_name'))]",
                             "properties": {
                                 "primary": false
                             }
