@@ -671,7 +671,7 @@
                                 "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_WAN_Name'))]"
                             },
                             "primary": true,
-                            "privateIPAddressVersion": "IPv4",
+                            "privateIPAddressVersion": "IPv4"
                         }
                     }
                 ],
