@@ -296,7 +296,7 @@
                         "properties": {
                             "addressPrefix": "10.0.0.0/8",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS1a_Static_IP')]"
                         }
                     },
                     {
@@ -304,7 +304,7 @@
                         "properties": {
                             "addressPrefix": "172.16.0.0/12",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS1a_Static_IP')]"
                         }
                     },
                     {
@@ -312,7 +312,7 @@
                         "properties": {
                             "addressPrefix": "192.168.0.0/16",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE01_TRANS1a_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('VCE02_TRANS1a_Static_IP')]"
                         }
                     }
                 ]
@@ -340,7 +340,7 @@
                         "properties": {
                             "addressPrefix": "10.0.0.0/8",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE02_TRANS2_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS2_Static_IP')]"
                         }
                     },
                     {
@@ -348,7 +348,7 @@
                         "properties": {
                             "addressPrefix": "172.16.0.0/12",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE02_TRANS2_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS2_Static_IP')]"
                         }
                     },
                     {
@@ -356,7 +356,7 @@
                         "properties": {
                             "addressPrefix": "192.168.0.0/16",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE02_TRANS2_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('VCE01_TRANS2_Static_IP')]"
                         }
                     }
                 ]
