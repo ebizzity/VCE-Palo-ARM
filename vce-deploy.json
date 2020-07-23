@@ -1002,7 +1002,7 @@
                          "value": "[variables('global_SN_HUB_MGMT_Name')]"
                     },
                     "subnetName-Dataplane1": {
-                        "value": "[variables('global_SN_HUB_WAN_Name')]"
+                        "value": "[variables('global_SN_HUB_Untrust_Name')]"
                     },
                     "subnetName-Dataplane2": {
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
