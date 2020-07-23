@@ -115,7 +115,7 @@
         },
         "VCE_PUB_NSG_NAME":{
             "type": "string"
-        }
+        } 
 
     },
     "functions": [

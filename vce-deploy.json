@@ -673,7 +673,7 @@
                     },
                     "VCE_PUB_NSG_NAME":{
                        "value": "[variables('global_networkSecurityGroups_NSG_VCE_PUB_NSG_NAME')]"
-                    }
+                    } 
                 }
         
                   
