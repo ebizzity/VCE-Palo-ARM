@@ -688,7 +688,7 @@
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled",
                             "natGateway": {
-                            "id": "[resourceId('Microsoft.Network/natGateways/',parameters('natgwname'))]"
+                                "id": "[resourceId('Microsoft.Network/natGateways/',parameters('natgwname'))]"
                             }
                         }
                     }
