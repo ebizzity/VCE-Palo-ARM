@@ -760,7 +760,7 @@
                     "global_SN_HUB_TRANS1a_Name": {
                         "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
                     },
-                    "VCE02_TRANS1_Static_IP": {
+                    "VCE01_TRANS2_Static_IP": {
                         "value": "[parameters('VCE01_TRANS2_Static_IP')]"
                     },
                     "global_SN_HUB_TRANS2_Name": {
