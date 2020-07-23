@@ -485,7 +485,7 @@
             "properties": {
                 "securityRules": [
                     {
-                    "name": "Inbound to Palo",
+                    "name": "Inbound-to-Palo",
                     "properties": {
                       "protocol": "*",
                       "sourcePortRange": "*",
@@ -502,7 +502,7 @@
                     }
                   },
                   {
-                    "name": "Outbound from Palo",
+                    "name": "Outbound-from-Palo",
                     "properties": {
                       "protocol": "*",
                       "sourcePortRange": "*",
