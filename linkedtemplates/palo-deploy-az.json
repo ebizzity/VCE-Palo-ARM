@@ -372,10 +372,10 @@
         "type": "string"
       },
       "FW1-IPTRANS1": {
-        "type": "string",
+        "type": "string"
       },
       "FW1-IPTRANS1a": {
-        "type": "string",
+        "type": "string"
       },
       "subnetName-TRANS1": {
         "type": "string"
