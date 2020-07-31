@@ -5,107 +5,135 @@
 
         "VCE01_LAN_Static_IP": {
             "defaultValue": "10.132.232.68",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Static IP for VCE01 - LAN Interface"
+            }
         },
         "VCE01_MGMT_Static_IP": {
             "defaultValue": "10.132.232.5",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Static IP for VCE01 - MGMT Interface"
+            }
         },
         "VCE01_WAN_Static_IP": {
             "defaultValue": "10.132.232.20",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Static IP for VCE01 - WAN Interface"
+            }
         },
         "VCE01_TRANS1_Static_IP": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "Static IP for VCE01 - TRANS1 Interface"
             }
         },
         "VCE02_TRANS1a_Static_IP": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "Static IP for VCE02 - TRANS1a Interface"
             }
         },
         "VCE02_LAN_Static_IP": {
             "defaultValue": "10.132.232.69",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Static IP for VCE02 - LAN Interface"
+            }
         },
         "VCE02_MGMT_Static_IP": {
             "defaultValue": "10.132.232.6",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Static IP for VCE02 - Management Interface"
+            }
         },
         "VCE02_WAN_Static_IP": {
             "defaultValue": "10.132.232.21",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Static IP for VCE02 - WAN Interface"
+            }
         },
         "VCE01_TRANS2_Static_IP": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "Static IP for VCE01 - TRANS2 Interface"
             }
         },
         "VCE02_TRANS2a_Static_IP": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "Static IP for VCE02 - TRANS2a Interface"
             }
         },
         "Palo_Alto_ILB-IP": {
             "type": "string",
             "metadata": {
-                "description": "Normally is in the same subnet as the LAN NIC."
+                "description": "Static IP for Palo Alto Internal Load Balancer... Normally is in the same subnet as the LAN NIC."
             }
         },
         "Palo_Alto_FW1-MGMT-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #1 - Management Interface"
+            }
         },
         "Palo_Alto_FW1-WAN-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #1 - WAN Interface"
+            }
         },
         "Palo_Alto_FW1-LAN-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #1 - LAN Interface"
+            }
         },
         "Palo_Alto_FW1-TRANS1-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #1 - TRANS1 Interface"
+            }
         },
         "Palo_Alto_FW1-TRANS1a-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #1 - TRANS1a Interface"
+            }
         },
         "Palo_Alto_FW2-MGMT-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #2 - Management Interface"
+            }
         },
         "Palo_Alto_FW2-WAN-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #2 - WAN Interface"
+            }
         },
         "Palo_Alto_FW2-LAN-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #2 - LAN Interface"
+            }
         },
         "Palo_Alto_FW2-TRANS2-IP": {
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #2 - TRANS2 Interface"
+            }
         },
         "Palo_Alto_FW2-TRANS2a-IP": {
-            "type": "string"
-        },
-        "SN_HUB_TRANS1_Address_Space": {
-            "defaultValue": "<TRANS1_Address Space>",
-            "type": "string"
-        },
-        "SN_HUB_TRANS2_Address_Space": {
-            "defaultValue": "<TRANS2_Address Space>",
-            "type": "string"
-        },
-        "SN_HUB_TRANS1a_Address_Space": {
-            "defaultValue": "<TRANS1_Address Space>",
-            "type": "string"
-        },
-        "SN_HUB_TRANS2a_Address_Space": {
-            "defaultValue": "<TRANS2_Address Space>",
-            "type": "string"
-        },
-        "SN_HUB_Untrust_Address_Space": {
-            "defaultValue": "Untrust_Address Space>",
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #2 - TRANS2a Interface"
+            }
         },
         "username": {
             "defaultValue": "azureadmin",
@@ -115,12 +143,18 @@
             }
         },
         "SSH_Key": {
-            "type": "SecureString"
+            "type": "SecureString",
+            "metadata": {
+                "description": "VCE - SSH Key"
+            }
         },
 
         "VCE-Vnet-RG": {
             "defaultValue": "<VNETRG>",
-            "type": "String"
+            "type": "string",
+            "metadata": {
+                "description": "Resource Group for Where VCEs are.  If this is a Greenfield deployment, this should match the name of the resource group for the overall deploymenyt."
+            }
         },
         "VNETOption": {
             "type": "string",
@@ -130,7 +164,7 @@
                 "Use existing VNET"
             ],
             "metadata": {
-                "description": "If creating a new VNET, anything not specified in the template will be deleted."
+                "description": "Create a new VNET or use an existing (if retrofitting)"
             }
         },
         "DeploymentOption": {
@@ -164,65 +198,115 @@
         },
         "VN_HUB_Address_Space": {
             "defaultValue": "10.132.232.0/24",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Hub VNET address space"
+            }
         },
         "SN_HUB_LAN_Address_Space": {
             "defaultValue": "10.132.232.64/28",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Hub Subnet - LAN (For NVA LAN NICs) - Address Space"
+            }
         },
         "SN_HUB_WAN_Address_Space": {
             "defaultValue": "10.132.232.16/28",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Hub Subnet - WAN (For VCE SDWAN connection) - Address Space"
+            }
         },
         "SN_HUB_MGMT_Address_Space": {
             "defaultValue": "10.132.232.0/28",
-            "type": "String"
+            "type": "String",
+            "metadata": {
+                "description": "Hub Subnet - Management (For NVA Management NICs) - Address Space"
+            }
+        },
+         "SN_HUB_TRANS1_Address_Space": {
+            "defaultValue": "<TRANS1_Address Space>",
+            "type": "string",
+            "metadata": {
+                "description": "Hub Subnet - TRANS1 (For BGP Peering with VCE) - Address Space"
+            }
+        },
+        "SN_HUB_TRANS2_Address_Space": {
+            "defaultValue": "<TRANS2_Address Space>",
+            "type": "string",
+            "metadata": {
+                "description": "Hub Subnet - TRANS2 (For BGP Peering with VCE) - Address Space"
+            }
+        },
+        "SN_HUB_TRANS1a_Address_Space": {
+            "defaultValue": "<TRANS1_Address Space>",
+            "type": "string",
+            "metadata": {
+                "description": "Hub Subnet - TRANS1a (For BGP Peering with VCE) - Address Space"
+            }
+        },
+        "SN_HUB_TRANS2a_Address_Space": {
+            "defaultValue": "<TRANS2a_Address Space>",
+            "type": "string",
+            "metadata": {
+                "description": "Hub Subnet - TRANS2a (For BGP Peering with VCE) - Address Space"
+            }
+        },
+        "SN_HUB_Untrust_Address_Space": {
+            "defaultValue": "Untrust_Address Space>",
+            "type": "string",
+            "metadata": {
+                "description": "Hub Subnet - Untrust (For Internet Egress/Ingress via Palos) - Address Space"
+            }
         },
         "NATIPWhitelistCIDR": {
             "defaultValue": "0.0.0.0/0",
-            "type": "string"
+            "type": "string",
+            "metadata": {
+                "description": "Management subnet NSG"
+            }
         },
         "APP_VNET_Address_Space": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "APP VNET Address Space"
             }
         },
         "App_Subnet_Address_Space": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "App VNET default subnet address space"
             }
         },
         "SQL_VNET_Address_Space": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "SQL VNET Address Space"
             }
         },
         "SQL_Subnet_Address_Space": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "SQL VNET default subnet address space"
             }
         },
         "WEB_VNET_Address_Space": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "WEB VNET Address Space"
             }
         },
         "WEB_Subnet_Address_Space": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "WEB VNET default subnet address space"
             }
         },
         "SiteCode": {
             "type": "string",
             "defaultValue": "<SITE_CODE>",
             "metadata": {
-                "description": "Site Code for naming"
+                "description": "Site Code for auto-naming of resources"
             }
         },
         "storageAccounts_diagnostics_name": {
@@ -243,7 +327,7 @@
             "type": "string",
             "defaultValue": "80, 443, 22, 3389",
             "metadata": {
-                "description": "Ports allowed inbound from Public LB."
+                "description": "Ports allowed inbound from Public LB infront of palo Untrust."
             }
         },
         "PaloMGMTNSGAllowFrom": {
@@ -262,25 +346,25 @@
         "JumpboxUser": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "Userid for Jumpbox."
             }
         },
         "JumpboxPassword": {
             "type": "securestring",
             "metadata": {
-                "description": "description"
+                "description": "Password for Jumpbox user"
             }
         },
         "JMP01_LAN_Static_IP": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "Jumpbox-01 - Static IP address."
             }
         },
         "JMP02_LAN_Static_IP": {
             "type": "string",
             "metadata": {
-                "description": "description"
+                "description": "Jumpbox-02 - Static IP address."
             }
         }
     },
