@@ -70,8 +70,8 @@
             "apiVersion": "2019-09-01",
             "name": "[concat(parameters('global_vnet_name'), '/', parameters('TRANS2a-subnet-name'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('TRANS1a-subnet-name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]"
+                
             ],
             
             "properties": {
