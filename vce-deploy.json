@@ -403,6 +403,8 @@
         "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-MGMT'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS1A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1a'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS2A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2a'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_VCE_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN2'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-Untrust'), ' ', ''), 80)]",
         "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'-SV-VCE01-ip'), ' ', ''), 80)]",
@@ -428,8 +430,8 @@
         "PaloAStemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-as.json')]",
         "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az.json')]",
         "JumpboxTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','jumpboxes.json')]",
-        "NATGWTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','natgateway.json')]"
-
+        "NATGWTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','natgateway.json')]",
+        "VnetretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vnetretrofit.json')]"
     },
     "resources": [
 
@@ -624,6 +626,56 @@
                         "value": "[variables('global_NAT_Gateway_Name')]"
                     }
                 }
+            }
+        },
+         {
+            "comments": "Retrofit - VNET",
+            "type": "Microsoft.Resources/deployments",
+            "name": "VNET-rtro",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('VnetretrofittemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+
+                    "global_vnet_name": {
+                        "value": "[variables('global_vnet_name')]"
+                    },
+                    "global_vnet_resource_group": {
+                        "value": "[variables('global_vnet_resource_group')]"
+                    },
+                    "TRANS1a-subnet-name": {
+                        "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1', 'TRANS1a')]"
+                    },
+                    "TRANS1a-address-space": {
+                        "value": "[parameters('SN_HUB_TRANS1a_Address_Space')]"
+                    },
+                    "TRANS2a-subnet-name": {
+                        "value": "[replace(variables('global_SN_HUB_TRANS2_Name'),'TRANS2', 'TRANS2a')]"
+                    },
+                    "TRANS2a-address-space": {
+                        "value": "[parameters('SN_HUB_TRANS2a_Address_Space')]"
+                    },
+                    "Untrust-subnet-name": {
+                        "value": "[variables('global_SN_HUB_Untrust_Name')]"
+                    },
+                    "Untrust-subnet-address-space": {
+                        "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS1A_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1A_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS2A_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2A_name')]"
+                    }
+                }
+
+
             }
         },    
         {
