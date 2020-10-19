@@ -1,0 +1,166 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "global_vnet_name": {
+            "type": "string"
+        },
+        "global_vnet_resource_group": {
+            "type": "string"
+        },
+        "TRANS1a-subnet-name": {
+            "type": "string"
+        },
+        "TRANS1a-address-space": {
+            "type": "string"
+        },
+        "TRANS2a-subnet-name": {
+            "type": "string"
+        },
+        "TRANS2a-address-space": {
+            "type": "string"
+        },
+        "Untrust-subnet-name": {
+            "type": "string"
+        },
+        "Untrust-subnet-address-space": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_TRANS1A_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_TRANS2A_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_UNTRUST_name": {
+            "type": "string"
+        }
+    },
+    "functions": [],
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('global_vnet_name'), '/', parameters('TRANS1a-subnet-name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1A_name'))]"
+            ],
+            
+            "properties": {
+                "addressPrefix": "[parameters('TRANS1a-address-space')]",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1A_name'))]"
+                },
+                "serviceEndpoints": [
+                    {
+                        "service": "Microsoft.Storage",
+                        "locations": [
+                            "[resourceGroup().location]"
+                        ]
+                    }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('global_vnet_name'), '/', parameters('TRANS2a-subnet-name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]"
+            ],
+            
+            "properties": {
+                "addressPrefix": "[parameters('TRANS2a-address-space')]",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]"
+                },
+                "serviceEndpoints": [
+                    {
+                        "service": "Microsoft.Storage",
+                        "locations": [
+                            "[resourceGroup().location]"
+                        ]
+                    }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2019-09-01",
+            "name": "[concat(parameters('global_vnet_name'), '/', parameters('Untrust-subnet-name'))]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name'))]"
+            ],
+            
+            "properties": {
+                "addressPrefix": "[parameters('Untrust-subnet-address-space')]",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name'))]"
+                },
+                "serviceEndpoints": [
+                    {
+                        "service": "Microsoft.Storage",
+                        "locations": [
+                            "[resourceGroup().location]"
+                        ]
+                    }
+                ],
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Enabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "properties": {
+                "securityRules": [
+                    
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('networkSecurityGroups_NSG_HUB_TRANS1A_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "properties": {
+                "securityRules": [
+                    
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "properties": {
+                "securityRules": [
+                    
+                ]
+            }
+        },
+
+
+    ],
+    "outputs": {}
+}

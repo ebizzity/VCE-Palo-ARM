@@ -672,6 +672,9 @@
                     },
                     "networkSecurityGroups_NSG_HUB_TRANS2A_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2A_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_UNTRUST_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
                     }
                 }
 
