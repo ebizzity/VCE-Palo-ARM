@@ -71,7 +71,7 @@
             "name": "[concat(parameters('global_vnet_name'), '/', parameters('TRANS2a-subnet-name'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('TRANS1a-subnet-name'))]"
+                "[concat(parameters('global_vnet_name'), '/', parameters('TRANS1a-subnet-name'))]"
             ],
             
             "properties": {
@@ -98,7 +98,7 @@
             "name": "[concat(parameters('global_vnet_name'), '/', parameters('Untrust-subnet-name'))]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('TRANS2a-subnet-name'))]"
+                "[concat(parameters('global_vnet_name'), '/', parameters('TRANS2a-subnet-name'))]"
             ],
             
             "properties": {

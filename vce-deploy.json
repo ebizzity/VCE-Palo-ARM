@@ -826,7 +826,8 @@
             "resourceGroup": "[variables('global_vnet_resource_group')]",
             "condition": "[and(equals(parameters('DeploymentOption'), 'Retrofit'),equals(parameters('NVADeploymentOption'), 'Availability Set'))]",
             "dependsOn": [
-                "CREATE_HUB_VNET"
+                "CREATE_HUB_VNET",
+                "VNET-rtro"
             ],
             "properties": {
                 "mode": "Incremental",
