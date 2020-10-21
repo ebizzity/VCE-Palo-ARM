@@ -4,6 +4,8 @@
     $newAvailSetName = "SGAZ1SV-VCE-AS"
     $trans1NicId = "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RG_NAME>/providers/Microsoft.Network/networkInterfaces/NIC-SGAZ1SV-VCE01-TRANS1"
     $trans2NicId = "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RG_NAME>/providers/Microsoft.Network/networkInterfaces/NIC-SGAZ1SV-VCE01-TRANS2"
+    $wanNicName = "NIC-SGAZ1SV-VCE-WAN"
+    $publicIPName = "SGAZ1SV-VCE01-ip"
 
 # Get the details of the VM to be moved to the Availability Set
     $originalVM = Get-AzVM `
@@ -40,6 +42,17 @@ Set-AzVMOSDisk `
     -Name $originalVM.StorageProfile.OsDisk.Name `
     -Linux
 
+# Create new Standard SKU PIP for VCE01
+$oldip = Get-AzPublicIpAddress -Name $publicIPName
+$ip = New-AzPublicIpAddress -name $($oldip.Name+"1") -sku Standard -Location eastus -ResourceGroupName moogtemplatetest -AllocationMethod static
+
+
+# Update WAN Nic Public IP
+$WANNic=Get-AzNetworkInterface -Name $wanNicName -ResourceGroupName $resourceGroup
+$WANNic.IpConfigurations.Item(0).PublicIPAddress.Id=$($ip.Id)
+$WANNic | Set-AzNetworkInterface
+
+# Add Nics to new VM
 foreach ($nic in $originalVM.NetworkProfile.NetworkInterfaces) {
  if ($nic.Primary -eq "True")
  {
@@ -59,8 +72,10 @@ Add-AzVMNetworkInterface -VM $newVM -Id $trans1NicId
 
 Add-AzVMNetworkInterface -VM $newVM -Id $trans2NicId
 
+# Update VM Plan as this is a marketplace deployment
 Set-AzVMPlan -VM $newVM -Publisher "velocloud" -Product "velocloud-virtual-edge-3x" -Name "velocloud-virtual-edge-3x"
 
+# Create the VM
 New-AzVM `
     -ResourceGroupName $resourceGroup `
     -Location $originalVM.Location `
