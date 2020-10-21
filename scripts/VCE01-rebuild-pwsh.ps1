@@ -2,10 +2,11 @@
     $resourceGroup = "moogtemplatetest"
     $vmName = "SGAZ1SV-VCE01"
     $newAvailSetName = "SGAZ1SV-VCE-AS"
-    $trans1NicId = "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RG_NAME>/providers/Microsoft.Network/networkInterfaces/NIC-SGAZ1SV-VCE01-TRANS1"
-    $trans2NicId = "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RG_NAME>/providers/Microsoft.Network/networkInterfaces/NIC-SGAZ1SV-VCE01-TRANS2"
+    $trans1NicId = "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.Network/networkInterfaces/NIC-SGAZ1SV-VCE01-TRANS1"
+    $trans2NicId = "/subscriptions/<SUBSCRIPTION_ID>/resourceGroups/<RESOURCE_GROUP>/providers/Microsoft.Network/networkInterfaces/NIC-SGAZ1SV-VCE01-TRANS2"
     $wanNicName = "NIC-SGAZ1SV-VCE-WAN"
     $publicIPName = "SGAZ1SV-VCE01-ip"
+    $rglocation = "eastus"
 
 # Get the details of the VM to be moved to the Availability Set
     $originalVM = Get-AzVM `
@@ -44,7 +45,7 @@ Set-AzVMOSDisk `
 
 # Create new Standard SKU PIP for VCE01
 $oldip = Get-AzPublicIpAddress -Name $publicIPName
-$ip = New-AzPublicIpAddress -name $($oldip.Name+"1") -sku Standard -Location eastus -ResourceGroupName moogtemplatetest -AllocationMethod static
+$ip = New-AzPublicIpAddress -name $($oldip.Name+"1") -sku Standard -Location $rglocation -ResourceGroupName $resourceGroup -AllocationMethod static
 
 
 # Update WAN Nic Public IP
