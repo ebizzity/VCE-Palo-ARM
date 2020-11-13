@@ -3,6 +3,18 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
 
+        "VNET_RG_NAME": {
+            "defaultValue": "RG-USAGV-ADSAP-Network-Hub-NP",
+            "type": "String"
+        },
+        "NSG_RG_NAME": {
+            "defaultValue": "RG-USAGV-ADSAP-Network-Hub-Security-NP",
+            "type": "String"
+        },
+        "VCE_RG_NAME": {
+            "defaultValue": "RG-USAGV-ADSAP-Network-Hub-VCE-NP",
+            "type": "String"
+        },
         "VCE01_LAN_Static_IP": {
             "defaultValue": "10.132.232.68",
             "type": "String",
