@@ -469,12 +469,10 @@
         {
             "comments": "Create NSGs",
             "type": "Microsoft.Resources/deployments",
-            "name": "CREATE_NSGS",
+            "name": "CREATE_SECURITY_GROUPS",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('NSG_RG_NAME')]",
             "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
-            "dependsOn": [
-            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -533,7 +531,7 @@
             "resourceGroup": "[variables('global_vnet_resource_group')]",
             "condition": "[equals(variables('global_vnet_option'), 'Create new VNET')]",
             "dependsOn": [
-                "CREATE_NSGS"
+                "CREATE_SECURITY_GROUPS"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -704,7 +702,7 @@
             "resourceGroup": "[parameters('VNET_RG_NAME')]",
             "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
             "dependsOn": [
-                "CREATE_NSGS"
+                "CREATE_SECURITY_GROUPS"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -760,7 +758,7 @@
                 "resourceGroup": "[parameters('VCE_RG_NAME')]",
                 "condition": "[and(equals(parameters('DeploymentOption'), 'Greenfield'),equals(parameters('NVADeploymentOption'), 'Availability Set'))]",
                 "dependsOn": [
-                "CREATE_HUB_VNET"
+                    "CREATE_HUB_VNET"
                 ],
                 "properties": {
                     "mode": "Incremental",
