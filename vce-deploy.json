@@ -469,7 +469,7 @@
         {
             "comments": "Create NSGs",
             "type": "Microsoft.Resources/deployments",
-            "name": "CREATE_NSGs",
+            "name": "CREATE_NSGS",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('NSG_RG_NAME')]",
             "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
@@ -533,7 +533,7 @@
             "resourceGroup": "[variables('global_vnet_resource_group')]",
             "condition": "[equals(variables('global_vnet_option'), 'Create new VNET')]",
             "dependsOn": [
-                "CREATE_NSGs"
+                "CREATE_NSGS"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -704,7 +704,7 @@
             "resourceGroup": "[parameters('VNET_RG_NAME')]",
             "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
             "dependsOn": [
-                "CREATE_NSGs"
+                "CREATE_NSGS"
             ],
             "properties": {
                 "mode": "Incremental",
