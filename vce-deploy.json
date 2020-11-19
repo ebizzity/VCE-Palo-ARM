@@ -1559,8 +1559,7 @@
                 "parameters": {
                     
                     "NATIPs" : {
-                        "type": "array",
-                        "defaultValue": [
+                        "value": [
                             "1.2.3.4/32",
                             "4.5.6.7/32"
                         ]
