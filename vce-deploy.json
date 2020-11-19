@@ -467,6 +467,65 @@
     "resources": [
 
         {
+            "comments": "Create NSGs",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_NSGs",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[parameters('NSG_RG_NAME')]",
+            "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('NSGtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+                    
+                    "NATIPs" : {
+                        "value": [
+                            "1.2.3.4/32",
+                            "4.5.6.7/32"
+                        ]
+                    },
+                    "networkSecurityGroups_NSG_HUB_MGMT_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_WAN_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_LAN_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_LAN_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS1_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS1a_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1a_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS2_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS2a_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2a_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_bastion_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_Untrust_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
+                    }
+
+
+                }
+
+
+            }
+        },
+
+        {
             "comments": "Create Hub Virtual Network",
             "type": "Microsoft.Resources/deployments",
             "name": "CREATE_HUB_VNET",
@@ -1513,65 +1572,8 @@
 
 
             }
-        },
-        {
-            "comments": "Create NSGs",
-            "type": "Microsoft.Resources/deployments",
-            "name": "CREATE_NSGs",
-            "apiVersion": "2019-07-01",
-            "resourceGroup": "[parameters('NSG_RG_NAME')]",
-            "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
-            "dependsOn": [
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('NSGtemplateUri')]",
-                    "contentVersion": "1.0.0.0"
-
-                },
-                "parameters": {
-                    
-                    "NATIPs" : {
-                        "value": [
-                            "1.2.3.4/32",
-                            "4.5.6.7/32"
-                        ]
-                    },
-                    "networkSecurityGroups_NSG_HUB_MGMT_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_WAN_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_LAN_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_LAN_name')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_TRANS1_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1_name')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_TRANS1a_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1a_name')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_TRANS2_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2_name')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_TRANS2a_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2a_name')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_bastion_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME')]"
-                    },
-                    "networkSecurityGroups_NSG_HUB_Untrust_name": {
-                        "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
-                    }
-
-
-                }
-
-
-            }
         }
+        
 /*         {
             "comments": "Create Jumpboxes",
             "type": "Microsoft.Resources/deployments",
