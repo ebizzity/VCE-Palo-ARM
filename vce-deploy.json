@@ -4,19 +4,19 @@
     "parameters": {
 
         "VNET_RG_NAME": {
-            "defaultValue": "RG-USAGV-ADSAP-Network-Hub-NP",
+            "defaultValue": "RG-Network-Hub",
             "type": "String"
         },
         "NSG_RG_NAME": {
-            "defaultValue": "RG-USAGV-ADSAP-Network-Hub-Security-NP",
+            "defaultValue": "RG-Network-Hub-Security",
             "type": "String"
         },
         "VCE_RG_NAME": {
-            "defaultValue": "RG-USAGV-ADSAP-Network-Hub-VCE-NP",
+            "defaultValue": "RG-Network-Hub-VCE",
             "type": "String"
         },
         "FW_RG_NAME": {
-              "defaultValue": "RG-USAGV-ADSAP-Network-Hub-FW-NP",
+              "defaultValue": "RG-Network-Hub-FW",
               "type": "string"
         },
         "VCE01_LAN_Static_IP": {
