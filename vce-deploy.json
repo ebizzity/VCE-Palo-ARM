@@ -15,6 +15,10 @@
             "defaultValue": "RG-USAGV-ADSAP-Network-Hub-VCE-NP",
             "type": "String"
         },
+        "FW_RG_NAME": {
+              "defaultValue": "RG-USAGV-ADSAP-Network-Hub-FW-NP",
+              "type": "string"
+        },
         "VCE01_LAN_Static_IP": {
             "defaultValue": "10.132.232.68",
             "type": "String",
@@ -1513,8 +1517,8 @@
 
 
             }
-        },
-        {
+        }
+/*         {
             "comments": "Create Jumpboxes",
             "type": "Microsoft.Resources/deployments",
             "name": "CREATE_Jumpboxes",
@@ -1585,7 +1589,7 @@
 
 
             }
-        }
+        } */
 
     ],
     "outputs": {

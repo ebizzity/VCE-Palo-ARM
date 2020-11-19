@@ -48,6 +48,9 @@
         "TRANS2a-address-space": {
             "type": "string"
         },
+        "bastion-subnet-address-space": {
+            "type": "string"
+        },
         "VNET_NAME": {
             "type": "string"
         },
@@ -55,6 +58,27 @@
             "type": "string"
         },
         "networkSecurityGroups_NSG_HUB_WAN_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_Untrust_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_TRANS1_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_TRANS1a_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_TRANS2_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_TRANS2a_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_LAN_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_bastion_name": {
             "type": "string"
         },
         "NATIPWhitelistCIDR": {
@@ -75,7 +99,7 @@
         "routeTables_TRANS2a_name": {
             "type": "string"
         },
-        "virtualNetworks_VN_APP_name": {
+        /* "virtualNetworks_VN_APP_name": {
             "type": "string"
         },
         "VN_APP_Address_Space": {
@@ -110,7 +134,7 @@
         },
         "SN_WEB_Address_Space": {
             "type": "string"
-        },
+        }, */
         "Palo_ILB_Static_IP": {
             "type": "string"
         },
@@ -156,7 +180,10 @@
         "Untrust-subnet-address-space": {
             "type": "string"
         },
-        "networkSecurityGroups_NSG_HUB_Untrust_name": {
+        "bastion-name": {
+            "type": "string"
+        },
+        "bastion-pip-name": {
             "type": "string"
         }
     },
@@ -188,6 +215,51 @@
         },
 
         {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('bastion-pip-name')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Standard"
+            },
+            "properties": {
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
+            }
+        },
+
+        {
+            "name": "[parameters('bastion-name')]",
+            "type": "Microsoft.Network/bastionHosts",
+            "apiVersion": "2020-06-01",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[parameters('VNET_NAME')]"
+            ],
+            "tags": {},
+            "properties": {
+                "ipConfigurations": [
+                {
+                    "name": "IpConf",
+                    "properties": {
+                    "subnet": {
+                        "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', parameters('VNET_NAME')), '/subnets/AzureBastionSubnet')]"
+                    },
+                    "publicIPAddress": {
+                        "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('bastion-pip-name'))]"
+                    }
+        
+                    }
+                }
+            ]
+            }
+        },
+
+
+
+        {
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2019-09-01",
             "name": "[parameters('routeTables_RT_HUB_name')]",
@@ -202,13 +274,13 @@
                             "nextHopType": "VirtualAppliance",
                             "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
-                    }//,
-                    /* {
+                    },
+                    {
                         "name": "RFC1918-1",
                         "properties": {
                             "addressPrefix": "10.0.0.0/8",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE_LAN_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
                     },
                     {
@@ -216,7 +288,7 @@
                         "properties": {
                             "addressPrefix": "172.16.0.0/12",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE_LAN_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
                     },
                     {
@@ -224,9 +296,9 @@
                         "properties": {
                             "addressPrefix": "192.168.0.0/16",
                             "nextHopType": "VirtualAppliance",
-                            "nextHopIpAddress": "[parameters('VCE_LAN_Static_IP')]"
+                            "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
-                    } */
+                    } 
                 ]
             }
         },
@@ -408,7 +480,7 @@
             }
         },
 
-        {
+       /*  {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-09-01",
             "name": "[parameters('networkSecurityGroups_NSG_HUB_MGMT_name')]",
@@ -520,7 +592,7 @@
                     }
                 ]
             }
-        },
+        }, */
         
         
         {
@@ -529,8 +601,6 @@
             "name": "[parameters('VNET_NAME')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS1_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS1a_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2_name'))]",
@@ -548,6 +618,9 @@
                         "name": "[parameters('LAN-subnet-name')]",
                         "properties": {
                             "addressPrefix": "[parameters('LAN-subnet-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_LAN_name'))]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -565,6 +638,9 @@
                         "name": "[parameters('TRANS1-subnet-name')]",
                         "properties": {
                             "addressPrefix": "[parameters('TRANS1-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1_name'))]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -582,6 +658,9 @@
                         "name": "[parameters('TRANS2-subnet-name')]",
                         "properties": {
                             "addressPrefix": "[parameters('TRANS2-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2_name'))]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -599,6 +678,9 @@
                         "name": "[parameters('TRANS1a-subnet-name')]",
                         "properties": {
                             "addressPrefix": "[parameters('TRANS1a-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1a_name'))]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -616,6 +698,9 @@
                         "name": "[parameters('TRANS2a-subnet-name')]",
                         "properties": {
                             "addressPrefix": "[parameters('TRANS2a-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2a_name'))]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -691,13 +776,25 @@
                                 "id": "[resourceId('Microsoft.Network/natGateways/',parameters('natgwname'))]"
                             }
                         }
+                    },
+                                        {
+                        "name": "AzureBastionSubnet",
+                        "properties": {
+                            "addressPrefix": "[parameters('bastion-subnet-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_bastion_name'))]"
+                            },
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
                     }
                 ],
                 "enableDdosProtection": false,
                 "enableVmProtection": false
             }
-        },
-                {
+        }
+       /*  {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-05-01",
             "name": "[parameters('virtualNetworks_VN_APP_name')]",
@@ -963,7 +1060,7 @@
                     ]
                 }
             }
-        }
+        } */
 
     ],
     "outputs": {}

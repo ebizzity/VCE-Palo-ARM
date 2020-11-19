@@ -26,9 +26,6 @@
         "global_SN_HUB_MGMT_Name": {
             "type": "string"
         },
-        "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
-            "type": "string"
-        },
         "global_publicIPAddresses_VCE01_ip_name": {
             "type": "string"
         },
@@ -128,31 +125,6 @@
         "avset_platformFaultDomainCount": 2
     },
     "resources": [
-
-        {
-            "name": "[parameters('VCE_PUB_NSG_NAME')]",
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2019-11-01",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "securityRules": [
-                    {
-                        "name": "nsgRule1",
-                        "properties": {
-                            "description": "description",
-                            "protocol": "Tcp",
-                            "sourcePortRange": "*",
-                            "destinationPortRange": "*",
-                            "sourceAddressPrefix": "*",
-                            "destinationAddressPrefix": "*",
-                            "access": "Allow",
-                            "priority": 100,
-                            "direction": "Inbound"
-                        }
-                    }
-                ]
-            }
-        },
 
         {
             "type": "Microsoft.Compute/availabilitySets",
@@ -280,10 +252,7 @@
                     "dnsServers": []
                 },
                 "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('global_networkSecurityGroups_NSG_HUB_MGMT_name'))]"
-                }
+                "enableIPForwarding": false
             }
         },
         {
@@ -292,8 +261,7 @@
             "name": "[parameters('global_NIC_VCE_WAN_name')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('global_publicIPAddresses_VCE01_ip_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('global_publicIPAddresses_VCE01_ip_name'))]"
                 
             ],
             "properties": {
@@ -314,9 +282,6 @@
                         }
                     }
                 ],
-                "networkSecurityGroup": {
-                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
-                },
                 "dnsSettings": {
                     "dnsServers": []
                 },
@@ -641,10 +606,7 @@
                     "dnsServers": []
                 },
                 "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('global_networkSecurityGroups_NSG_HUB_MGMT_name'))]"
-                }
+                "enableIPForwarding": false
             }
         },
         {
@@ -653,9 +615,7 @@
             "name": "[parameters('global_NIC_VCE02_WAN_name')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('global_publicIPAddresses_VCE02_ip_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
-                
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('global_publicIPAddresses_VCE02_ip_name'))]"   
             ],
             "properties": {
                 "ipConfigurations": [
@@ -675,9 +635,6 @@
                         }
                     }
                 ],
-                "networkSecurityGroup": {
-                            "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('VCE_PUB_NSG_NAME'))]"
-                },
                 "dnsSettings": {
                     "dnsServers": []
                 },

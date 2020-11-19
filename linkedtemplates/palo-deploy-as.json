@@ -550,7 +550,7 @@
     "fw2_interface1_pip_id": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('fw2_interface1_pip_name'))]" }
   },
   "resources": [
-    {
+/*     {
       "comments": "CREATE FIREWALL MGMT & DATA NSGS",
       "type": "Microsoft.Resources/deployments",
       "name": "CREATE_NSGS",
@@ -635,7 +635,7 @@
           ]
         }
       }
-    },
+    }, */
     {
       "comments": "CREATE FIREWALL PUBLIC LOAD BALANCER",
       "type": "Microsoft.Resources/deployments",
@@ -920,9 +920,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_mgmtnsg_name'))]"
-                },
                 "tapConfigurations": []
               },
               "dependsOn": [
@@ -957,9 +954,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               },
               "dependsOn": [
@@ -993,9 +987,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
             },
@@ -1022,9 +1013,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
             },
@@ -1051,9 +1039,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
             },
@@ -1214,9 +1199,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_mgmtnsg_name'))]"
-                },
                 "tapConfigurations": []
               },
               "dependsOn": [
@@ -1251,9 +1233,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               },
               "dependsOn": [
@@ -1287,9 +1266,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
             },
@@ -1316,9 +1292,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
             },
@@ -1345,9 +1318,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
             },
