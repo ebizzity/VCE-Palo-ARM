@@ -99,6 +99,9 @@
         "routeTables_TRANS2a_name": {
             "type": "string"
         },
+        "NSG_RG_NAME": {
+            "type": "string"
+        },
         /* "virtualNetworks_VN_APP_name": {
             "type": "string"
         },
@@ -619,7 +622,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('LAN-subnet-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_LAN_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_LAN_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -639,7 +642,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('TRANS1-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -659,7 +662,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('TRANS2-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -679,7 +682,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('TRANS1a-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1a_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1a_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -699,7 +702,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('TRANS2a-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2a_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2a_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -719,7 +722,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('MGMT-subnet-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_MGMT_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -739,7 +742,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('WAN-subnet-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_WAN_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -759,7 +762,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('Untrust-subnet-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_Untrust_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_Untrust_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -782,7 +785,7 @@
                         "properties": {
                             "addressPrefix": "[parameters('bastion-subnet-address-space')]",
                             "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_bastion_name'))]"
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_bastion_name'))]"
                             },
                             "delegations": [],
                             "privateEndpointNetworkPolicies": "Enabled",

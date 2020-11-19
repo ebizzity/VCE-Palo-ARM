@@ -389,7 +389,8 @@
     ],
     "variables": {
         "global_var_resource_group": "[resourceGroup().name]",
-        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master/",
+        //"globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master/",
+        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/rg-updates-etc/",
         "global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
         "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat('VN-',parameters('SiteCode'),'-HUB', variables('global_var_appendedString')), ' ', ''), 64))]",
         "global_vnet_resource_group": "[if(equals(parameters('VCE-Vnet-RG'), ''), variables('global_var_resource_group'), parameters('VCE-Vnet-RG'))]",
@@ -418,13 +419,19 @@
         "global_NIC_JMP01_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-JMP01-LAN'), ' ', ''), 80)]",
         "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_LAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-LAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-MGMT'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS1_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_TRANS1A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1a'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS2_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_TRANS2A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2a'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_VCE_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN2'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-Untrust'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-bastion'), ' ', ''), 80)]",
         "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'SV-VCE01-ip'), ' ', ''), 80)]",
         "global_publicIPAddresses_JMP01_ip_name": "[take(replace(concat(parameters('SiteCode'),'SV-JMP01-ip'), ' ', ''), 80)]",
+        "global_publicIP_Bastion_Name": "[take(replace(concat(parameters('SiteCode'),'SV-Bastion-ip'), ' ', ''), 80)]",
+        "global_Bastion_Name": "[take(replace(concat(parameters('SiteCode'),'SV-Bastion'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'SV-VCE01'), ' ', ''), 80)]",
         "global_virtualMachines_JMP01_name": "[take(replace(concat(parameters('SiteCode'),'SV-JMP01'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
@@ -447,7 +454,8 @@
         "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az.json')]",
         "JumpboxTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','jumpboxes.json')]",
         "NATGWTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','natgateway.json')]",
-        "VnetretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vnetretrofit.json')]"
+        "VnetretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vnetretrofit.json')]",
+        "NSGtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','nsg-deploy.json')]"
     },
     "resources": [
 
@@ -458,6 +466,9 @@
             "apiVersion": "2019-07-01",
             "resourceGroup": "[variables('global_vnet_resource_group')]",
             "condition": "[equals(variables('global_vnet_option'), 'Create new VNET')]",
+            "dependsOn": [
+                "CREATE_NSGs"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -470,83 +481,82 @@
                         "value": "[variables('global_vnet_name')]"
                     },
                     "address-space": {
-
                         "value": "[parameters('VN_HUB_Address_Space')]"
                     },
                     "LAN-subnet-name": {
-
                         "value": "[variables('global_SN_HUB_LAN_Name')]"
                     },
                     "LAN-subnet-address-space": {
-
                         "value": "[parameters('SN_HUB_LAN_Address_Space')]"
                     },
                     "WAN-subnet-name": {
-
                         "value": "[variables('global_SN_HUB_WAN_Name')]"
                     },
                     "WAN-subnet-address-space": {
-
                         "value": "[parameters('SN_HUB_WAN_Address_Space')]"
                     },
                     "MGMT-subnet-name": {
-
                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
                     },
                     "MGMT-subnet-address-space": {
-
                         "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
                     },
                     "TRANS1-subnet-name": {
-
                         "value": "[variables('global_SN_HUB_TRANS1_Name')]"
                     },
                     "TRANS1-address-space": {
-
                         "value": "[parameters('SN_HUB_TRANS1_Address_Space')]"
                     },
                     "TRANS2-subnet-name": {
-
                         "value": "[variables('global_SN_HUB_TRANS2_Name')]"
                     },
                     "TRANS2-address-space": {
-
                         "value": "[parameters('SN_HUB_TRANS2_Address_Space')]"
                     },
                     "TRANS1a-subnet-name": {
-
                         "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1', 'TRANS1a')]"
                     },
                     "TRANS1a-address-space": {
-
                         "value": "[parameters('SN_HUB_TRANS1a_Address_Space')]"
                     },
                     "TRANS2a-subnet-name": {
-
                         "value": "[replace(variables('global_SN_HUB_TRANS2_Name'),'TRANS2', 'TRANS2a')]"
                     },
                     "TRANS2a-address-space": {
-
                         "value": "[parameters('SN_HUB_TRANS2a_Address_Space')]"
                     },
                     "Untrust-subnet-name": {
-
                         "value": "[variables('global_SN_HUB_Untrust_Name')]"
                     },
                     "Untrust-subnet-address-space": {
-
                         "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
                     },
                     "networkSecurityGroups_NSG_HUB_Untrust_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
                     },
                     "networkSecurityGroups_NSG_HUB_MGMT_name": {
-
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_WAN_name": {
-
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_LAN_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_LAN_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS1_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS1a_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1a_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS2_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS2a_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2a_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_bastion_name": {
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME')]"
                     },
                     "NATIPWhitelistCIDR": {
                         "value": "[parameters('NATIPWhitelistCIDR')]"
@@ -640,6 +650,15 @@
                     },
                     "natgwname": {
                         "value": "[variables('global_NAT_Gateway_Name')]"
+                    },
+                    "bastion-name": {
+                        "value": "[variables('global_Bastion_Name')]"
+                    },
+                    "bastion-pip-name": {
+                        "value": "[variables('global_PublicIP_Bastion_Name')]"
+                    },
+                    "NSG_RG_NAME": {
+                        "value": "[parameters('NSG_RG_NAME')]"
                     }
                 }
             }
@@ -649,8 +668,11 @@
             "type": "Microsoft.Resources/deployments",
             "name": "VNET-rtro",
             "apiVersion": "2019-07-01",
-            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "resourceGroup": "[parameters('VNET_RG_NAME')]",
             "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
+            "dependsOn": [
+                "CREATE_NSGs"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -702,7 +724,7 @@
                 "type": "Microsoft.Resources/deployments",
                 "name": "CREATE_VCEs-gf",
                 "apiVersion": "2019-07-01",
-                "resourceGroup": "[variables('global_vnet_resource_group')]",
+                "resourceGroup": "[parameters('VCE_RG_NAME')]",
                 "condition": "[and(equals(parameters('DeploymentOption'), 'Greenfield'),equals(parameters('NVADeploymentOption'), 'Availability Set'))]",
                 "dependsOn": [
                 "CREATE_HUB_VNET"
@@ -839,7 +861,7 @@
             "type": "Microsoft.Resources/deployments",
             "name": "CREATE_VCEs-rtro",
             "apiVersion": "2019-07-01",
-            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "resourceGroup": "[parameters('VCE_RG_NAME')]",
             "condition": "[and(equals(parameters('DeploymentOption'), 'Retrofit'),equals(parameters('NVADeploymentOption'), 'Availability Set'))]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
@@ -950,7 +972,7 @@
                 "type": "Microsoft.Resources/deployments",
                 "name": "CREATE_VCEs-gf-az",
                 "apiVersion": "2019-07-01",
-                "resourceGroup": "[variables('global_vnet_resource_group')]",
+                "resourceGroup": "[parameters('VCE_RG_NAME')]",
                 "condition": "[and(equals(parameters('DeploymentOption'), 'Greenfield'),equals(parameters('NVADeploymentOption'), 'Availability Zone'))]",
                 "dependsOn": [
                 "CREATE_HUB_VNET"
@@ -1087,7 +1109,7 @@
             "type": "Microsoft.Resources/deployments",
             "name": "CREATE_VCEs-rtro-az",
             "apiVersion": "2019-07-01",
-            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "resourceGroup": "[parameters('VCE_RG_NAME')]",
             "condition": "[and(equals(parameters('DeploymentOption'), 'Retrofit'),equals(parameters('NVADeploymentOption'), 'Availability Zone'))]",
             "dependsOn": [
                 "CREATE_HUB_VNET"
@@ -1196,7 +1218,7 @@
             "type": "Microsoft.Resources/deployments",
             "name": "CREATE_Palos-AS",
             "apiVersion": "2019-07-01",
-            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "resourceGroup": "[parameters('FW_RG_NAME')]",
             "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Set')]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
@@ -1359,7 +1381,7 @@
             "type": "Microsoft.Resources/deployments",
             "name": "CREATE_Palos-AZ",
             "apiVersion": "2019-07-01",
-            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "resourceGroup": "[parameters('FW_RG_NAME')]",
             "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Zone')]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
@@ -1513,6 +1535,75 @@
                     "subnetName-TRANS2a": {
                         "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
                     }
+                }
+
+
+            }
+        },
+        {
+            "comments": "Create NSGs",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_NSGs",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[parameters('NSG_RG_NAME')]",
+            "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
+            "dependsOn": [
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('NSGtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+                    
+                    "NATIPs" : {
+                        "type": "array",
+                        "defaultValue": [
+                            "1.2.3.4/32",
+                            "4.5.6.7/32"
+                        ]
+                    },
+                    "networkSecurityGroups_NSG_HUB_MGMT_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
+
+                    },
+                    "networkSecurityGroups_NSG_HUB_WAN_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_LAN_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_LAN_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS1_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS1a_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1a_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS2_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_TRANS2a_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2a_name')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_bastion_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_Untrust_name": {
+                        "type": "string",
+                        "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
+                    }
+
+
                 }
 
 
