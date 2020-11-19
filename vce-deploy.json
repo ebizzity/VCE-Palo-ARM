@@ -289,42 +289,6 @@
                 "description": "Management subnet NSG"
             }
         },
-        "APP_VNET_Address_Space": {
-            "type": "string",
-            "metadata": {
-                "description": "APP VNET Address Space"
-            }
-        },
-        "App_Subnet_Address_Space": {
-            "type": "string",
-            "metadata": {
-                "description": "App VNET default subnet address space"
-            }
-        },
-        "SQL_VNET_Address_Space": {
-            "type": "string",
-            "metadata": {
-                "description": "SQL VNET Address Space"
-            }
-        },
-        "SQL_Subnet_Address_Space": {
-            "type": "string",
-            "metadata": {
-                "description": "SQL VNET default subnet address space"
-            }
-        },
-        "WEB_VNET_Address_Space": {
-            "type": "string",
-            "metadata": {
-                "description": "WEB VNET Address Space"
-            }
-        },
-        "WEB_Subnet_Address_Space": {
-            "type": "string",
-            "metadata": {
-                "description": "WEB VNET default subnet address space"
-            }
-        },
         "SiteCode": {
             "type": "string",
             "defaultValue": "<SITE_CODE>",
@@ -365,30 +329,6 @@
             "metadata": {
                 "description": "Initial Password for Palo Alto."
             }
-        },
-        "JumpboxUser": {
-            "type": "string",
-            "metadata": {
-                "description": "Userid for Jumpbox."
-            }
-        },
-        "JumpboxPassword": {
-            "type": "securestring",
-            "metadata": {
-                "description": "Password for Jumpbox user"
-            }
-        },
-        "JMP01_LAN_Static_IP": {
-            "type": "string",
-            "metadata": {
-                "description": "Jumpbox-01 - Static IP address."
-            }
-        },
-        "JMP02_LAN_Static_IP": {
-            "type": "string",
-            "metadata": {
-                "description": "Jumpbox-02 - Static IP address."
-            }
         }
     },
 
@@ -410,12 +350,6 @@
         "global_SN_HUB_TRANS1a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS1a'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS2a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS2a'), ' ', ''), 80)]",
         "global_SN_HUB_Untrust_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-Untrust'), ' ', ''), 80)]",
-        "global_App_VNET_Name": "[take(replace(concat('VN-',parameters('SiteCode'),'-APP'), ' ', ''), 80)]",
-        "global_App_Subnet_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-INT-APP'), ' ', ''), 80)]",
-        "global_SQL_VNET_Name": "[take(replace(concat('VN-',parameters('SiteCode'),'-SQL'), ' ', ''), 80)]",
-        "global_SQL_Subnet_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-INT-SQL'), ' ', ''), 80)]",
-        "global_WEB_VNET_Name": "[take(replace(concat('VN-',parameters('SiteCode'),'-WEB'), ' ', ''), 80)]",
-        "global_WEB_Subnet_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-INT-WEB'), ' ', ''), 80)]",
         "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-LAN'), ' ', ''), 80)]",
         "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-WAN'), ' ', ''), 80)]",
         "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-MGMT'), ' ', ''), 80)]",
@@ -423,7 +357,6 @@
         "global_NIC_VCE02_TRANS1a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE02-TRANS1a'), ' ', ''), 80)]",
         "global_NIC_VCE01_TRANS2_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-TRANS2'), ' ', ''), 80)]",
         "global_NIC_VCE02_TRANS2a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE02-TRANS2a'), ' ', ''), 80)]",
-        "global_NIC_JMP01_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-JMP01-LAN'), ' ', ''), 80)]",
         "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_LAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-LAN'), ' ', ''), 80)]",
@@ -436,11 +369,9 @@
         "global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-Untrust'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-bastion'), ' ', ''), 80)]",
         "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'SV-VCE01-ip'), ' ', ''), 80)]",
-        "global_publicIPAddresses_JMP01_ip_name": "[take(replace(concat(parameters('SiteCode'),'SV-JMP01-ip'), ' ', ''), 80)]",
         "global_publicIP_Bastion_Name": "[take(replace(concat(parameters('SiteCode'),'SV-Bastion-ip'), ' ', ''), 80)]",
         "global_Bastion_Name": "[take(replace(concat(parameters('SiteCode'),'SV-Bastion'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'SV-VCE01'), ' ', ''), 80)]",
-        "global_virtualMachines_JMP01_name": "[take(replace(concat(parameters('SiteCode'),'SV-JMP01'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
         "global_plb_name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-PLB'), ' ', ''), 80)]",
         "global_ilb_name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-ILB'), ' ', ''), 80)]",
@@ -459,7 +390,6 @@
         "VCEretrofit-aztemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-retrofit-az.json')]",
         "PaloAStemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-as.json')]",
         "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az.json')]",
-        "JumpboxTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','jumpboxes.json')]",
         "NATGWTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','natgateway.json')]",
         "VnetretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vnetretrofit.json')]",
         "NSGtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','nsg-deploy.json')]"
@@ -1572,79 +1502,6 @@
             }
         }
         
-/*         {
-            "comments": "Create Jumpboxes",
-            "type": "Microsoft.Resources/deployments",
-            "name": "CREATE_Jumpboxes",
-            "apiVersion": "2019-07-01",
-            "resourceGroup": "[variables('global_vnet_resource_group')]",
-            "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
-            "dependsOn": [
-                "CREATE_HUB_VNET",
-                "CREATE_VCEs-gf",
-                "CREATE_VCEs-rtro",
-                "CREATE_VCEs-gf-az",
-                "CREATE_VCEs-rtro-az"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('JumpboxtemplateUri')]",
-                    "contentVersion": "1.0.0.0"
-
-                },
-                "parameters": {
-                    
-                    "VM_Admin_PW": {
-                        "value": "[parameters('JumpboxPassword')]"
-                    },
-                    "VM_Admin_US": {
-                        "value": "[parameters('JumpboxUser')]"
-                    },
-                    "networkInterfaces_vcejmp02_name": {
-                        "value": "[replace(variables('global_NIC_JMP01_LAN_name'),'JMP01', 'JMP02')]"
-                    },
-                    "networkInterfaces_vcejmp01_name": {
-                        "value": "[variables('global_NIC_JMP01_LAN_name')]"
-                    },
-                    "publicIPAddresses_VCEJMP01_ip_name": {
-                        "value": "[variables('global_publicIPAddresses_JMP01_ip_name')]"
-                    },
-                    "virtualMachines_SVVCEJMP01_name": {
-                        "value": "[variables('global_virtualMachines_JMP01_name')]"
-                    },
-                    "virtualMachines_SVVCEJMP02_name": {
-                        "value": "[replace(variables('global_virtualMachines_JMP01_name'),'JMP01','JMP02')]"
-                    },
-                    "JMP01_Static_IP": {
-                        "value": "[parameters('JMP01_LAN_Static_IP')]"
-                    },
-                    "JMP02_Static_IP": {
-                        "value": "[parameters('JMP02_LAN_Static_IP')]"
-                    },
-                    "storageAccounts_diagnostics_name": {
-                        "value": "[parameters('storageAccounts_diagnostics_name')]"
-                    },
-                    "virtualNetworks_VN_HUB_name": {
-                        "value": "[variables('global_vnet_name')]"
-                    },
-                    "SN_HUB_MGMT_Name": {
-                        "value": "[variables('global_SN_HUB_MGMT_Name')]"
-                    },
-                    "virtualNetworks_VN_APP_name": {
-                        "value": "[variables('global_App_VNET_Name')]"
-                    },
-                    "SN_APP_Name": {
-                        "value": "[variables('global_App_Subnet_Name')]"
-                    }
-
-
-                }
-
-
-            }
-        } */
-
     ],
     "outputs": {
     }
