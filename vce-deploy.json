@@ -576,9 +576,6 @@
                     "routeTables_TRANS2a_name": {
                         "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2a')]"
                     },
-                    "virtualNetworks_VN_APP_name": {
-                        "value": "[variables('global_App_VNET_Name')]"
-                    },
                     "Palo_ILB_Static_IP": {
                         "value": "[parameters('Palo_Alto_ILB-IP')]"
                     },
@@ -605,39 +602,6 @@
                     },
                     "VCE02_TRANS2a_Static_IP":{
                         "value": "[parameters('VCE02_TRANS2a_Static_IP')]"
-                    },
-                    "VN_APP_Address_Space": {
-                        "value": "[parameters('APP_VNET_Address_Space')]"
-                    },
-                    "SN_APP_Name": {
-                        "value": "[variables('global_App_Subnet_Name')]"
-                    },
-                    "SN_APP_Address_Space": {
-                        "value": "[parameters('App_Subnet_Address_Space')]"
-                    },
-                    "virtualNetworks_VN_SQL_name": {
-                        "value": "[variables('global_SQL_VNET_Name')]"
-                    },
-                    "VN_SQL_Address_Space": {
-                        "value": "[parameters('SQL_VNET_Address_Space')]"
-                    },
-                    "SN_SQL_Name": {
-                        "value": "[variables('global_SQL_Subnet_Name')]"
-                    },
-                    "SN_SQL_Address_Space": {
-                        "value": "[parameters('SQL_Subnet_Address_Space')]"
-                    },
-                    "virtualNetworks_VN_WEB_name": {
-                        "value": "[variables('global_WEB_VNET_Name')]"
-                    },
-                    "VN_WEB_Address_Space": {
-                        "value": "[parameters('WEB_VNET_Address_Space')]"
-                    },
-                    "SN_WEB_Name": {
-                        "value": "[variables('global_WEB_Subnet_Name')]"
-                    },
-                    "SN_WEB_Address_Space": {
-                        "value": "[parameters('WEB_Subnet_Address_Space')]"
                     },
                     "global_vnet_resource_group": {
                         "value": "[variables('global_vnet_resource_group')]"
