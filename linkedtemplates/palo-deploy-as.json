@@ -855,7 +855,6 @@
       "resourceGroup": "[resourceGroup().name]",
       "dependsOn": [
         "CREATE_AVSET",
-        "CREATE_NSGS",
         "CREATE_INTERNALLB",
         "CREATE_PUBLICLB"
       ],
@@ -1134,7 +1133,6 @@
       "resourceGroup": "[resourceGroup().name]",
       "dependsOn": [
         "CREATE_AVSET",
-        "CREATE_NSGS",
         "CREATE_INTERNALLB",
         "CREATE_PUBLICLB"
       ],
