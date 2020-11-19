@@ -275,6 +275,13 @@
                 "description": "Hub Subnet - Untrust (For Internet Egress/Ingress via Palos) - Address Space"
             }
         },
+        "bastion-subnet-address-space": {
+            "defaultValue": "Untrust_Address Space>",
+            "type": "string",
+            "metadata": {
+                "description": "Bastion subnet - Address Space"
+            }
+        },
         "NATIPWhitelistCIDR": {
             "defaultValue": "0.0.0.0/0",
             "type": "string",
@@ -623,6 +630,9 @@
                     },
                     "NSG_RG_NAME": {
                         "value": "[parameters('NSG_RG_NAME')]"
+                    },
+                    "bastion-subnet-address-space": {
+                        "value": "[parameters('bastion-subnet-address-space')]"
                     }
                 }
             }
@@ -1529,40 +1539,30 @@
                         ]
                     },
                     "networkSecurityGroups_NSG_HUB_MGMT_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
-
                     },
                     "networkSecurityGroups_NSG_HUB_WAN_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_WAN_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_LAN_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_LAN_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_TRANS1_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_TRANS1a_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS1a_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_TRANS2_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_TRANS2a_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_TRANS2a_name')]"
                     },
                     "networkSecurityGroups_NSG_HUB_bastion_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME')]"
                     },
                     "networkSecurityGroups_NSG_HUB_Untrust_name": {
-                        "type": "string",
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
                     }
 
