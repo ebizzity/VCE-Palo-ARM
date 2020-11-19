@@ -644,6 +644,9 @@
                             "networkSecurityGroup": {
                                 "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1_name'))]"
                             },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1_name'))]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -663,6 +666,9 @@
                             "addressPrefix": "[parameters('TRANS2-address-space')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS2_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -684,6 +690,9 @@
                             "networkSecurityGroup": {
                                 "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1a_name'))]"
                             },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1a_name'))]"
+                            },
                             "serviceEndpoints": [
                                 {
                                     "service": "Microsoft.Storage",
@@ -703,6 +712,9 @@
                             "addressPrefix": "[parameters('TRANS2a-address-space')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2a_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS2a_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
