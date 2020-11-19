@@ -738,9 +738,9 @@
                     "global_SN_HUB_MGMT_Name": {
                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
                     },
-                    "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
+                    /* "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
-                    },
+                    }, */
                     "global_publicIPAddresses_VCE01_ip_name": {
                         "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
                     },
@@ -867,9 +867,9 @@
                     "global_SN_HUB_MGMT_Name": {
                         "value": "[replace(variables('global_SN_HUB_MGMT_Name'),'VCE01', 'VCE02')]"
                     },
-                    "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
+                    /* "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
-                    },
+                    }, */
                     "global_publicIPAddresses_VCE01_ip_name": {
                         "value": "[replace(variables('global_publicIPAddresses_VCE01_ip_name'),'VCE01', 'VCE02')]"
                     },
@@ -986,9 +986,9 @@
                     "global_SN_HUB_MGMT_Name": {
                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
                     },
-                    "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
+                    /* "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
-                    },
+                    }, */
                     "global_publicIPAddresses_VCE01_ip_name": {
                         "value": "[variables('global_publicIPAddresses_VCE01_ip_name')]"
                     },
@@ -1114,9 +1114,9 @@
                     "global_SN_HUB_MGMT_Name": {
                         "value": "[replace(variables('global_SN_HUB_MGMT_Name'),'VCE01', 'VCE02')]"
                     },
-                    "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
+                    /* "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
-                    },
+                    }, */
                     "global_publicIPAddresses_VCE01_ip_name": {
                         "value": "[replace(variables('global_publicIPAddresses_VCE01_ip_name'),'VCE01', 'VCE02')]"
                     },
