@@ -469,10 +469,10 @@
         {
             "comments": "Create NSGs",
             "type": "Microsoft.Resources/deployments",
-            "name": "CREATE_SECURITY_GROUPS",
+            "name": "NSGs_Create",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('NSG_RG_NAME')]",
-            "condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
+            //"condition": "[equals(parameters('DeploymentOption'), 'Greenfield')]",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -531,7 +531,7 @@
             "resourceGroup": "[variables('global_vnet_resource_group')]",
             "condition": "[equals(variables('global_vnet_option'), 'Create new VNET')]",
             "dependsOn": [
-                "CREATE_SECURITY_GROUPS"
+                "NSGs_Create"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -702,7 +702,7 @@
             "resourceGroup": "[parameters('VNET_RG_NAME')]",
             "condition": "[equals(parameters('DeploymentOption'), 'Retrofit')]",
             "dependsOn": [
-                "CREATE_SECURITY_GROUPS"
+                "NSGs_Create"
             ],
             "properties": {
                 "mode": "Incremental",
