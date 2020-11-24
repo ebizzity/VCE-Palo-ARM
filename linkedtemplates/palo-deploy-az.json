@@ -434,13 +434,6 @@
       "nsg_data_inbound_rule_name": "allow-all-inbound",
       "nsg_data_outbound_rule_name": "allow-all-outbound",
   
-      "COMMENT_vnet": "NEW VNET TEMPLATE VARIABLES",
-      "vnet_cidr": "[parameters('VNETPrefix')]",
-      "vnet_subnet0_cidr": "[parameters('subnetPrefix-Management')]",
-      "vnet_subnet1_cidr": "[parameters('subnetPrefix-Dataplane1')]",
-      "vnet_subnet2_cidr": "[parameters('subnetPrefix-Dataplane2')]",
-      "vnet_subnet3_cidr": "[parameters('subnetPrefix-InternalLB')]",
-  
       "COMMENT_publicLb": "PUBLIC LB TEMPLATE VARIABLES",
       "publicLb_name": "[take(replace(concat(parameters('publicLBName'), variables('global_var_appendedString')), ' ', ''), 80)]",
       "publicLb_resource_group": "[resourceGroup().name]",
@@ -518,92 +511,6 @@
       "fw2_zone": "[parameters('FW2-Zone')]"
     },
     "resources": [
-      {
-        "comments": "CREATE FIREWALL MGMT & DATA NSGS",
-        "type": "Microsoft.Resources/deployments",
-        "name": "CREATE_NSGS",
-        "apiVersion": "[variables('global_var_apiVersion')]",
-        "resourceGroup": "[resourceGroup().name]",
-        "properties": {
-          "mode": "Incremental",
-          "template": {
-            "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-            "contentVersion": "1.0.0.0",
-            "resources": [
-              {
-                "type": "Microsoft.Network/networkSecurityGroups",
-                "name": "[variables('global_fw_mgmtnsg_name')]",
-                "apiVersion": "[variables('global_var_apiVersion')]",
-                "location": "[resourceGroup().location]",
-                "properties": {
-                  "securityRules": [
-                    {
-                      "name": "[variables('nsg_mgmt_inbound_rule_name')]",
-                      "properties": {
-                        "protocol": "Tcp",
-                        "sourcePortRange": "*",
-                        "sourceAddressPrefix": "[variables('nsg_mgmt_inbound_rule_sourceAddress')]",
-                        "destinationAddressPrefix": "*",
-                        "access": "Allow",
-                        "priority": "100",
-                        "direction": "Inbound",
-                        "sourcePortRanges": [],
-                        "destinationPortRanges": "[variables('nsg_mgmt_inbound_rule_ports')]",
-                        "sourceAddressPrefixes": [],
-                        "destinationAddressPrefixes": []
-                      }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "Microsoft.Network/networkSecurityGroups",
-                "name": "[variables('global_fw_dataNsg_name')]",
-                "apiVersion": "[variables('global_var_apiVersion')]",
-                "location": "[resourceGroup().location]",
-                "properties": {
-                  "securityRules": [
-                    {
-                      "name": "[variables('nsg_data_inbound_rule_name')]",
-                      "properties": {
-                        "protocol": "*",
-                        "sourcePortRange": "*",
-                        "destinationPortRange": "*",
-                        "sourceAddressPrefix": "*",
-                        "destinationAddressPrefix": "*",
-                        "access": "Allow",
-                        "priority": "100",
-                        "direction": "Inbound",
-                        "sourcePortRanges": [],
-                        "destinationPortRanges": [],
-                        "sourceAddressPrefixes": [],
-                        "destinationAddressPrefixes": []
-                      }
-                    },
-                    {
-                      "name": "[variables('nsg_data_outbound_rule_name')]",
-                      "properties": {
-                        "protocol": "*",
-                        "sourcePortRange": "*",
-                        "destinationPortRange": "*",
-                        "sourceAddressPrefix": "*",
-                        "destinationAddressPrefix": "*",
-                        "access": "Allow",
-                        "priority": "100",
-                        "direction": "Outbound",
-                        "sourcePortRanges": [],
-                        "destinationPortRanges": [],
-                        "sourceAddressPrefixes": [],
-                        "destinationAddressPrefixes": []
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      },
       
       {
         "comments": "CREATE FIREWALL PUBLIC LOAD BALANCER",
@@ -860,9 +767,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": false,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_mgmtnsg_name'))]"
-                  },
                   "tapConfigurations": []
                 },
                 "dependsOn": [
@@ -897,9 +801,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": true,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                  },
                   "tapConfigurations": []
                 },
                 "dependsOn": [
@@ -933,9 +834,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": true,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                  },
                   "tapConfigurations": []
                 }
               },
@@ -962,9 +860,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
               },
@@ -991,9 +886,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": true,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                  },
                   "tapConfigurations": []
                 }
               },
@@ -1156,9 +1048,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": false,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_mgmtnsg_name'))]"
-                  },
                   "tapConfigurations": []
                 },
                 "dependsOn": [
@@ -1193,9 +1082,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": true,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                  },
                   "tapConfigurations": []
                 },
                 "dependsOn": [
@@ -1229,9 +1115,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": true,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                  },
                   "tapConfigurations": []
                 }
               },
@@ -1258,9 +1141,6 @@
                 ],
                 "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                 "enableIPForwarding": true,
-                "networkSecurityGroup": {
-                  "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                },
                 "tapConfigurations": []
               }
             },
