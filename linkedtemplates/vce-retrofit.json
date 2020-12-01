@@ -399,8 +399,7 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_WAN_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_LAN_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS1a_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2a_name'))]",
-                "[resourceId('Microsoft.Storage/StorageAccounts', parameters('global_storageAccounts_diagnostics_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2a_name'))]"
             ],
             "tags": {
 
