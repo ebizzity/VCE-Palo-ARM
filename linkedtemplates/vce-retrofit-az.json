@@ -20,9 +20,6 @@
         "global_SN_HUB_MGMT_Name": {
             "type": "string"
         },
-        "global_networkSecurityGroups_NSG_HUB_MGMT_name": {
-            "type": "string"
-        },
         "global_publicIPAddresses_VCE01_ip_name": {
             "type": "string"
         },
@@ -209,10 +206,7 @@
                     "dnsServers": []
                 },
                 "enableAcceleratedNetworking": false,
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('global_networkSecurityGroups_NSG_HUB_MGMT_name'))]"
-                }
+                "enableIPForwarding": false
             }
         },
         {
