@@ -648,6 +648,9 @@
                     "global_vnet_resource_group": {
                         "value": "[variables('global_vnet_resource_group')]"
                     },
+                    "global_nsg_resource_group": {
+                        "value": "[parameters('NSG_RG_NAME')]"
+                    },
                     "TRANS1a-subnet-name": {
                         "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1', 'TRANS1a')]"
                     },
