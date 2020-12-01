@@ -3,9 +3,12 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "global_vnet_name": {
-            "type": "string"
+           "type": "string"
         },
         "global_vnet_resource_group": {
+            "type": "string"
+        },
+        "global_nsg_resource_group": {
             "type": "string"
         },
         "TRANS1a-subnet-name": {
@@ -35,6 +38,7 @@
         "networkSecurityGroups_NSG_HUB_UNTRUST_name": {
             "type": "string"
         }
+        
     },
     "functions": [],
     "variables": {},
@@ -44,14 +48,13 @@
             "apiVersion": "2019-09-01",
             "name": "[concat(parameters('global_vnet_name'), '/', parameters('TRANS1a-subnet-name'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1A_name'))]"
-                
+
             ],
             
             "properties": {
                 "addressPrefix": "[parameters('TRANS1a-address-space')]",
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1A_name'))]"
+                    "id": "[resourceId(parameters('global_nsg_resource_group'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS1A_name'))]"
                 },
                 "serviceEndpoints": [
                     {
@@ -71,7 +74,6 @@
             "apiVersion": "2019-09-01",
             "name": "[concat(parameters('global_vnet_name'), '/', parameters('TRANS2a-subnet-name'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]",
                 "[concat(resourceId(parameters('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('TRANS1a-subnet-name'))]"
                 
             ],
@@ -79,7 +81,7 @@
             "properties": {
                 "addressPrefix": "[parameters('TRANS2a-address-space')]",
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]"
+                    "id": "[resourceId(parameters('global_nsg_resource_group'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name'))]"
                 },
                 "serviceEndpoints": [
                     {
@@ -99,14 +101,13 @@
             "apiVersion": "2019-09-01",
             "name": "[concat(parameters('global_vnet_name'), '/', parameters('Untrust-subnet-name'))]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name'))]",
                 "[concat(resourceId(parameters('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('TRANS2a-subnet-name'))]"
             ],
             
             "properties": {
                 "addressPrefix": "[parameters('Untrust-subnet-address-space')]",
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name'))]"
+                    "id": "[resourceId(parameters('global_nsg_resource_group'), 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name'))]"
                 },
                 "serviceEndpoints": [
                     {
@@ -120,50 +121,7 @@
                 "privateEndpointNetworkPolicies": "Enabled",
                 "privateLinkServiceNetworkPolicies": "Enabled"
             }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2019-09-01",
-            "name": "[parameters('networkSecurityGroups_NSG_HUB_UNTRUST_name')]",
-            "location": "[resourceGroup().location]",
-            "tags": {
-
-            },
-            "properties": {
-                "securityRules": [
-                    
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2019-09-01",
-            "name": "[parameters('networkSecurityGroups_NSG_HUB_TRANS1A_name')]",
-            "location": "[resourceGroup().location]",
-            "tags": {
-
-            },
-            "properties": {
-                "securityRules": [
-                    
-                ]
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2019-09-01",
-            "name": "[parameters('networkSecurityGroups_NSG_HUB_TRANS2A_name')]",
-            "location": "[resourceGroup().location]",
-            "tags": {
-
-            },
-            "properties": {
-                "securityRules": [
-                    
-                ]
-            }
         }
-
 
     ],
     "outputs": {}
