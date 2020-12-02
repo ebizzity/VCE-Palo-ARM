@@ -932,7 +932,8 @@
                 "resourceGroup": "[parameters('VCE_RG_NAME')]",
                 "condition": "[and(equals(parameters('DeploymentOption'), 'Greenfield'),equals(parameters('NVADeploymentOption'), 'Availability Zone'))]",
                 "dependsOn": [
-                "CREATE_HUB_VNET"
+                "CREATE_HUB_VNET",
+                "VNET-rtro"
                 ],
                 "properties": {
                     "mode": "Incremental",
