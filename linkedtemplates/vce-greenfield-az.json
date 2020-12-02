@@ -501,11 +501,12 @@
                         "enabled": true,
                         "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
                     }
-                },
-                "zones": [
+                }
+                
+            },
+            "zones": [
                     "[parameters('vce1_zone')]"
                 ]
-            }
         },
         
         
@@ -725,11 +726,13 @@
                         "enabled": true,
                         "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
                     }
-                },
-                "zones": [
+                }
+                
+            },
+            "zones": [
                     "[parameters('vce2_zone')]"
                 ]
-            }
+
         }
 
     ],
