@@ -1165,9 +1165,6 @@
                   ],
                   "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
                   "enableIPForwarding": true,
-                  "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('global_fw_dataNsg_name'))]"
-                  },
                   "tapConfigurations": []
               }
             },
