@@ -702,7 +702,6 @@
         "resourceGroup": "[resourceGroup().name]",
         "dependsOn": [
          
-          "CREATE_NSGS",
           "CREATE_INTERNALLB",
           "CREATE_PUBLICLB"
         ],
@@ -983,7 +982,6 @@
         "resourceGroup": "[resourceGroup().name]",
         "dependsOn": [
         
-          "CREATE_NSGS",
           "CREATE_INTERNALLB",
           "CREATE_PUBLICLB"
         ],
