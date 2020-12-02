@@ -151,7 +151,10 @@
                 ],
                 "delegations": [],
                 "privateEndpointNetworkPolicies": "Enabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
+                "privateLinkServiceNetworkPolicies": "Enabled",
+                "natGateway": {
+                    "id": "[resourceId('Microsoft.Network/natGateways/',parameters('natgwname'))]"
+                }
             }
         }
 
