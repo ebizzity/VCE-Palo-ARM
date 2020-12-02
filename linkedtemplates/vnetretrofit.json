@@ -37,12 +37,44 @@
         },
         "networkSecurityGroups_NSG_HUB_UNTRUST_name": {
             "type": "string"
+        },
+        "NATGWtemplateUri": {
+            "type": "string"
+        },
+        "publicprefixname": {
+            "type": "string"
+        },
+        "natgwname": {
+            "type": "string"
         }
         
     },
     "functions": [],
     "variables": {},
     "resources": [
+        {
+            "comments": "Create NATGW",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_NATGW",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[parameters('global_vnet_resource_group')]",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('NATGWtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+
+                    "publicprefixname": {
+                        "value": "[parameters('publicprefixname')]"
+                    },
+                    "natgwname": {
+                        "value": "[parameters('natgwname')]"
+                    }
+                }
+            }
+        },
         {
             "type": "Microsoft.Network/virtualNetworks/subnets",
             "apiVersion": "2019-09-01",

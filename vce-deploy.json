@@ -673,6 +673,15 @@
                     },
                     "networkSecurityGroups_NSG_HUB_UNTRUST_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
+                    },
+                    "NATGWtemplateUri": {
+                        "value": "[variables('NATGWTemplateUri')]"
+                    },
+                    "publicprefixname": {
+                        "value": "[variables('global_publicIP_Prefix_Name')]"
+                    },
+                    "natgwname": {
+                        "value": "[variables('global_NAT_Gateway_Name')]"
                     }
                 }
 
