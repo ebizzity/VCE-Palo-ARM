@@ -1,160 +1,175 @@
-{
-    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+{  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
 
         "NSG_RG_NAME": {
-            "defaultValue": "RG-Network-Hub-Security",
+            "defaultValue": "RG-USAE2-Azure-Networking-Security-Hub-Prod",
             "type": "String"
         },
         "VCE_RG_NAME": {
-            "defaultValue": "RG-Network-Hub-VCE",
+            "defaultValue": "RG-USAE2-Azure-Infrastructure-VCE-Hub-Prod",
             "type": "String"
         },
         "FW_RG_NAME": {
-              "defaultValue": "RG-Network-Hub-FW",
+              "defaultValue": "RG-USAE2-Azure-Infrastructure-Firewall-Hub-Prod",
               "type": "string"
         },
         "VCE01_LAN_Static_IP": {
-            "defaultValue": "10.132.232.68",
+            "defaultValue": "10.132.208.100",
             "type": "String",
             "metadata": {
                 "description": "Static IP for VCE01 - LAN Interface"
             }
         },
         "VCE01_MGMT_Static_IP": {
-            "defaultValue": "10.132.232.5",
+            "defaultValue": "10.132.208.4",
             "type": "String",
             "metadata": {
                 "description": "Static IP for VCE01 - MGMT Interface"
             }
         },
         "VCE01_WAN_Static_IP": {
-            "defaultValue": "10.132.232.20",
+            "defaultValue": "10.132.208.20",
             "type": "String",
             "metadata": {
                 "description": "Static IP for VCE01 - WAN Interface"
             }
         },
         "VCE01_TRANS1_Static_IP": {
+            "defaultValue": "10.132.208.36",
             "type": "string",
             "metadata": {
                 "description": "Static IP for VCE01 - TRANS1 Interface"
             }
         },
         "VCE02_TRANS1a_Static_IP": {
+            "defaultValue": "10.132.208.52",
             "type": "string",
             "metadata": {
                 "description": "Static IP for VCE02 - TRANS1a Interface"
             }
         },
         "VCE02_LAN_Static_IP": {
-            "defaultValue": "10.132.232.69",
+            "defaultValue": "10.132.208.101",
             "type": "String",
             "metadata": {
                 "description": "Static IP for VCE02 - LAN Interface"
             }
         },
         "VCE02_MGMT_Static_IP": {
-            "defaultValue": "10.132.232.6",
+            "defaultValue": "10.132.208.5",
             "type": "String",
             "metadata": {
                 "description": "Static IP for VCE02 - Management Interface"
             }
         },
         "VCE02_WAN_Static_IP": {
-            "defaultValue": "10.132.232.21",
+            "defaultValue": "10.132.208.21",
             "type": "String",
             "metadata": {
                 "description": "Static IP for VCE02 - WAN Interface"
             }
         },
         "VCE01_TRANS2_Static_IP": {
+            "defaultValue": "10.132.208.68",
             "type": "string",
             "metadata": {
                 "description": "Static IP for VCE01 - TRANS2 Interface"
             }
         },
         "VCE02_TRANS2a_Static_IP": {
+            "defaultValue": "10.132.208.84",
             "type": "string",
             "metadata": {
                 "description": "Static IP for VCE02 - TRANS2a Interface"
             }
         },
         "Palo_Alto_ILB-IP": {
+            "defaultValue": "10.132.208.102",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto Internal Load Balancer... Normally is in the same subnet as the LAN NIC."
             }
         },
         "Palo_Alto_FW1-MGMT-IP": {
+            "defaultValue": "10.132.208.6",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #1 - Management Interface"
             }
         },
         "Palo_Alto_FW1-WAN-IP": {
+            "defaultValue": "10.132.208.116",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #1 - WAN Interface"
             }
         },
         "Palo_Alto_FW1-LAN-IP": {
+            "defaultValue": "10.132.208.103",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #1 - LAN Interface"
             }
         },
         "Palo_Alto_FW1-TRANS1-IP": {
+            "defaultValue": "10.132.208.37",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #1 - TRANS1 Interface"
             }
         },
         "Palo_Alto_FW1-TRANS1a-IP": {
+            "defaultValue": "10.132.208.53",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #1 - TRANS1a Interface"
             }
         },
         "Palo_Alto_FW2-MGMT-IP": {
+            "defaultValue": "10.132.208.7",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #2 - Management Interface"
             }
         },
         "Palo_Alto_FW2-WAN-IP": {
+            "defaultValue": "10.132.208.117",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #2 - WAN Interface"
             }
         },
         "Palo_Alto_FW2-LAN-IP": {
+            "defaultValue": "10.132.208.104",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #2 - LAN Interface"
             }
         },
         "Palo_Alto_FW2-TRANS2-IP": {
+            "defaultValue": "10.132.208.69",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #2 - TRANS2 Interface"
             }
         },
         "Palo_Alto_FW2-TRANS2a-IP": {
+            "defaultValue": "10.132.208.85",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #2 - TRANS2a Interface"
             }
         },
         "username": {
-            "defaultValue": "azureadmin",
+            "defaultValue": "adm_local",
             "type": "string",
             "metadata": {
                 "description": "Palo Username"
             }
         },
         "SSH_Key": {
+            
             "type": "SecureString",
             "metadata": {
                 "description": "VCE - SSH Key"
@@ -162,7 +177,7 @@
         },
 
         "VCE-Vnet-RG": {
-            "defaultValue": "<VNETRG>",
+            "defaultValue": "RG-USAE2-Azure-Networking-Hub01-Prod",
             "type": "string",
             "metadata": {
                 "description": "Resource Group for Where VCEs are.  If this is a Greenfield deployment, this should match the name of the resource group for the overall deploymenyt."
@@ -203,76 +218,76 @@
         },
         "VNETName": {
             "type": "string",
-            "defaultValue": "<VCE-HUB-VNET>",
+            "defaultValue": "VN-USAE2-HUB01-PROD",
             "metadata": {
                 "description": "Hub VNET name"
             }
         },
         "VN_HUB_Address_Space": {
-            "defaultValue": "10.132.232.0/24",
+            "defaultValue": "10.132.208.0/24",
             "type": "String",
             "metadata": {
                 "description": "Hub VNET address space"
             }
         },
         "SN_HUB_LAN_Address_Space": {
-            "defaultValue": "10.132.232.64/28",
+            "defaultValue": "10.132.208.96/28",
             "type": "String",
             "metadata": {
                 "description": "Hub Subnet - LAN (For NVA LAN NICs) - Address Space"
             }
         },
         "SN_HUB_WAN_Address_Space": {
-            "defaultValue": "10.132.232.16/28",
+            "defaultValue": "10.132.208.16/28",
             "type": "String",
             "metadata": {
                 "description": "Hub Subnet - WAN (For VCE SDWAN connection) - Address Space"
             }
         },
         "SN_HUB_MGMT_Address_Space": {
-            "defaultValue": "10.132.232.0/28",
+            "defaultValue": "10.132.208.0/28",
             "type": "String",
             "metadata": {
                 "description": "Hub Subnet - Management (For NVA Management NICs) - Address Space"
             }
         },
          "SN_HUB_TRANS1_Address_Space": {
-            "defaultValue": "<TRANS1_Address Space>",
+            "defaultValue": "10.132.208.32/28",
             "type": "string",
             "metadata": {
                 "description": "Hub Subnet - TRANS1 (For BGP Peering with VCE) - Address Space"
             }
         },
         "SN_HUB_TRANS2_Address_Space": {
-            "defaultValue": "<TRANS2_Address Space>",
+            "defaultValue": "10.132.208.64/28",
             "type": "string",
             "metadata": {
                 "description": "Hub Subnet - TRANS2 (For BGP Peering with VCE) - Address Space"
             }
         },
         "SN_HUB_TRANS1a_Address_Space": {
-            "defaultValue": "<TRANS1_Address Space>",
+            "defaultValue": "10.132.208.48/28",
             "type": "string",
             "metadata": {
                 "description": "Hub Subnet - TRANS1a (For BGP Peering with VCE) - Address Space"
             }
         },
         "SN_HUB_TRANS2a_Address_Space": {
-            "defaultValue": "<TRANS2a_Address Space>",
+            "defaultValue": "10.132.208.80/28",
             "type": "string",
             "metadata": {
                 "description": "Hub Subnet - TRANS2a (For BGP Peering with VCE) - Address Space"
             }
         },
         "SN_HUB_Untrust_Address_Space": {
-            "defaultValue": "Untrust_Address Space>",
+            "defaultValue": "10.132.208.112/28",
             "type": "string",
             "metadata": {
                 "description": "Hub Subnet - Untrust (For Internet Egress/Ingress via Palos) - Address Space"
             }
         },
         "bastion-subnet-address-space": {
-            "defaultValue": "Untrust_Address Space>",
+            "defaultValue": "10.132.208.128/27",
             "type": "string",
             "metadata": {
                 "description": "Bastion subnet - Address Space"
@@ -287,14 +302,14 @@
         },
         "SiteCode": {
             "type": "string",
-            "defaultValue": "<SITE_CODE>",
+            "defaultValue": "USAE2",
             "metadata": {
                 "description": "Site Code for auto-naming of resources"
             }
         },
         "storageAccounts_diagnostics_name": {
             "type": "string",
-            "defaultValue": "<DiagStorageacctName>",
+            "defaultValue": "embsausae2prodnetworkdiag01",
             "metadata": {
                 "description": "Storage account used for VM Diagnostics"
             }
@@ -321,6 +336,7 @@
             }
         },
         "paloPassword": {
+            "defaultValue": "Testing123!!",
             "type": "securestring",
             "metadata": {
                 "description": "Initial Password for Palo Alto."
@@ -333,50 +349,50 @@
     "variables": {
         "global_var_resource_group": "[resourceGroup().name]",
         //"globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master/",
-        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/rg-updates-etc/",
+        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/var-updates/",
         "global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
-        "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat('VN-',parameters('SiteCode'),'-HUB', variables('global_var_appendedString')), ' ', ''), 64))]",
+        "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat('VN-',parameters('SiteCode'),'-HUB01-PROD', variables('global_var_appendedString')), ' ', ''), 64))]",
         "global_vnet_resource_group": "[if(equals(parameters('VCE-Vnet-RG'), ''), variables('global_var_resource_group'), parameters('VCE-Vnet-RG'))]",
         "global_vnet_option": "[parameters('VNETOption')]",
-        "global_SN_HUB_LAN_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-LAN'), ' ', ''), 80)]",
-        "global_SN_HUB_WAN_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-WAN'), ' ', ''), 80)]",
-        "global_SN_HUB_MGMT_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-MGMT'), ' ', ''), 80)]",
-        "global_SN_HUB_TRANS1_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS1'), ' ', ''), 80)]",
-        "global_SN_HUB_TRANS2_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS2'), ' ', ''), 80)]",
-        "global_SN_HUB_TRANS1a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS1a'), ' ', ''), 80)]",
-        "global_SN_HUB_TRANS2a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-TRANS2a'), ' ', ''), 80)]",
-        "global_SN_HUB_Untrust_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-Untrust'), ' ', ''), 80)]",
-        "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-LAN'), ' ', ''), 80)]",
-        "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-WAN'), ' ', ''), 80)]",
-        "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-MGMT'), ' ', ''), 80)]",
-        "global_NIC_VCE01_TRANS1_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-TRANS1'), ' ', ''), 80)]",
-        "global_NIC_VCE02_TRANS1a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE02-TRANS1a'), ' ', ''), 80)]",
-        "global_NIC_VCE01_TRANS2_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE01-TRANS2'), ' ', ''), 80)]",
-        "global_NIC_VCE02_TRANS2a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SV-VCE02-TRANS2a'), ' ', ''), 80)]",
-        "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-HUB'), ' ', ''), 80)]",
+        "global_SN_HUB_LAN_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-LAN'), ' ', ''), 80)]",
+        "global_SN_HUB_WAN_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-WAN'), ' ', ''), 80)]",
+        "global_SN_HUB_MGMT_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-MGMT'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS1_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-TRANS1A'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS2_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-TRANS2A'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS1a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-TRANS1B'), ' ', ''), 80)]",
+        "global_SN_HUB_TRANS2a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-TRANS2B'), ' ', ''), 80)]",
+        "global_SN_HUB_Untrust_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-EXT-UNTRUST'), ' ', ''), 80)]",
+        "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-LAN'), ' ', ''), 80)]",
+        "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-WAN'), ' ', ''), 80)]",
+        "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-MGMT'), ' ', ''), 80)]",
+        "global_NIC_VCE01_TRANS1_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-TRANS1A'), ' ', ''), 80)]",
+        "global_NIC_VCE02_TRANS1a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE02-TRANS1B'), ' ', ''), 80)]",
+        "global_NIC_VCE01_TRANS2_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-TRANS2A'), ' ', ''), 80)]",
+        "global_NIC_VCE02_TRANS2a_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE02-TRANS2B'), ' ', ''), 80)]",
+        "global_RT_HUB_name": "[take(replace(concat('RT-',parameters('SiteCode'),'-INT-HUB'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_LAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-LAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-MGMT'), ' ', ''), 80)]",
-        "global_networkSecurityGroups_NSG_HUB_TRANS1_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1'), ' ', ''), 80)]",
-        "global_networkSecurityGroups_NSG_HUB_TRANS1A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1a'), ' ', ''), 80)]",
-        "global_networkSecurityGroups_NSG_HUB_TRANS2_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2'), ' ', ''), 80)]",
-        "global_networkSecurityGroups_NSG_HUB_TRANS2A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2a'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS1_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1A'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS1A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1B'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS2_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2A'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_TRANS2A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2B'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_VCE_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN2'), ' ', ''), 80)]",
-        "global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-Untrust'), ' ', ''), 80)]",
-        "global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-bastion'), ' ', ''), 80)]",
-        "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat(parameters('SiteCode'),'SV-VCE01-ip'), ' ', ''), 80)]",
-        "global_publicIP_Bastion_Name": "[take(replace(concat(parameters('SiteCode'),'SV-Bastion-ip'), ' ', ''), 80)]",
-        "global_Bastion_Name": "[take(replace(concat(parameters('SiteCode'),'SV-Bastion'), ' ', ''), 80)]",
-        "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'SV-VCE01'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-EXT-HUB-UNTRUST'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-EXT-HUB-BASTION'), ' ', ''), 80)]",
+        "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat('PIP-',parameters('SiteCode'),'-Network-Infrastructure-VCE01-Prod'), ' ', ''), 80)]",
+        "global_publicIP_Bastion_Name": "[take(replace(concat('PIP-',parameters('SiteCode'),'-Network-Bastion-Prod'), ' ', ''), 80)]",
+        "global_Bastion_Name": "[take(replace(concat('BSTN-',parameters('SiteCode'),'-Network-Infrastructure-Prod'), ' ', ''), 80)]",
+        "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'SVPEVVCE01'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
-        "global_plb_name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-PLB'), ' ', ''), 80)]",
-        "global_ilb_name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-ILB'), ' ', ''), 80)]",
-        "global_NAT_Gateway_Name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-NATGW'), ' ', ''), 80)]",
-        "global_publicIP_Prefix_Name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-PIPPFX'), ' ', ''), 80)]",
-        "global_paloASName": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-AS'), ' ', ''), 80)]",
-        "global_VCEASName": "[take(replace(concat(parameters('SiteCode'),'SV-VCE-AS'), ' ', ''), 80)]",
-        "global_palo-fw1-name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-1'), ' ', ''), 80)]",
-        "global_palo-fw2-name": "[take(replace(concat(parameters('SiteCode'),'SV-PALO-2'), ' ', ''), 80)]",
+        "global_plb_name": "[take(replace(concat('LB-',parameters('SiteCode'),'-EXT-Firewall-Prod'), ' ', ''), 80)]",
+        "global_ilb_name": "[take(replace(concat('LB-',parameters('SiteCode'),'-INT-Firewall-Prod'), ' ', ''), 80)]",
+        "global_NAT_Gateway_Name": "[take(replace(concat('NGW-',parameters('SiteCode'),'-Firewall-Infrastructure-Prod'), ' ', ''), 80)]",
+        "global_publicIP_Prefix_Name": "[take(replace(concat('PIPFX-',parameters('SiteCode'),'-Firewall-Infrastructure-Palo-Prod'), ' ', ''), 80)]",
+        "global_paloASName": "[take(replace(concat('AS-',parameters('SiteCode'),'-Firewall-Palo-Prod'), ' ', ''), 80)]",
+        "global_VCEASName": "[take(replace(concat('AS-',parameters('SiteCode'),'-Network-VCE-Prod'), ' ', ''), 80)]",
+        "global_palo-fw1-name": "[take(replace(concat(parameters('SiteCode'),'SVPEVFW01'), ' ', ''), 80)]",
+        "global_palo-fw2-name": "[take(replace(concat(parameters('SiteCode'),'SVPEVFW02'), ' ', ''), 80)]",
         "global_paloNSGName": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-PALOS'), ' ', ''), 80)]",
         "global_vm_adminUsername": "[parameters('username')]",
         "HubVNETTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','hubvnet-deploy.json')]",
@@ -504,13 +520,13 @@
                         "value": "[parameters('SN_HUB_TRANS2_Address_Space')]"
                     },
                     "TRANS1a-subnet-name": {
-                        "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1', 'TRANS1a')]"
+                        "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1A', 'TRANS1B')]"
                     },
                     "TRANS1a-address-space": {
                         "value": "[parameters('SN_HUB_TRANS1a_Address_Space')]"
                     },
                     "TRANS2a-subnet-name": {
-                        "value": "[replace(variables('global_SN_HUB_TRANS2_Name'),'TRANS2', 'TRANS2a')]"
+                        "value": "[replace(variables('global_SN_HUB_TRANS2_Name'),'TRANS2A', 'TRANS2B')]"
                     },
                     "TRANS2a-address-space": {
                         "value": "[parameters('SN_HUB_TRANS2a_Address_Space')]"
@@ -555,16 +571,16 @@
                         "value": "[variables('global_RT_HUB_name')]"
                     },
                     "routeTables_TRANS1_name": {
-                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS1')]"
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS1A')]"
                     },
                     "routeTables_TRANS1a_name": {
-                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS1a')]"
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS1B')]"
                     },
                     "routeTables_TRANS2_name": {
-                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2')]"
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2A')]"
                     },
                     "routeTables_TRANS2a_name": {
-                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2a')]"
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2B')]"
                     },
                     "Palo_ILB_Static_IP": {
                         "value": "[parameters('Palo_Alto_ILB-IP')]"
@@ -648,13 +664,13 @@
                         "value": "[parameters('NSG_RG_NAME')]"
                     },
                     "TRANS1a-subnet-name": {
-                        "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1', 'TRANS1a')]"
+                        "value": "[replace(variables('global_SN_HUB_TRANS1_Name'),'TRANS1A', 'TRANS1B')]"
                     },
                     "TRANS1a-address-space": {
                         "value": "[parameters('SN_HUB_TRANS1a_Address_Space')]"
                     },
                     "TRANS2a-subnet-name": {
-                        "value": "[replace(variables('global_SN_HUB_TRANS2_Name'),'TRANS2', 'TRANS2a')]"
+                        "value": "[replace(variables('global_SN_HUB_TRANS2_Name'),'TRANS2A', 'TRANS2B')]"
                     },
                     "TRANS2a-address-space": {
                         "value": "[parameters('SN_HUB_TRANS2a_Address_Space')]"
