@@ -313,7 +313,7 @@
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/routeTables',concat('/routes/',parameters('routeTables_TRANS1_name'),'/','Default'))]"
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1_name')), '/routes/', 'Default')]"
             ],
             "properties": {
                 "addressPrefix": "10.0.0.0/8",
@@ -326,7 +326,7 @@
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/routeTables/routes/', concat('/routes/',parameters('routeTables_TRANS1_name'),'/','RFC1918-1'))]"
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1_name')), '/routes/', 'RFC1918-1')]"
             ],
             "properties": {
                 "addressPrefix": "172.16.0.0/12",
@@ -339,7 +339,7 @@
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/routeTables/routes/',concat('/routes/',parameters('routeTables_TRANS1_name'),'/','RFC1918-2'))]"
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1_name')), '/routes/', 'RFC1918-2')]"
             ],
             "properties": {
                 "addressPrefix": "192.168.0.0/16",
