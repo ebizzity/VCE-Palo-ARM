@@ -296,7 +296,7 @@
         },
 
         {
-            "name": "[concat(parameters('routeTables_TRANS1_name'),'/','Default')]",
+            "name": "[concat(parameters('routeTables_TRANS1_name'),'Default')]",
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
             "dependsOn": [
@@ -309,11 +309,11 @@
             }
         },
         {
-            "name": "[concat(parameters('routeTables_TRANS1_name'),'/','RFC1918-1')]",
+            "name": "[concat(parameters('routeTables_TRANS1_name'),'RFC1918-1')]",
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
             "dependsOn": [
-                "[concat(parameters('routeTables_TRANS1_name'),'/','Default')]"
+                "[concat(parameters('routeTables_TRANS1_name'),'Default')]"
             ],
             "properties": {
                 "addressPrefix": "10.0.0.0/8",
@@ -322,11 +322,11 @@
             }
         },
         {
-            "name": "[concat(parameters('routeTables_TRANS1_name'),'/','RFC1918-2')]",
+            "name": "[concat(parameters('routeTables_TRANS1_name'),'RFC1918-2')]",
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
             "dependsOn": [
-                "[concat(parameters('routeTables_TRANS1_name'),'/','RFC1918-1')]"
+                "[concat(parameters('routeTables_TRANS1_name'),'RFC1918-1')]"
             ],
             "properties": {
                 "addressPrefix": "172.16.0.0/12",
@@ -335,11 +335,11 @@
             }
         },
         {
-            "name": "[concat(parameters('routeTables_TRANS1_name'),'/','RFC1918-3')]",
+            "name": "[concat(parameters('routeTables_TRANS1_name'),'RFC1918-3')]",
             "type": "Microsoft.Network/routeTables/routes",
             "apiVersion": "2019-11-01",
             "dependsOn": [
-                "[concat(parameters('routeTables_TRANS1_name'),'/','RFC1918-2')]"
+                "[concat(parameters('routeTables_TRANS1_name'),'RFC1918-2')]"
             ],
             "properties": {
                 "addressPrefix": "192.168.0.0/16",
