@@ -341,6 +341,21 @@
             "metadata": {
                 "description": "Initial Password for Palo Alto."
             }
+        },
+        "spokes": {
+        "type": "object",
+        "defaultValue": {
+            "vnet": {
+            "subnets": [
+            { "name": "spoke1", "addressPrefix": "10.99.0.0/24" },
+            { "name": "spoke2", "addressPrefix": "10.99.1.0/24" },
+            { "name": "spoke3", "addressPrefix": "10.99.2.0/24" }
+            ]
+        },
+        "metadata": {
+            "description": "Spoke Ranges for TRANS RTs"
+        }
+        }
         }
     },
 
@@ -349,7 +364,7 @@
     "variables": {
         "global_var_resource_group": "[resourceGroup().name]",
         //"globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master/",
-        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/var-updates/",
+        "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/new-updates/",
         "global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
         "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat('VN-',parameters('SiteCode'),'-HUB01-PROD', variables('global_var_appendedString')), ' ', ''), 64))]",
         "global_vnet_resource_group": "[if(equals(parameters('VCE-Vnet-RG'), ''), variables('global_var_resource_group'), parameters('VCE-Vnet-RG'))]",
@@ -626,6 +641,9 @@
                     },
                     "bastion-subnet-address-space": {
                         "value": "[parameters('bastion-subnet-address-space')]"
+                    },
+                    "spokes":{
+                        "value": "[parameters('spokes')]"
                     }
                 }
             }
