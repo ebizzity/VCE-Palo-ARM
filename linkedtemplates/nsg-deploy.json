@@ -2,13 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "NATIPs" : {
-            "type": "array",
-            "defaultValue": [
-                "1.2.3.4/32",
-                "4.5.6.7/32"
-            ]
-        },
         "networkSecurityGroups_NSG_HUB_MGMT_name": {
             "type": "string"
 
@@ -52,22 +45,45 @@
             "properties": {
                 "securityRules": [
                     {
-                        "name": "Management",
+                        "name": "Allow-RFC-in",
                         "properties": {
-                            "protocol": "TCP",
+                            "protocol": "*",
                             "sourcePortRange": "*",
+                            "destinationPortRange": "*",
                             "destinationAddressPrefix": "*",
                             "access": "Allow",
-                            "priority": 600,
+                            "priority": 4000,
                             "direction": "Inbound",
                             "sourcePortRanges": [],
-                            "destinationPortRanges": [
-                                "22",
-                                "443",
-                                "3389"
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "192.168.0.0/16",
+                                "172.16.0.0/12"
                             ],
-                            "sourceAddressPrefixes": "[parameters('NATIPs')]",
                             "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "Allow-RFC-out",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 4000,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                
+                            ],
+                            "destinationAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "192.168.0.0/16",
+                                "172.16.0.0/12"
+                            ]
                         }
                     }
                 ]
@@ -198,11 +214,13 @@
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
                             "sourceAddressPrefixes": [
+                                
+                            ],
+                            "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
                                 "172.16.0.0/12"
-                            ],
-                            "destinationAddressPrefixes": []
+                            ]
                         }
                     }
                 ]
@@ -251,11 +269,13 @@
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
                             "sourceAddressPrefixes": [
+                                
+                            ],
+                            "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
                                 "172.16.0.0/12"
-                            ],
-                            "destinationAddressPrefixes": []
+                            ]
                         }
                     }
                 ]
@@ -304,11 +324,13 @@
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
                             "sourceAddressPrefixes": [
+                                
+                            ],
+                            "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
                                 "172.16.0.0/12"
-                            ],
-                            "destinationAddressPrefixes": []
+                            ]
                         }
                     }
                 ]
@@ -357,11 +379,13 @@
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
                             "sourceAddressPrefixes": [
+                                
+                            ],
+                            "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
                                 "172.16.0.0/12"
-                            ],
-                            "destinationAddressPrefixes": []
+                            ]
                         }
                     }
                 ]
@@ -410,11 +434,13 @@
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
                             "sourceAddressPrefixes": [
+                                
+                            ],
+                            "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
                                 "172.16.0.0/12"
-                            ],
-                            "destinationAddressPrefixes": []
+                            ]
                         }
                     }
                 ]

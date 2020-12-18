@@ -424,12 +424,6 @@
                 },
                 "parameters": {
                     
-                    "NATIPs" : {
-                        "value": [
-                            "1.2.3.4/32",
-                            "4.5.6.7/32"
-                        ]
-                    },
                     "networkSecurityGroups_NSG_HUB_MGMT_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_MGMT_name')]"
                     },
