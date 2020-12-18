@@ -70,15 +70,13 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "*",
-                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 4000,
                             "direction": "Outbound",
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [
-                                "*"
-                            ],
+                            "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
@@ -207,15 +205,13 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "*",
-                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 4000,
                             "direction": "Outbound",
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [
-                                "*"
-                            ],
+                            "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
@@ -262,15 +258,13 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "*",
-                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 4000,
                             "direction": "Outbound",
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [
-                                "*"
-                            ],
+                            "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
@@ -317,15 +311,13 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "*",
-                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 4000,
                             "direction": "Outbound",
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [
-                                "*"
-                            ],
+                            "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
@@ -372,15 +364,13 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "*",
-                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 4000,
                             "direction": "Outbound",
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [
-                                "*"
-                            ],
+                            "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
@@ -427,15 +417,13 @@
                             "protocol": "*",
                             "sourcePortRange": "*",
                             "destinationPortRange": "*",
-                            "destinationAddressPrefix": "*",
+                            "sourceAddressPrefix": "*",
                             "access": "Allow",
                             "priority": 4000,
                             "direction": "Outbound",
                             "sourcePortRanges": [],
                             "destinationPortRanges": [],
-                            "sourceAddressPrefixes": [
-                                "*"
-                            ],
+                            "sourceAddressPrefixes": [],
                             "destinationAddressPrefixes": [
                                 "10.0.0.0/8",
                                 "192.168.0.0/16",
