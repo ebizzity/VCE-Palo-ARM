@@ -347,9 +347,236 @@
                 "nextHopIpAddress": "[parameters('VCE01_TRANS1_Static_IP')]"
             }
         },
+        {
+
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_TRANS1a_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                    "copy": [{
+                    "name": "routes",
+                    "count": "[length(parameters('spokes').vnet.subnets)]",
+                    "input": {
+                        "name": "[parameters('spokes').vnet.subnets[copyIndex('routes')].name]",
+                        "properties":{
+                            "addressPrefix": "[parameters('spokes').vnet.subnets[copyIndex('routes')].addressPrefix]",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+                        }
+                    }
+                }]
+            }
+        },
+
+        {
+
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_TRANS2_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                    "copy": [{
+                    "name": "routes",
+                    "count": "[length(parameters('spokes').vnet.subnets)]",
+                    "input": {
+                        "name": "[parameters('spokes').vnet.subnets[copyIndex('routes')].name]",
+                        "properties":{
+                            "addressPrefix": "[parameters('spokes').vnet.subnets[copyIndex('routes')].addressPrefix]",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+                        }
+                    }
+                }]
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_TRANS2a_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                    "copy": [{
+                    "name": "routes",
+                    "count": "[length(parameters('spokes').vnet.subnets)]",
+                    "input": {
+                        "name": "[parameters('spokes').vnet.subnets[copyIndex('routes')].name]",
+                        "properties":{
+                            "addressPrefix": "[parameters('spokes').vnet.subnets[copyIndex('routes')].addressPrefix]",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                        }
+                    }
+                }]
+            }
+        },
 
 
         {
+            "name": "[concat(parameters('routeTables_TRANS1a_name'),'/','Default')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[parameters('routeTables_TRANS1a_name')]"
+            ],
+            "properties": {
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS1a_name'),'/','RFC1918-1')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1a_name')), '/routes/', 'Default')]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.0.0/8",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE02_TRANS1a_Static_IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS1a_name'),'/','RFC1918-2')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1a_name')), '/routes/', 'RFC1918-1')]"
+            ],
+            "properties": {
+                "addressPrefix": "172.16.0.0/12",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE02_TRANS1a_Static_IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS1a_name'),'/','RFC1918-3')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1a_name')), '/routes/', 'RFC1918-2')]"
+            ],
+            "properties": {
+                "addressPrefix": "192.168.0.0/16",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE02_TRANS1a_Static_IP')]"
+            }
+        },
+
+
+        {
+            "name": "[concat(parameters('routeTables_TRANS2_name'),'/','Default')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[parameters('routeTables_TRANS2_name')]"
+            ],
+            "properties": {
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS2_name'),'/','RFC1918-1')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS1a_name')), '/routes/', 'Default')]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.0.0/8",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE01_TRANS2_Static_IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS2_name'),'/','RFC1918-2')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS2_name')), '/routes/', 'RFC1918-1')]"
+            ],
+            "properties": {
+                "addressPrefix": "172.16.0.0/12",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE01_TRANS2_Static_IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS2_name'),'/','RFC1918-3')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS2_name')), '/routes/', 'RFC1918-2')]"
+            ],
+            "properties": {
+                "addressPrefix": "192.168.0.0/16",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE01_TRANS2_Static_IP')]"
+            }
+        },
+                {
+            "name": "[concat(parameters('routeTables_TRANS2a_name'),'/','Default')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[parameters('routeTables_TRANS2a_name')]"
+            ],
+            "properties": {
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS2a_name'),'/','RFC1918-1')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS2a_name')), '/routes/', 'Default')]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.0.0/8",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE02_TRANS2a_Static_IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS2a_name'),'/','RFC1918-2')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS2a_name')), '/routes/', 'RFC1918-1')]"
+            ],
+            "properties": {
+                "addressPrefix": "172.16.0.0/12",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE02_TRANS2a_Static_IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_TRANS2a_name'),'/','RFC1918-3')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_TRANS2a_name')), '/routes/', 'RFC1918-2')]"
+            ],
+            "properties": {
+                "addressPrefix": "192.168.0.0/16",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('VCE02_TRANS2a_Static_IP')]"
+            }
+        },
+
+
+
+/*         {
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2019-09-01",
             "name": "[parameters('routeTables_TRANS1a_name')]",
@@ -392,8 +619,8 @@
                 ]
             }
         },
-
-        {
+ */
+       /*  {
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2019-09-01",
             "name": "[parameters('routeTables_TRANS2_name')]",
@@ -435,10 +662,10 @@
                     }
                 ]
             }
-        },
+        }, */
 
 
-        {
+       /*  {
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2019-09-01",
             "name": "[parameters('routeTables_TRANS2a_name')]",
@@ -480,7 +707,7 @@
                     }
                 ]
             }
-        },    
+        },     */
         {
             "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-05-01",
