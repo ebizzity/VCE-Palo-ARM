@@ -521,7 +521,7 @@
         "name": "CREATE_PUBLICLB",
         "apiVersion": "[variables('global_var_apiVersion')]",
         "resourceGroup": "[variables('publicLb_resource_group')]",
-        "condition": "[equals(parameters('DeployPublicLB'), 'true')]",
+        "condition": "[parameters('DeployPublicLB')]",
         "properties": {
           "mode": "Incremental",
           "template": {
