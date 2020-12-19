@@ -880,7 +880,10 @@
                     },
                     "VCE_PUB_NSG_NAME":{
                        "value": "[variables('global_networkSecurityGroups_NSG_VCE_PUB_NSG_NAME')]"
-                    } 
+                    },
+                    "DeployVCELAN":{
+                        "value": "[parameters('DeployVCELAN')]"
+                    }
                 }
         
                   
@@ -988,6 +991,9 @@
                     },
                     "global_NIC_VCE02_TRANS1a_name": {
                         "value": "[variables('global_NIC_VCE02_TRANS1a_name')]"
+                    },
+                    "DeployVCELAN":{
+                        "value": "[parameters('DeployVCELAN')]"
                     }
                 }
 
@@ -1123,6 +1129,9 @@
                     },
                     "global_NIC_VCE02_TRANS2a_name": {
                         "value": "[variables('global_NIC_VCE02_TRANS2a_name')]"
+                    },
+                    "DeployVCELAN":{
+                        "value": "[parameters('DeployVCELAN')]"
                     }
                 }
         
@@ -1230,6 +1239,9 @@
                     },
                     "global_NIC_VCE02_TRANS1a_name": {
                         "value": "[variables('global_NIC_VCE02_TRANS1a_name')]"
+                    },
+                    "DeployVCELAN":{
+                        "value": "[parameters('DeployVCELAN')]"
                     }
 
                 }

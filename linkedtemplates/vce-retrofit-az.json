@@ -85,6 +85,9 @@
         },
         "global_NIC_VCE02_TRANS1a_name": {
             "type": "string"
+        },
+        "DeployVCELAN": {
+            "type": "bool"
         }
 
     },
@@ -148,6 +151,7 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-09-01",
             "name": "[parameters('global_NIC_VCE_LAN_name')]",
+            "condition": "[parameters('DeployVCELAN')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 
@@ -375,6 +379,7 @@
             "type": "Microsoft.Compute/virtualMachines",
             "apiVersion": "2019-03-01",
             "name": "[parameters('global_virtualMachines_VCE01_name')]",
+            "condition": "[parameters('DeployVCELAN')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_MGMT_name'))]",
@@ -476,7 +481,109 @@
             "zones": [
                     "[parameters('vce2_zone')]"
             ]
+        },
+                {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[parameters('global_virtualMachines_VCE01_name')]",
+            "condition": "[not(parameters('DeployVCELAN'))]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_MGMT_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_WAN_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS1a_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2a_name'))]"
+            ],
+            "tags": {
+
+            },
+            "plan": {
+                "name": "velocloud-virtual-edge-3x",
+                "product": "velocloud-virtual-edge-3x",
+                "publisher": "velocloud"
+            },
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_DS4_v2"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "velocloud",
+                        "offer": "velocloud-virtual-edge-3x",
+                        "sku": "velocloud-virtual-edge-3x",
+                        "version": "3.0.0"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(parameters('global_virtualMachines_VCE01_name'), '_OsDisk_1')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS"
+                        },
+                        "diskSizeGB": 32
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('global_virtualMachines_VCE01_name')]",
+                    "adminUsername": "appadmin",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "/home/appadmin/.ssh/authorized_keys",
+                                    "keyData": "[parameters('SSH_Key')]"
+                                }
+                            ]
+                        },
+                        "provisionVMAgent": true
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_MGMT_name'))]",
+                            "properties": {
+                                "primary": true
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE_WAN_name'))]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS1a_name'))]",
+                            "properties": {
+                                "primary": false
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('global_NIC_VCE02_TRANS2a_name'))]",
+                            "properties": {
+                                "primary": false
+                            }
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
+                    }
+                }
+            },
+            "zones": [
+                    "[parameters('vce2_zone')]"
+            ]
         } 
+
+        
 
     ],
     "outputs": {}
