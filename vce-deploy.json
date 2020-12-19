@@ -309,9 +309,16 @@
         },
         "storageAccounts_diagnostics_name": {
             "type": "string",
-            "defaultValue": "embsausae2prodnetworkdiag01",
+            "defaultValue": "embsausaenetworkdiag",
             "metadata": {
                 "description": "Storage account used for VM Diagnostics"
+            }
+        },
+        "storageAccounts_nsgflowlogs_name": {
+            "type": "string",
+            "defaultValue": "embsausaensgflowlogs",
+            "metadata": {
+                "description": "Storage account used for NSG Flow Logs"
             }
         },
         "(opt.) AppendStringToResources": {
@@ -400,6 +407,7 @@
         "global_Bastion_Name": "[take(replace(concat('BSTN-',parameters('SiteCode'),'-Network-Infrastructure-Prod'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'SVPEVVCE01'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
+        "global_storageAccounts_nsgflologs_name": "[take(replace(parameters('storageAccounts_nsgflowlogs_name'), ' ', ''), 80)]",
         "global_plb_name": "[take(replace(concat('LB-',parameters('SiteCode'),'-EXT-Firewall-Prod'), ' ', ''), 80)]",
         "global_ilb_name": "[take(replace(concat('LB-',parameters('SiteCode'),'-INT-Firewall-Prod'), ' ', ''), 80)]",
         "global_NAT_Gateway_Name": "[take(replace(concat('NGW-',parameters('SiteCode'),'-Firewall-Infrastructure-Prod'), ' ', ''), 80)]",
@@ -465,6 +473,9 @@
                     },
                     "networkSecurityGroups_NSG_HUB_Untrust_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
+                    },
+                    "global_storageAccounts_nsgflologs_name":{
+                        "value": "[variables('global_storageAccounts_nsgflologs_name')]"
                     }
 
 

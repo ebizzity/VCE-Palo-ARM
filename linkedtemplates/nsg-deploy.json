@@ -29,11 +29,50 @@
         },
         "networkSecurityGroups_NSG_HUB_Untrust_name": {
             "type": "string"
+        },
+        "global_storageAccounts_nsgflologs_name": {
+            "type": "string"
         }
     },
     "functions": [],
     "variables": {},
     "resources": [
+
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('global_storageAccounts_nsgflologs_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                }
+            }
+        },
+
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-09-01",
