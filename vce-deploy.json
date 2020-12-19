@@ -216,6 +216,28 @@
                 "description": "Leverage Availability Sets or Availability Zones for Deployment of NVAs"
             }
         },
+        "DeployPublicLB": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Boolean to determine wheter or not to deploy Palo Alto Public Load Balancer"
+            },
+            "allowedValues": [
+                true,
+                false
+            ]
+        },
+        "DeployVCELAN": {
+            "type": "bool",
+            "defaultValue": true,
+            "metadata": {
+                "description": "Boolean to determine wheter or not to deploy LAN Interfaces on the VCEs"
+            },
+            "allowedValues": [
+                true,
+                false
+            ]
+        },
         "VNETName": {
             "type": "string",
             "defaultValue": "VN-USAE2-HUB01-PROD",
@@ -1370,6 +1392,9 @@
                     },
                     "password": {
                         "value":"[parameters('paloPassword')]"
+                    },
+                    "DeployPublicLB": {
+                        "value": "[parameters('DeployPublicLB')]"
                     }
                 }
 
@@ -1534,6 +1559,9 @@
                     },
                     "subnetName-TRANS2a": {
                         "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
+                    },
+                    "DeployPublicLB": {
+                        "value": "[parameters('DeployPublicLB')]"
                     }
                 }
 
