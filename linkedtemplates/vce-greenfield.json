@@ -114,7 +114,7 @@
             "type": "string"
         },
         "DeployVCELAN": {
-            "type": "bool"
+            "type": "string"
         } 
  
     },
@@ -135,7 +135,7 @@
     "name": "DEPLOY_VCEs-LAN",
     "type": "Microsoft.Resources/deployments",
     "apiVersion": "2019-10-01",
-    "condition": "[parameters('DeployVCELAN')]",
+    "condition": "[equals(parameters('DeployVCELAN'), 'true')]",
     "properties": {
         "expressionEvaluationOptions": {
             "scope": "outer"

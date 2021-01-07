@@ -228,14 +228,14 @@
             ]
         },
         "DeployVCELAN": {
-            "type": "bool",
-            "defaultValue": true,
+            "type": "string",
+            "defaultValue": "true",
             "metadata": {
                 "description": "Boolean to determine wheter or not to deploy LAN Interfaces on the VCEs"
             },
             "allowedValues": [
-                true,
-                false
+                "true",
+                "false"
             ]
         },
         "VNETName": {
