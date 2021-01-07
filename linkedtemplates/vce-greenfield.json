@@ -129,7 +129,26 @@
     },
     "resources": [
 
-        {
+        
+ 
+{
+    "name": "DEPLOY_VCEs-LAN",
+    "type": "Microsoft.Resources/deployments",
+    "apiVersion": "2019-10-01",
+    "condition": "[parameters('DeployVCELAN')]",
+    "properties": {
+        "expressionEvaluationOptions": {
+            "scope": "outer"
+        },
+        "mode": "Incremental",
+        "template": {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.0",
+            "parameters": {},
+            "variables": {},
+            "resources": [
+
+            {
             "type": "Microsoft.Compute/availabilitySets",
             "sku": {
             "name": "[variables('avset_sku')]"
@@ -176,24 +195,8 @@
                 }
             }
  },
- 
-{
-    "name": "DEPLOY_VCEs-LAN",
-    "type": "Microsoft.Resources/deployments",
-    "apiVersion": "2019-10-01",
-    "condition": "[parameters('DeployVCELAN')]",
-    "properties": {
-        "expressionEvaluationOptions": {
-            "scope": "outer"
-        },
-        "mode": "Incremental",
-        "template": {
-            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-            "contentVersion": "1.0.0.0",
-            "parameters": {},
-            "variables": {},
-            "resources": [
-                {
+
+            {
             "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2019-09-01",
             "name": "[parameters('global_publicIPAddresses_VCE01_ip_name')]",
@@ -207,9 +210,9 @@
                 "idleTimeoutInMinutes": 4,
                 "ipTags": []
             }
- },
- 
- {
+            },
+            
+            {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-09-01",
             "name": "[parameters('global_NIC_VCE_LAN_name')]",
