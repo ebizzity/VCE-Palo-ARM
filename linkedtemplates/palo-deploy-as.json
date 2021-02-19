@@ -204,6 +204,13 @@
         "description": "Enter a private IP address for firewall-1's second dataplane interface."
       }
     },
+    "FW1-IPHA": {
+      "type": "string",
+      "defaultValue": "10.0.0.6",
+      "metadata": {
+        "description": "Enter a private IP address for firewall-1's HA interface."
+      }
+    },
     "FW2-Name": {
       "type": "string",
       "defaultValue": "vmseries-fw-vm2",
@@ -236,14 +243,21 @@
       "type": "string",
       "defaultValue": "10.0.5.4",
       "metadata": {
-        "description": "Enter a private IP address for firewall-1's second dataplane interface."
+        "description": "Enter a private IP address for firewall-2's second dataplane interface."
       }
     },
     "FW2-IPTRANS2a": {
       "type": "string",
       "defaultValue": "10.0.6.4",
       "metadata": {
-        "description": "Enter a private IP address for firewall-1's second dataplane interface."
+        "description": "Enter a private IP address for firewall-2's second dataplane interface."
+      }
+    },
+    "FW2-IPHA": {
+      "type": "string",
+      "defaultValue": "10.0.0.7",
+      "metadata": {
+        "description": "Enter a private IP address for firewall-2's HA interface."
       }
     },
     "licenseType": {
@@ -417,7 +431,10 @@
       }
     },
     "DeployPublicLB": {
-            "type": "bool"
+      "type": "bool"
+    },
+    "global_storageAccounts_diagnostics_name": {
+      "type": "string"
     }
   },
   "variables": {
@@ -508,11 +525,13 @@
     "fw1_interface2_name": "[take(replace(concat('NIC-',parameters('FW1-Name'), '-Nic2-LAN', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface3_name": "[take(replace(concat('NIC-',parameters('FW1-Name'), '-Nic3-TRANS1A', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface4_name": "[take(replace(concat('NIC-',parameters('FW1-Name'), '-Nic4-TRANS1B', variables('global_var_appendedString')), ' ', ''), 80)]",
+    "fw1_interface5_name": "[take(replace(concat('NIC-',parameters('FW1-Name'), '-Nic5-HA', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface0_ip": "[parameters('FW1-IPManagement')]",
     "fw1_interface1_ip": "[parameters('FW1-IPDataplane1')]",
     "fw1_interface2_ip": "[parameters('FW1-IPDataplane2')]",
     "fw1_interface3_ip": "[parameters('FW1-IPTRANS1')]",
     "fw1_interface4_ip": "[parameters('FW1-IPTRANS1a')]",
+    "fw1_interface5_ip": "[parameters('FW1-IPHA')]",
     "fw1_interface0_pip_name": "[take(replace(concat('PIP-',parameters('FW1-Name'), '-Firewall-Infrastructure-Nic0-Prod', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface1_pip_name": "[take(replace(concat('PIP-',parameters('FW1-Name'), '-Firewall-Infrastructure-Nic1-Prod', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw1_interface0_pip_id": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('fw1_interface0_pip_name'))]" },
@@ -525,11 +544,13 @@
     "fw2_interface2_name": "[take(replace(concat('NIC-',parameters('FW2-Name'), '-Nic2-LAN', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface3_name": "[take(replace(concat('NIC-',parameters('FW2-Name'), '-Nic3-TRANS2A', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface4_name": "[take(replace(concat('NIC-',parameters('FW2-Name'), '-Nic4-TRANS2B', variables('global_var_appendedString')), ' ', ''), 80)]",
+    "fw2_interface5_name": "[take(replace(concat('NIC-',parameters('FW2-Name'), '-Nic5-HA', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface0_ip": "[parameters('FW2-IPManagement')]",
     "fw2_interface1_ip": "[parameters('FW2-IPDataplane1')]",
     "fw2_interface2_ip": "[parameters('FW2-IPDataplane2')]",
     "fw2_interface3_ip": "[parameters('FW2-IPTRANS2')]",
     "fw2_interface4_ip": "[parameters('FW2-IPTRANS2a')]",
+    "fw2_interface5_ip": "[parameters('FW2-IPHA')]",
     "fw2_interface0_pip_name": "[take(replace(concat('PIP-',parameters('FW2-Name'),'-Firewall-Infrastructure-Nic0-Prod', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface1_pip_name": "[take(replace(concat('PIP-',parameters('FW2-Name'),'-Firewall-Infrastructure-Nic1-Prod', variables('global_var_appendedString')), ' ', ''), 80)]",
     "fw2_interface0_pip_id": { "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('fw2_interface0_pip_name'))]" },
@@ -943,6 +964,33 @@
               }
             },
             {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw1_interface5_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw1_interface5_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet0_name'))]"
+                      },
+                      "primary": false,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": false,
+                "tapConfigurations": []
+              },
+              "dependsOn": [
+              ]
+            },
+            {
               "type": "Microsoft.Compute/virtualMachines",
               "name": "[variables('fw1_computerName')]",
               "apiVersion": "[variables('global_var_apiVersion')]",
@@ -1010,8 +1058,20 @@
                       "properties": {
                         "primary": false
                       }
+                    },
+                    {
+                      "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface5_name'))]",
+                      "properties": {
+                        "primary": false
+                      }
                     }
                   ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
+                    }
                 }
               },
               "dependsOn": [
@@ -1019,7 +1079,8 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface1_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface2_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface3_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface4_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface4_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw1_interface5_name'))]"
               ]
             }
           ]
@@ -1221,6 +1282,33 @@
               }
             },
             {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw2_interface5_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw2_interface5_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet0_name'))]"
+                      },
+                      "primary": false,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]"
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": false,
+                "tapConfigurations": []
+              },
+              "dependsOn": [
+              ]
+            },
+            {
               "type": "Microsoft.Compute/virtualMachines",
               "name": "[variables('fw2_computerName')]",
               "apiVersion": "[variables('global_var_apiVersion')]",
@@ -1288,8 +1376,20 @@
                       "properties": {
                         "primary": false
                       }
+                    },
+                    {
+                      "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface5_name'))]",
+                      "properties": {
+                        "primary": false
+                      }
                     }
                   ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
+                    }
                 }
               },
               "dependsOn": [
@@ -1297,7 +1397,8 @@
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface1_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface2_name'))]",
                 "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface3_name'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface4_name'))]"
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface4_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('fw2_interface5_name'))]"
               ]
             }
           ]

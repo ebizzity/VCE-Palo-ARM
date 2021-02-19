@@ -126,6 +126,13 @@
                 "description": "Static IP for Palo Alto #1 - TRANS1a Interface"
             }
         },
+        "Palo_Alto_FW1-HA-IP": {
+            "defaultValue": "10.132.208.53",
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #1 - HA Interface"
+            }
+        },
         "Palo_Alto_FW2-MGMT-IP": {
             "defaultValue": "10.132.208.7",
             "type": "string",
@@ -159,6 +166,13 @@
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #2 - TRANS2a Interface"
+            }
+        },
+        "Palo_Alto_FW2-HA-IP": {
+            "defaultValue": "10.132.208.53",
+            "type": "string",
+            "metadata": {
+                "description": "Static IP for Palo Alto #2 - HA Interface"
             }
         },
         "username": {
@@ -238,6 +252,45 @@
                 "false"
             ]
         },
+        "DeployVNG": {
+            "type": "string",
+            "defaultValue": "true",
+            "allowedValues": [
+                "true",
+                "false"
+            ],
+            "metadata": {
+                "description": "Create a VNG with this deployment?"
+            }
+        },
+        "VNGName": {
+            "type": "string",
+            "defaultValue": "VNG-RENAME_ME",
+            "metadata": {
+                "description": "Name for VNG to be created.  If option above is set to false, ignore..."
+            }
+        },
+        "LNGName": {
+            "type": "string",
+            "defaultValue": "LNG-RENAME_ME",
+            "metadata": {
+                "description": "Name for LNG to be created.  If VNG option above is false, ignore..."
+            }
+        },
+        "LNGRemoteIP": {
+            "type": "string",
+            "defaultValue": "67.163.222.199",
+            "metadata": {
+                "description": "IP Address for remote end of tunnel  If VNG option above is false, ignore..."
+            }
+        },
+        "LNGSubnets": {
+            "type": "array",
+            "defaultValue": [
+                "10.0.0.0/8",
+                "192.168.0.0/16"
+            ]
+        },
         "VNETName": {
             "type": "string",
             "defaultValue": "VN-USAE2-HUB01-PROD",
@@ -306,6 +359,13 @@
             "type": "string",
             "metadata": {
                 "description": "Hub Subnet - Untrust (For Internet Egress/Ingress via Palos) - Address Space"
+            }
+        },
+        "SN_HUB_GatewaySubnet_Address_Space": {
+            "defaultValue": "10.132.208.160/27",
+            "type": "string",
+            "metadata": {
+                "description": "Hub Subnet - GatewaySubnet for VNG - Address Space"
             }
         },
         "bastion-subnet-address-space": {
@@ -426,6 +486,7 @@
         "global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME": "[take(replace(concat('NSG-',parameters('SiteCode'),'-EXT-HUB-BASTION'), ' ', ''), 80)]",
         "global_publicIPAddresses_VCE01_ip_name": "[take(replace(concat('PIP-',parameters('SiteCode'),'-Network-Infrastructure-VCE01-Prod'), ' ', ''), 80)]",
         "global_publicIP_Bastion_Name": "[take(replace(concat('PIP-',parameters('SiteCode'),'-Network-Bastion-Prod'), ' ', ''), 80)]",
+        "global_publicIP_VNG_Name": "[take(replace(concat('PIP-',parameters('SiteCode'),'-Network-VNG-Prod'), ' ', ''), 80)]",
         "global_Bastion_Name": "[take(replace(concat('BSTN-',parameters('SiteCode'),'-Network-Infrastructure-Prod'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'SVPEVVCE01'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
@@ -449,7 +510,8 @@
         "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az.json')]",
         "NATGWTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','natgateway.json')]",
         "VnetretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vnetretrofit.json')]",
-        "NSGtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','nsg-deploy.json')]"
+        "NSGtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','nsg-deploy.json')]",
+        "VNGTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vng-deploy.json')]"
     },
     "resources": [
 
@@ -679,6 +741,52 @@
                         "value": "[parameters('spokes')]"
                     }
                 }
+            }
+        },
+        {
+            "comments": "Create VNG",
+            "type": "Microsoft.Resources/deployments",
+            "name": "VNG_Create",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[variables('global_vnet_resource_group')]",
+            "condition": "[equals(parameters('DeployVNG'), 'true')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'CREATE_HUB_VNET')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('VNGtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+                    
+                "VNGName": {
+                    "value": "[parameters('VNGName')]"
+                },
+                "LNGName": {
+                    "value": "[parameters('LNGName')]"
+                },
+                "vnetrg": {
+                    "value": "[variables('global_vnet_resource_group')]"
+                },
+                "vnetname": {
+                    "value": "[variables('global_vnet_name')]"
+                },
+                "vng-pip-name": {
+                    "type": "[variables('global_publicIP_VNG_Name')]"
+                },
+                "LNGRemoteIP": {
+                    "value": "[parameters('LNGRemoteIP')]"
+                },
+                "LNGSubnets": {
+                    "value": "[parameters('LNGSubnets')]"
+                }
+
+                }
+
+
             }
         },
          {
@@ -1348,6 +1456,9 @@
                     "FW1-IPTRANS1a":{
                         "value": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
                     },
+                    "FW1-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW1-HA-IP')]"
+                    },
                     "FW2-Name": {
                         "value": "[variables('global_palo-fw2-name')]"
                     },
@@ -1365,6 +1476,9 @@
                     },
                     "FW2-IPTRANS2a":{
                         "value": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                    },
+                    "FW2-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW2-HA-IP')]"
                     },
                     "licenseType": {
                         "value": "byol"
@@ -1407,6 +1521,9 @@
                     },
                     "DeployPublicLB": {
                         "value": "[parameters('DeployPublicLB')]"
+                    },
+                    "global_storageAccounts_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_diagnostics_name')]"
                     }
                 }
 
@@ -1497,6 +1614,9 @@
                     "FW1-IPDataplane2": {
                         "value": "[parameters('Palo_Alto_FW1-LAN-IP')]"
                     },
+                    "FW1-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW1-HA-IP')]"
+                    },
                     "FW2-Name": {
                         "value": "[variables('global_palo-fw2-name')]"
                     },
@@ -1508,6 +1628,9 @@
                     },
                     "FW2-IPDataplane2": {
                         "value": "[parameters('Palo_Alto_FW2-LAN-IP')]"
+                    },
+                    "FW2-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW2-HA-IP')]"
                     },
                     "licenseType": {
                         "value": "byol"
@@ -1574,6 +1697,9 @@
                     },
                     "DeployPublicLB": {
                         "value": "[parameters('DeployPublicLB')]"
+                    },
+                    "global_storageAccounts_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_diagnostics_name')]"
                     }
                 }
 
