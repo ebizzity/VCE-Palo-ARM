@@ -127,7 +127,7 @@
             }
         },
         "Palo_Alto_FW1-HA-IP": {
-            "defaultValue": "10.132.208.53",
+            "defaultValue": "10.132.208.9",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #1 - HA Interface"
@@ -169,7 +169,7 @@
             }
         },
         "Palo_Alto_FW2-HA-IP": {
-            "defaultValue": "10.132.208.53",
+            "defaultValue": "10.132.208.8",
             "type": "string",
             "metadata": {
                 "description": "Static IP for Palo Alto #2 - HA Interface"
@@ -279,7 +279,6 @@
         },
         "LNGRemoteIP": {
             "type": "string",
-            "defaultValue": "67.163.222.199",
             "metadata": {
                 "description": "IP Address for remote end of tunnel  If VNG option above is false, ignore..."
             }
@@ -732,6 +731,9 @@
                     },
                     "bastion-subnet-address-space": {
                         "value": "[parameters('bastion-subnet-address-space')]"
+                    },
+                    "gatewaysubnet-address-space": {
+                        "value": "[parameters('SN_HUB_GatewaySubnet_Address_Space')]"
                     },
                     "spokes":{
                         "value": "[parameters('spokes')]"

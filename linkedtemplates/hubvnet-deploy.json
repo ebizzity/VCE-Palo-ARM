@@ -48,6 +48,9 @@
         "TRANS2a-address-space": {
             "type": "string"
         },
+        "gatewaysubnet-address-space": {
+            "type": "string"
+        },
         "bastion-subnet-address-space": {
             "type": "string"
         },
@@ -902,7 +905,7 @@
                             }
                         }
                     },
-                                        {
+                    {
                         "name": "AzureBastionSubnet",
                         "properties": {
                             "addressPrefix": "[parameters('bastion-subnet-address-space')]",
@@ -912,6 +915,13 @@
                             "delegations": [],
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "GatewaySubnet",
+                        "properties": {
+                            "addressPrefix": "[parameters('gatewaysubnet-address-space')]",
+                            "delegations": []
                         }
                     }
                 ],
