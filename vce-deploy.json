@@ -775,7 +775,7 @@
                     "value": "[variables('global_vnet_name')]"
                 },
                 "vng-pip-name": {
-                    "type": "[variables('global_publicIP_VNG_Name')]"
+                    "value": "[variables('global_publicIP_VNG_Name')]"
                 },
                 "LNGRemoteIP": {
                     "value": "[parameters('LNGRemoteIP')]"
