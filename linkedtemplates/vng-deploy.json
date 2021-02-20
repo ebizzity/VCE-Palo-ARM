@@ -82,9 +82,7 @@
             ],
             "properties": {
                 "localNetworkAddressSpace": {
-                    "addressPrefixes": [
-                        "[parameters('LNGSubnets')]"
-                    ]
+                    "addressPrefixes": "[parameters('LNGSubnets')]"
                 },
                 "gatewayIpAddress": "[parameters('LNGRemoteIP')]"
             }
