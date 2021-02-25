@@ -624,8 +624,7 @@
         "resourceGroup": "[resourceGroup().name]",
         "dependsOn": [
          
-          "CREATE_INTERNALLB",
-          "CREATE_PUBLICLB"
+          "CREATE_INTERNALLB"
         ],
         "properties": {
           "mode": "Incremental",
@@ -938,8 +937,7 @@
         "resourceGroup": "[resourceGroup().name]",
         "dependsOn": [
         
-          "CREATE_INTERNALLB",
-          "CREATE_PUBLICLB"
+          "CREATE_INTERNALLB"
         ],
         "properties": {
           "mode": "Incremental",
