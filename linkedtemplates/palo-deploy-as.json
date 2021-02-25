@@ -430,9 +430,6 @@
         "description": "If the NAME and CONFIGURATION of the created LBs/NSGs/VMs/AVSET/VNET match an existing LBs/NSGs/VMs/AVSET/VNET in the SAME resource group, the template will its skip creation.  If the new resource NAME matches, but the resource CONFIGURATION does not, the template will fail or will overwrite the existing resource."
       }
     },
-    "DeployPublicLB": {
-      "type": "bool"
-    },
     "global_storageAccounts_diagnostics_name": {
       "type": "string"
     }
@@ -563,7 +560,6 @@
       "name": "CREATE_PUBLICLB",
       "apiVersion": "[variables('global_var_apiVersion')]",
       "resourceGroup": "[variables('publicLb_resource_group')]",
-      "condition": "[parameters('DeployPublicLB')]",
       "properties": {
         "mode": "Incremental",
         "template": {

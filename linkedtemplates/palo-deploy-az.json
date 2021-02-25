@@ -403,9 +403,6 @@
       "subnetName-TRANS2a": {
         "type": "string"
       },
-      "DeployPublicLB": {
-            "type": "bool"
-      },
      "global_storageAccounts_diagnostics_name": {
       "type": "string"
       }
@@ -542,7 +539,6 @@
         "name": "CREATE_PUBLICLB",
         "apiVersion": "[variables('global_var_apiVersion')]",
         "resourceGroup": "[variables('publicLb_resource_group')]",
-        "condition": "[parameters('DeployPublicLB')]",
         "properties": {
           "mode": "Incremental",
           "template": {
