@@ -851,6 +851,42 @@
               "type": "Microsoft.Network/networkInterfaces",
               "name": "[variables('fw1_interface1_name')]",
               "apiVersion": "[variables('global_var_apiVersion')]",
+              "condition": "[parameters('DeployPublicLB')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw1_interface1_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "publicIpAddress": "[if(equals(variables('global_fw_interface1_pip_option'), 'Yes'), variables('fw1_interface1_pip_id'), json('null'))]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet1_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]",
+                      "loadBalancerBackendAddressPools": [
+                        {
+                          "id": "[concat(resourceId(variables('publicLb_resource_group'), 'Microsoft.Network/loadBalancers', variables('publicLb_name')), '/backendAddressPools/', variables('publicLb_pool_name'))]"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "tapConfigurations": []
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses/', variables('fw1_interface1_pip_name'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw1_interface1_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "condition": "[equals(parameters('DeployPublicLB'), 'false')]",
               "location": "[resourceGroup().location]",
               "properties": {
                 "ipConfigurations": [
@@ -1169,6 +1205,42 @@
               "type": "Microsoft.Network/networkInterfaces",
               "name": "[variables('fw2_interface1_name')]",
               "apiVersion": "[variables('global_var_apiVersion')]",
+              "condition": "[parameters('DeployPublicLB')]",
+              "location": "[resourceGroup().location]",
+              "properties": {
+                "ipConfigurations": [
+                  {
+                    "name": "ipconfig1",
+                    "properties": {
+                      "privateIpAddress": "[variables('fw2_interface1_ip')]",
+                      "privateIPAllocationMethod": "[variables('global_var_allocationMethod')]",
+                      "publicIpAddress": "[if(equals(variables('global_fw_interface1_pip_option'),'Yes'), variables('fw2_interface1_pip_id'), json('null'))]",
+                      "subnet": {
+                        "id": "[concat(resourceId(variables('global_vnet_resource_group'), 'Microsoft.Network/virtualNetworks', variables('global_vnet_name')), '/subnets/', variables('global_vnet_subnet1_name'))]"
+                      },
+                      "primary": true,
+                      "privateIPAddressVersion": "[variables('global_var_networkVersion')]",
+                      "loadBalancerBackendAddressPools": [
+                        {
+                          "id": "[concat(resourceId(variables('publicLb_resource_group'), 'Microsoft.Network/loadBalancers', variables('publicLb_name')), '/backendAddressPools/', variables('publicLb_pool_name'))]"
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "enableAcceleratedNetworking": "[variables('global_fw_enableAcceleratedNetworking')]",
+                "enableIPForwarding": true,
+                "tapConfigurations": []
+              },
+              "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses/', variables('fw2_interface1_pip_name'))]"
+              ]
+            },
+            {
+              "type": "Microsoft.Network/networkInterfaces",
+              "name": "[variables('fw2_interface1_name')]",
+              "apiVersion": "[variables('global_var_apiVersion')]",
+              "condition": "[equals(parameters('DeployPublicLB'), 'false')]",
               "location": "[resourceGroup().location]",
               "properties": {
                 "ipConfigurations": [
