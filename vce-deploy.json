@@ -503,6 +503,8 @@
         "VCEretrofit-aztemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vce-retrofit-az.json')]",
         "PaloAStemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-as.json')]",
         "PaloAZtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az.json')]",
+        "PaloASnolbtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-as-no-lb.json')]",
+        "PaloAZnolbtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','palo-deploy-az-no-lb.json')]",
         "NATGWTemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','natgateway.json')]",
         "VnetretrofittemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','vnetretrofit.json')]",
         "NSGtemplateUri": "[concat(variables('globalTemplateUriBase'),'/linkedtemplates/','nsg-deploy.json')]",
@@ -1359,7 +1361,7 @@
             "name": "CREATE_Palos-AS",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('FW_RG_NAME')]",
-            "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Set')]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Set'),equals(parameters('DeployPublicLB'), 'true')) ]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf",
@@ -1534,7 +1536,7 @@
             "name": "CREATE_Palos-AZ",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('FW_RG_NAME')]",
-            "condition": "[equals(parameters('NVADeploymentOption'), 'Availability Zone')]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Zone'),equals(parameters('DeployPublicLB'), 'true')) ]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf-az",
@@ -1544,6 +1546,357 @@
                 "mode": "Incremental",
                 "templateLink": {
                     "uri": "[variables('PaloAZtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+
+                    "VNETOption": {
+                        "value": "[variables('global_vnet_option')]"
+                    },
+                    "VNETResourceGroup": {
+                        "value": "[variables('global_vnet_resource_group')]"
+                    },
+                    "VNETName": {
+                        "value": "[variables('global_vnet_name')]"
+                    },
+                    "VNETPrefix": {
+                        "value": "[parameters('VN_HUB_Address_Space')]"
+                    },
+                    "subnetName-Management": {
+                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                    },
+                    "subnetName-Dataplane1": {
+                        "value": "[variables('global_SN_HUB_Untrust_Name')]"
+                    },
+                    "subnetName-Dataplane2": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "subnetName-InternalLB": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "subnetPrefix-Management": {
+                        "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
+                    },
+                    "subnetPrefix-Dataplane1": {
+                         "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
+                    },
+                    "subnetPrefix-Dataplane2": {
+                        "value": "[parameters('SN_HUB_LAN_Address_Space')]"
+                    },
+                    "subnetPrefix-InternalLB": {
+                        "value": "[parameters('SN_HUB_LAN_Address_Space')]"
+                    },
+                    "publicLBName": {
+                        "value": "[variables('global_plb_name')]"
+                    },
+                    "publicLBAllowedPorts": {
+                        "value": "[parameters('publicLBAllowedPorts')]"
+                    },
+                    "internalLBName": {
+                        "value": "[variables('global_ilb_name')]"
+                    },
+                    "internalLBAddress": {
+                        "value": "[parameters('Palo_Alto_ILB-IP')]"
+                    },
+                    "healthProbePort": {
+                        "value": "22"
+                    },
+                    "FW1-Name": {
+                        "value": "[variables('global_palo-fw1-name')]"
+                    },
+                    "FW1-IPManagement": {
+                        "value": "[parameters('Palo_Alto_FW1-MGMT-IP')]"
+                    },
+                    "FW1-IPDataplane1": {
+                        "value": "[parameters('Palo_Alto_FW1-WAN-IP')]"
+                    },
+                    "FW1-IPDataplane2": {
+                        "value": "[parameters('Palo_Alto_FW1-LAN-IP')]"
+                    },
+                    "FW1-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW1-HA-IP')]"
+                    },
+                    "FW2-Name": {
+                        "value": "[variables('global_palo-fw2-name')]"
+                    },
+                    "FW2-IPManagement": {
+                        "value": "[parameters('Palo_Alto_FW2-MGMT-IP')]"
+                    },
+                    "FW2-IPDataplane1": {
+                        "value": "[parameters('Palo_Alto_FW2-WAN-IP')]"
+                    },
+                    "FW2-IPDataplane2": {
+                        "value": "[parameters('Palo_Alto_FW2-LAN-IP')]"
+                    },
+                    "FW2-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW2-HA-IP')]"
+                    },
+                    "licenseType": {
+                        "value": "byol"
+                    },
+                    "PANOSVersion": {
+                        "value": "latest"
+                    },
+                    "VMSize": {
+                        "value": "Standard_DS4_v2"
+                    },
+                    "OSDiskType": {
+                        "value": "Standard_LRS"
+                    },
+                    "acceleratedNetworking": {
+                        "value": "disable"
+                    },
+                    "applyPublicIPToManagement": {
+                        "value": "Yes"
+                    },
+                    "applyPublicIPToDataplane1": {
+                        "value": "No"
+                    },
+                    "NSGName": {
+                        "value": "[variables('global_paloNSGName')]"
+                    },
+                    "NSGSourcePrefix": {
+                        "value": "[parameters('PaloMGMTNSGAllowFrom')]"
+                    },
+                    "username": {
+                        "value": "[variables('global_vm_adminUsername')]"
+                    },
+                    "password": {
+                        "value": "[parameters('paloPassword')]"
+                    },
+                    "FW1-Zone": {
+                        "value": "1"
+                    },
+                    "FW2-Zone": {
+                        "value": "2"
+                    },
+                    "FW2-IPTRANS2": {
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+                    },
+                    "FW2-IPTRANS2a": {
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                    },
+                    "FW1-IPTRANS1": {
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1-IP')]"
+                    },
+                    "FW1-IPTRANS1a": {
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+                    },
+                    "subnetName-TRANS1": {
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "subnetName-TRANS1a": {
+                        "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
+                    },
+                    "subnetName-TRANS2": {
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "subnetName-TRANS2a": {
+                        "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
+                    },
+                    "DeployPublicLB": {
+                        "value": "[parameters('DeployPublicLB')]"
+                    },
+                    "global_storageAccounts_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_diagnostics_name')]"
+                    }
+                }
+
+
+            }
+        },
+                {
+            "comments": "Create Palos AS-Option-NoPLB",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_Palos-ASSansPLB",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[parameters('FW_RG_NAME')]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Set'),equals(parameters('DeployPublicLB'), 'false')) ]",
+            "dependsOn": [
+                "CREATE_HUB_VNET",
+                "CREATE_VCEs-gf",
+                "CREATE_VCEs-rtro"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('PaloASnolbtemplateUri')]",
+                    "contentVersion": "1.0.0.0"
+
+                },
+                "parameters": {
+                    "VNETOption": {
+                        "value": "[variables('global_vnet_option')]"
+                    },
+                    "VNETResourceGroup": {
+                        "value": "[variables('global_vnet_resource_group')]"
+                    },
+                    "VNETName": {
+                        "value": "[variables('global_vnet_name')]"
+                    },
+                    "VNETPrefix": {
+                        "value": "[parameters('VN_HUB_Address_Space')]"
+                    },
+                    "subnetName-Management": {
+                         "value": "[variables('global_SN_HUB_MGMT_Name')]"
+                    },
+                    "subnetName-Dataplane1": {
+                        "value": "[variables('global_SN_HUB_Untrust_Name')]"
+                    },
+                    "subnetName-Dataplane2": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "subnetName-InternalLB": {
+                        "value": "[variables('global_SN_HUB_LAN_Name')]"
+                    },
+                    "subnetName-TRANS1":{
+                        "value": "[variables('global_SN_HUB_TRANS1_Name')]"
+                    },
+                    "subnetName-TRANS1a":{
+                        "value": "[variables('global_SN_HUB_TRANS1a_Name')]"
+                    },
+                    "subnetName-TRANS2":{
+                        "value": "[variables('global_SN_HUB_TRANS2_Name')]"
+                    },
+                    "subnetName-TRANS2a":{
+                        "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
+                    },
+                    "subnetPrefix-Management": {
+                        "value": "[parameters('SN_HUB_MGMT_Address_Space')]"
+                    },
+                    "subnetPrefix-Dataplane1": {
+                         "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
+                    },
+                    "subnetPrefix-Dataplane2": {
+                        "value": "[parameters('SN_HUB_LAN_Address_Space')]"
+                    },
+                    "subnetPrefix-InternalLB": {
+                        "value": "[parameters('SN_HUB_LAN_Address_Space')]"
+                    },
+                    "publicLBName": {
+                        "value": "[variables('global_plb_name')]"
+                    },
+                    "publicLBAllowedPorts": {
+                        "value": "[parameters('publicLBAllowedPorts')]"
+                    },
+                    "internalLBName": {
+                        "value": "[variables('global_ilb_name')]"
+                    },
+                    "internalLBAddress": {
+                        "value": "[parameters('Palo_Alto_ILB-IP')]"
+                    },
+                    "healthProbePort": {
+                        "value": "22"
+                    },
+                    "FW1-Name": {
+                        "value": "[variables('global_palo-fw1-name')]"
+                    },
+                    "FW1-IPManagement": {
+                        "value": "[parameters('Palo_Alto_FW1-MGMT-IP')]"
+                    },
+                    "FW1-IPDataplane1": {
+                        "value": "[parameters('Palo_Alto_FW1-WAN-IP')]"
+                    },
+                    "FW1-IPDataplane2": {
+                        "value": "[parameters('Palo_Alto_FW1-LAN-IP')]"
+                    },
+                    "FW1-IPTRANS1":{
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1-IP')]"
+                    },
+                    "FW1-IPTRANS1a":{
+                        "value": "[parameters('Palo_Alto_FW1-TRANS1a-IP')]"
+                    },
+                    "FW1-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW1-HA-IP')]"
+                    },
+                    "FW2-Name": {
+                        "value": "[variables('global_palo-fw2-name')]"
+                    },
+                    "FW2-IPManagement": {
+                        "value": "[parameters('Palo_Alto_FW2-MGMT-IP')]"
+                    },
+                    "FW2-IPDataplane1": {
+                        "value": "[parameters('Palo_Alto_FW2-WAN-IP')]"
+                    },
+                    "FW2-IPDataplane2": {
+                        "value": "[parameters('Palo_Alto_FW2-LAN-IP')]"
+                    },
+                    "FW2-IPTRANS2":{
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2-IP')]"
+                    },
+                    "FW2-IPTRANS2a":{
+                        "value": "[parameters('Palo_Alto_FW2-TRANS2a-IP')]"
+                    },
+                    "FW2-IPHA":{
+                        "value": "[parameters('Palo_Alto_FW2-HA-IP')]"
+                    },
+                    "licenseType": {
+                        "value": "byol"
+                    },
+                    "PANOSVersion": {
+                        "value": "latest"
+                    },
+                    "VMSize": {
+                        "value": "Standard_DS4_v2"
+                    },
+                    "OSDiskType": {
+                        "value": "Standard_LRS"
+                    },
+                    "availabilitySetOption": {
+                        "value": "Create new availability set"
+                    },
+                    "availabilitySetName": {
+                        "value": "[variables('global_paloASName')]"
+                    },
+                    "acceleratedNetworking": {
+                        "value": "disable"
+                    },
+                    "applyPublicIPToManagement": {
+                        "value": "Yes"
+                    },
+                    "applyPublicIPToDataplane1": {
+                        "value": "No"
+                    },
+                    "NSGName": {
+                        "value": "[variables('global_paloNSGName')]"
+                    },
+                    "NSGSourcePrefix": {
+                        "value": "[parameters('PaloMGMTNSGAllowFrom')]"
+                    },
+                    "username": {
+                        "value": "[variables('global_vm_adminUsername')]"
+                    },
+                    "password": {
+                        "value":"[parameters('paloPassword')]"
+                    },
+                    "DeployPublicLB": {
+                        "value": "[parameters('DeployPublicLB')]"
+                    },
+                    "global_storageAccounts_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_diagnostics_name')]"
+                    }
+                }
+
+
+            }
+        },
+        {
+            "comments": "Create Palos AZ-Option-NoPLB",
+            "type": "Microsoft.Resources/deployments",
+            "name": "CREATE_Palos-AZ-SansPLB",
+            "apiVersion": "2019-07-01",
+            "resourceGroup": "[parameters('FW_RG_NAME')]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Zone'),equals(parameters('DeployPublicLB'), 'false')) ]",
+            "dependsOn": [
+                "CREATE_HUB_VNET",
+                "CREATE_VCEs-gf-az",
+                "CREATE_VCEs-rtro-az"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('PaloAZnolbtemplateUri')]",
                     "contentVersion": "1.0.0.0"
 
                 },
