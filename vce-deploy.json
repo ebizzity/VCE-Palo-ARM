@@ -1361,7 +1361,7 @@
             "name": "CREATE_Palos-AS",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('FW_RG_NAME')]",
-            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Set'),equals(parameters('DeployPublicLB'), 'true')) ]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Set'),parameters('DeployPublicLB')) ]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf",
@@ -1536,7 +1536,7 @@
             "name": "CREATE_Palos-AZ",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('FW_RG_NAME')]",
-            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Zone'),equals(parameters('DeployPublicLB'), 'true')) ]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Zone'),parameters('DeployPublicLB')) ]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf-az",
@@ -1712,7 +1712,7 @@
             "name": "CREATE_Palos-ASSansPLB",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('FW_RG_NAME')]",
-            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Set'),equals(parameters('DeployPublicLB'), 'false')) ]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Set'),not(parameters('DeployPublicLB'))) ]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf",
@@ -1887,7 +1887,7 @@
             "name": "CREATE_Palos-AZ-SansPLB",
             "apiVersion": "2019-07-01",
             "resourceGroup": "[parameters('FW_RG_NAME')]",
-            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Zone'),equals(parameters('DeployPublicLB'), 'false')) ]",
+            "condition": "[and(equals(parameters('NVADeploymentOption'), 'Availability Zone'),not(parameters('DeployPublicLB'))) ]",
             "dependsOn": [
                 "CREATE_HUB_VNET",
                 "CREATE_VCEs-gf-az",
