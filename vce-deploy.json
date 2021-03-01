@@ -683,6 +683,9 @@
                     "routeTables_TRANS2a_name": {
                         "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'TRANS2B')]"
                     },
+                    "routeTables_MGMT_name": {
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'MGMT')]"
+                    },
                     "Palo_ILB_Static_IP": {
                         "value": "[parameters('Palo_Alto_ILB-IP')]"
                     },
