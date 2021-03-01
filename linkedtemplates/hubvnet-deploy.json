@@ -587,7 +587,7 @@
             "name": "[parameters('routeTables_MGMT_name')]",
             "location": "[resourceGroup().location]",
             "properties": {
-                "disableBgpRoutePropagation": false,
+                "disableBgpRoutePropagation": true,
                 "routes": [
                     {
                         "name": "RFC1918-1",
