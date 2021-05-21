@@ -588,7 +588,7 @@
                     "networkSecurityGroups_NSG_HUB_Untrust_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
                     },
-                    "networkSecurityGroups_NSG_HUB_DNS_name":{
+                    "networkSecurityGroups_NSG_HUB_dns_name":{
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_DNS_name')]"
                     },
                     "global_storageAccounts_nsgflologs_name":{
@@ -706,6 +706,9 @@
                     },
                     "networkSecurityGroups_NSG_HUB_bastion_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_HUB_bastion_NSG_NAME')]"
+                    },
+                    "networkSecurityGroups_NSG_HUB_dns_name":{
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_DNS_name')]"
                     },
                     "NATIPWhitelistCIDR": {
                         "value": "[parameters('NATIPWhitelistCIDR')]"
