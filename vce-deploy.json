@@ -412,13 +412,13 @@
                 "description": "Storage account used for VM Diagnostics"
             }
         },
-        "(opt.) AppendStringToResources": {
+        /*"(opt.) AppendStringToResources": {
             "type": "string",
             "defaultValue": "dummyvalue",
             "metadata": {
                 "description": "If the NAME and CONFIGURATION of the created LBs/NSGs/VMs/AVSET/VNET match an existing LBs/NSGs/VMs/AVSET/VNET in the SAME resource group, the template will its skip creation.  If the new resource NAME matches, but the resource CONFIGURATION does not, the template will fail or will overwrite the existing resource."
             }
-        },
+        },*/
         "PublicLBAllowedPorts": {
             "type": "string",
             "defaultValue": "80, 443, 22, 3389",
@@ -478,7 +478,8 @@
         "global_var_resource_group": "[resourceGroup().name]",
         //"globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/master/",
         "globalTemplateUriBase": "https://raw.githubusercontent.com/ebizzity/VCE-Palo-ARM/new-updates/",
-        "global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
+        //"global_var_appendedString": "[if(equals(parameters('(opt.) AppendStringToResources'), ''), '', parameters('(opt.) AppendStringToResources'))]",
+        "global_var_appendedString": "",
         "global_vnet_name": "[if(equals(parameters('VNETOption'), 'Use existing VNET'), parameters('VNETName'), take(replace(concat('VN-',parameters('SiteCode'),'-HUB01-PROD', variables('global_var_appendedString')), ' ', ''), 64))]",
         "global_vnet_resource_group": "[if(equals(parameters('VCE-Vnet-RG'), ''), variables('global_var_resource_group'), parameters('VCE-Vnet-RG'))]",
         "global_vnet_option": "[parameters('VNETOption')]",
