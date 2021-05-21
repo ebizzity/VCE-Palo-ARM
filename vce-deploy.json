@@ -503,6 +503,7 @@
         "global_networkSecurityGroups_NSG_HUB_WAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-WAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_LAN_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-LAN'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_MGMT_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-MGMT'), ' ', ''), 80)]",
+        "global_networkSecurityGroups_NSG_HUB_DNS_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-DNS'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_TRANS1_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1A'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_TRANS1A_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS1B'), ' ', ''), 80)]",
         "global_networkSecurityGroups_NSG_HUB_TRANS2_name": "[take(replace(concat('NSG-',parameters('SiteCode'),'-INT-HUB-TRANS2A'), ' ', ''), 80)]",
@@ -588,7 +589,7 @@
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
                     },
                     "networkSecurityGroups_NSG_HUB_DNS_name":{
-                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_LAN_NAME')]"
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_DNS_name')]"
                     },
                     "global_storageAccounts_nsgflologs_name":{
                         "value": "[variables('global_storageAccounts_nsgflologs_name')]"
