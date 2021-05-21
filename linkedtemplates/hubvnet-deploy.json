@@ -54,6 +54,12 @@
         "bastion-subnet-address-space": {
             "type": "string"
         },
+        "DNS-subnet-name": {
+            "type": "string"
+        },
+        "DNS-subnet-address-space": {
+            "type": "string"
+        },
         "VNET_NAME": {
             "type": "string"
         },
@@ -82,6 +88,9 @@
             "type": "string"
         },
         "networkSecurityGroups_NSG_HUB_bastion_name": {
+            "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_dns_name": {
             "type": "string"
         },
         "NATIPWhitelistCIDR": {
@@ -161,6 +170,9 @@
         },
         "spokes": {
             "type": "object"
+        },
+        "hubroutes": {
+            "type": "object"
         }
     },
     "functions": [],
@@ -234,7 +246,7 @@
         },
 
 
-
+/*
         {
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2019-09-01",
@@ -278,6 +290,32 @@
                 ]
             }
         },
+
+*/
+
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_RT_HUB_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                    "copy": [{
+                    "name": "routes",
+                    "count": "[length(parameters('hubroutes').route.routes)]",
+                    "input": {
+                        "name": "[parameters('hubroutes').route.routes[copyIndex('routes')].name]",
+                        "properties":{
+                            "addressPrefix": "[parameters('hubroutes').route.routes[copyIndex('routes')].addressPrefix]",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
+                        }
+                    }
+                }]
+            }
+        },
+
+
 
         {
             "type": "Microsoft.Network/routeTables",
@@ -625,6 +663,7 @@
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2a_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_MGMT_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_RT_HUB_name'))]",
                 "CREATE_NATGW"
             ],
             "properties": {
@@ -819,6 +858,29 @@
                             "networkSecurityGroup": {
                                 "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_bastion_name'))]"
                             },
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Enabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "[parameters('DNS-subnet-name')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('DNS-subnet-address-space')]",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_DNS_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',parameters('routeTables_RT_HUB_name'))]"
+                            },
+                            "serviceEndpoints": [
+                                {
+                                    "service": "Microsoft.Storage",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                }
+                            ],
                             "delegations": [],
                             "privateEndpointNetworkPolicies": "Enabled",
                             "privateLinkServiceNetworkPolicies": "Enabled"

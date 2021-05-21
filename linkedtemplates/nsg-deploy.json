@@ -32,6 +32,9 @@
         },
         "global_storageAccounts_nsgflologs_name": {
             "type": "string"
+        },
+        "networkSecurityGroups_NSG_HUB_DNS_name": {
+            "type": "string"
         }
     },
     "functions": [],
@@ -212,6 +215,59 @@
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2019-09-01",
             "name": "[parameters('networkSecurityGroups_NSG_HUB_LAN_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "Allow-RFC-in",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 4000,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "192.168.0.0/16",
+                                "172.16.0.0/12"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                    },
+                    {
+                        "name": "Allow-RFC-out",
+                        "properties": {
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "*",
+                            "sourceAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 4000,
+                            "direction": "Outbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [],
+                            "destinationAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "192.168.0.0/16",
+                                "172.16.0.0/12"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('networkSecurityGroups_NSG_HUB_DNS_name')]",
             "location": "[resourceGroup().location]",
             "tags": {
 

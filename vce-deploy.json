@@ -370,6 +370,13 @@
                 "description": "Bastion subnet - Address Space"
             }
         },
+        "SN_HUB_DNS_Address_Space": {
+            "defaultValue": "10.132.208.192/28",
+            "type": "string",
+            "metadata": {
+                "description": "DNS subnet - Address Space"
+            }
+        },
         "NATIPWhitelistCIDR": {
             "defaultValue": "0.0.0.0/0",
             "type": "string",
@@ -447,6 +454,21 @@
             "description": "Spoke Ranges for TRANS RTs"
         }
         }
+        },
+        "hubroutes": {
+        "type": "object",
+        "defaultValue": {
+            "route": {
+            "routes": [
+            { "name": "RFC-1918-10", "addressPrefix": "10.0.0.0/8" },
+            { "name": "RFC-1918-172", "addressPrefix": "172.16.0.0/12" },
+            { "name": "RFC-1918-192", "addressPrefix": "192.168.0.0/16" }
+            ]
+        },
+        "metadata": {
+            "description": "Spoke Ranges for TRANS RTs"
+        }
+        }
         }
     },
 
@@ -468,6 +490,7 @@
         "global_SN_HUB_TRANS1a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-TRANS1B'), ' ', ''), 80)]",
         "global_SN_HUB_TRANS2a_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-TRANS2B'), ' ', ''), 80)]",
         "global_SN_HUB_Untrust_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-EXT-UNTRUST'), ' ', ''), 80)]",
+        "global_SN_HUB_DNS_Name": "[take(replace(concat('SUB-',parameters('SiteCode'),'-HUB-INT-DNS'), ' ', ''), 80)]",
         "global_NIC_VCE_LAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-LAN'), ' ', ''), 80)]",
         "global_NIC_VCE_WAN_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-WAN'), ' ', ''), 80)]",
         "global_NIC_VCE_MGMT_name": "[take(replace(concat('NIC-',parameters('SiteCode'),'SVPEVVCE01-MGMT'), ' ', ''), 80)]",
@@ -563,6 +586,9 @@
                     "networkSecurityGroups_NSG_HUB_Untrust_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
                     },
+                    "networkSecurityGroups_NSG_HUB_DNS_name":{
+                        "value": "[variables('global_networkSecurityGroups_NSG_HUB_LAN_NAME')]"
+                    },
                     "global_storageAccounts_nsgflologs_name":{
                         "value": "[variables('global_storageAccounts_nsgflologs_name')]"
                     }
@@ -645,6 +671,12 @@
                     },
                     "Untrust-subnet-address-space": {
                         "value": "[parameters('SN_HUB_Untrust_Address_Space')]"
+                    },
+                    "DNS-subnet-name": {
+                        "value": "[variables('global_SN_HUB_DNS_Name')]"
+                    },
+                    "DNS-subnet-address-space": {
+                        "value": "[parameters('SN_HUB_DNS_Address_Space')]"
                     },
                     "networkSecurityGroups_NSG_HUB_Untrust_name": {
                         "value": "[variables('global_networkSecurityGroups_NSG_PALO_PUB_NSG_NAME')]"
@@ -750,6 +782,9 @@
                     },
                     "spokes":{
                         "value": "[parameters('spokes')]"
+                    },
+                    "hubroutes":{
+                        "value": "[parameters('hubroutes')]"
                     }
                 }
             }
