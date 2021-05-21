@@ -302,11 +302,11 @@
                 "disableBgpRoutePropagation": false,
                     "copy": [{
                     "name": "routes",
-                    "count": "[length(parameters('hubroutes').route.routes)]",
+                    "count": "[length(parameters('hubroutes').route0.routes0)]",
                     "input": {
-                        "name": "[parameters('hubroutes').route.routes[copyIndex('routes')].name]",
+                        "name": "[parameters('hubroutes').route0.routes0[copyIndex('routes')].name]",
                         "properties":{
-                            "addressPrefix": "[parameters('hubroutes').route.routes[copyIndex('routes')].addressPrefix]",
+                            "addressPrefix": "[parameters('hubroutes').route0.routes0[copyIndex('routes')].addressPrefix]",
                             "nextHopType": "VirtualAppliance",
                             "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
