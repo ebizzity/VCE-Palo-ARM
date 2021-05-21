@@ -398,6 +398,13 @@
                 "description": "Storage account used for NSG Flow Logs"
             }
         },
+        "storageAccounts_palo_diagnostics_name": {
+            "type": "string",
+            "defaultValue": "embpalsausaenetworkdiag",
+            "metadata": {
+                "description": "Storage account used for VM Diagnostics"
+            }
+        },
         "(opt.) AppendStringToResources": {
             "type": "string",
             "defaultValue": "",
@@ -485,6 +492,7 @@
         "global_Bastion_Name": "[take(replace(concat('BSTN-',parameters('SiteCode'),'-Network-Infrastructure-Prod'), ' ', ''), 80)]",
         "global_virtualMachines_VCE01_name": "[take(replace(concat(parameters('SiteCode'),'SVPEVVCE01'), ' ', ''), 80)]",
         "global_storageAccounts_diagnostics_name": "[take(replace(parameters('storageAccounts_diagnostics_name'), ' ', ''), 80)]",
+        "global_storageAccounts_palo_diagnostics_name": "[take(replace(parameters('storageAccounts_palo_diagnostics_name'), ' ', ''), 80)]",
         "global_storageAccounts_nsgflologs_name": "[take(replace(parameters('storageAccounts_nsgflowlogs_name'), ' ', ''), 80)]",
         "global_plb_name": "[take(replace(concat('LB-',parameters('SiteCode'),'-EXT-Firewall-Prod'), ' ', ''), 80)]",
         "global_ilb_name": "[take(replace(concat('LB-',parameters('SiteCode'),'-INT-Firewall-Prod'), ' ', ''), 80)]",
@@ -1519,8 +1527,8 @@
                     "password": {
                         "value":"[parameters('paloPassword')]"
                     },
-                    "global_storageAccounts_diagnostics_name":{
-                        "value": "[parameters('storageAccounts_diagnostics_name')]"
+                    "global_storageAccounts_palo_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_palo_diagnostics_name')]"
                     }
                 }
 
@@ -1692,8 +1700,8 @@
                     "subnetName-TRANS2a": {
                         "value": "[variables('global_SN_HUB_TRANS2a_Name')]"
                     },
-                    "global_storageAccounts_diagnostics_name":{
-                        "value": "[parameters('storageAccounts_diagnostics_name')]"
+                    "global_storageAccounts_palo_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_palo_diagnostics_name')]"
                     }
                 }
 
@@ -1864,8 +1872,8 @@
                     "password": {
                         "value":"[parameters('paloPassword')]"
                     },
-                    "global_storageAccounts_diagnostics_name":{
-                        "value": "[parameters('storageAccounts_diagnostics_name')]"
+                    "global_storageAccounts_palo_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_palo_diagnostics_name')]"
                     }
                 }
 
@@ -2040,8 +2048,8 @@
                     "DeployPublicLB": {
                         "value": "[parameters('DeployPublicLB')]"
                     },
-                    "global_storageAccounts_diagnostics_name":{
-                        "value": "[parameters('storageAccounts_diagnostics_name')]"
+                    "global_storageAccounts_palo_diagnostics_name":{
+                        "value": "[parameters('storageAccounts_palo_diagnostics_name')]"
                     }
                 }
 

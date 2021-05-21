@@ -430,7 +430,7 @@
         "description": "If the NAME and CONFIGURATION of the created LBs/NSGs/VMs/AVSET/VNET match an existing LBs/NSGs/VMs/AVSET/VNET in the SAME resource group, the template will its skip creation.  If the new resource NAME matches, but the resource CONFIGURATION does not, the template will fail or will overwrite the existing resource."
       }
     },
-    "global_storageAccounts_diagnostics_name": {
+    "global_storageAccounts_palo_diagnostics_name": {
       "type": "string"
     }
   },
@@ -1066,7 +1066,7 @@
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
+                        "storageUri": "[concat('https://', parameters('global_storageAccounts_palo_diagnostics_name'), '.blob.core.windows.net/')]"
                     }
                 }
               },
@@ -1385,7 +1385,7 @@
                 "diagnosticsProfile": {
                     "bootDiagnostics": {
                         "enabled": true,
-                        "storageUri": "[concat('https://', parameters('global_storageAccounts_diagnostics_name'), '.blob.core.windows.net/')]"
+                        "storageUri": "[concat('https://', parameters('global_storageAccounts_palo_diagnostics_name'), '.blob.core.windows.net/')]"
                     }
                 }
               },
