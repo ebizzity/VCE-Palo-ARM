@@ -555,6 +555,40 @@
   },
   "resources": [
     {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-04-01",
+            "name": "[parameters('global_storageAccounts_palo_diagnostics_name')]",
+            "location": "[resourceGroup().location]",
+            "tags": {
+
+            },
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "properties": {
+                "networkAcls": {
+                    "bypass": "AzureServices",
+                    "virtualNetworkRules": [],
+                    "ipRules": [],
+                    "defaultAction": "Allow"
+                },
+                "supportsHttpsTrafficOnly": true,
+                "encryption": {
+                    "services": {
+                        "file": {
+                            "enabled": true
+                        },
+                        "blob": {
+                            "enabled": true
+                        }
+                    },
+                    "keySource": "Microsoft.Storage"
+                }
+            }
+ },
+    {
       "comments": "CREATE FIREWALL PUBLIC LOAD BALANCER",
       "type": "Microsoft.Resources/deployments",
       "name": "CREATE_PUBLICLB",
@@ -774,7 +808,8 @@
       "dependsOn": [
         "CREATE_AVSET",
         "CREATE_INTERNALLB",
-        "CREATE_PUBLICLB"
+        "CREATE_PUBLICLB",
+        "[resourceId('Microsoft.Storage/StorageAccounts', parameters('global_storageAccounts_palo_diagnostics_name'))]"
       ],
       "properties": {
         "mode": "Incremental",
@@ -1092,7 +1127,8 @@
       "dependsOn": [
         "CREATE_AVSET",
         "CREATE_INTERNALLB",
-        "CREATE_PUBLICLB"
+        "CREATE_PUBLICLB",
+        "[resourceId('Microsoft.Storage/StorageAccounts', parameters('global_storageAccounts_palo_diagnostics_name'))]"
       ],
       "properties": {
         "mode": "Incremental",
