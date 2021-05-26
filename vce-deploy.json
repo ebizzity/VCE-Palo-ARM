@@ -469,6 +469,35 @@
             "description": "Prefixes for Hub RT"
         }
         }
+        },
+        "gwroutes": {
+        "type": "object",
+        "defaultValue": {
+            "route0": {
+            "routes0": [
+            { "name": "Spoke1-Replaceme", "addressPrefix": "10.1.2.0/24", "nexthoptype": "VirtualAppliance", "nexthop": "10.1.2.200" },
+            { "name": "Spoke2-Replaceme", "addressPrefix": "10.2.3.0/24", "nexthoptype": "VirtualAppliance", "nexthop": "10.1.2.200" },
+            { "name": "Spoke3-Replaceme", "addressPrefix": "10.3.4.0/24", "nexthoptype": "VirtualAppliance", "nexthop": "10.1.2.200" }
+            ]
+        },
+        "metadata": {
+            "description": "Prefixes for GW RT"
+        }
+        }
+        },
+        "lanroutes": {
+        "type": "object",
+        "defaultValue": {
+            "route0": {
+            "routes0": [
+            { "name": "Hubroute1-replaceme", "addressPrefix": "10.1.2.0/24", "nexthoptype": "VirtualAppliance", "nexthop": "10.1.2.200" }
+        
+            ]
+        },
+        "metadata": {
+            "description": "Prefixes for LAN RT"
+        }
+        }
         }
     },
 
@@ -731,6 +760,12 @@
                     "routeTables_MGMT_name": {
                         "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'MGMT')]"
                     },
+                    "routeTables_LAN_name": {
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'LAN')]"
+                    },
+                    "routeTables_GW_name": {
+                        "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'GW')]"
+                    },
                     "Palo_ILB_Static_IP": {
                         "value": "[parameters('Palo_Alto_ILB-IP')]"
                     },
@@ -785,11 +820,17 @@
                     "gatewaysubnet-address-space": {
                         "value": "[parameters('SN_HUB_GatewaySubnet_Address_Space')]"
                     },
-                    "spokes":{
+                    "spokes": {
                         "value": "[parameters('spokes')]"
                     },
-                    "hubroutes":{
+                    "hubroutes": {
                         "value": "[parameters('hubroutes')]"
+                    },
+                    "lanroutes": {
+                        "value": "[parameters('lanroutes')]"
+                    },
+                    "gwroutes": {
+                        "value": "[parameters('gwroutes')]"
                     }
                 }
             }

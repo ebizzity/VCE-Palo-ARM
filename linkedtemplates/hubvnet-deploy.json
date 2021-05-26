@@ -114,6 +114,12 @@
         "routeTables_MGMT_name": {
             "type": "string"
         },
+        "routeTables_RT_GW_name": {
+            "type": "string"
+        },
+        "routeTables_RT_LAN_name": {
+            "type": "string"
+        },
         "NSG_RG_NAME": {
             "type": "string"
         },
@@ -172,6 +178,12 @@
             "type": "object"
         },
         "hubroutes": {
+            "type": "object"
+        },
+        "lanroutes": {
+            "type": "object"
+        },
+        "gwroutes": {
             "type": "object"
         }
     },
@@ -315,7 +327,49 @@
             }
         },
 
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_RT_LAN_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                    "copy": [{
+                    "name": "routes",
+                    "count": "[length(parameters('lanroutes').route0.routes0)]",
+                    "input": {
+                        "name": "[parameters('lanroutes').route0.routes0[copyIndex('routes')].name]",
+                        "properties":{
+                            "addressPrefix": "[parameters('lanroutes').route0.routes0[copyIndex('routes')].addressPrefix]",
+                            "nextHopType": "[parameters('lanroutes').route0.routes0[copyIndex('routes')].nexthoptype]",
+                            "nextHopIpAddress": "[parameters('lanroutes').route0.routes0[copyIndex('routes')].nexthop]"
+                        }
+                    }
+                }]
+            }
+        },
 
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('routeTables_RT_GW_name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                    "copy": [{
+                    "name": "routes",
+                    "count": "[length(parameters('gwroutes').route0.routes0)]",
+                    "input": {
+                        "name": "[parameters('gwroutes').route0.routes0[copyIndex('routes')].name]",
+                        "properties":{
+                            "addressPrefix": "[parameters('gwroutes').route0.routes0[copyIndex('routes')].addressPrefix]",
+                            "nextHopType": "[parameters('gwroutes').route0.routes0[copyIndex('routes')].nexthoptype]",
+                            "nextHopIpAddress": "[parameters('gwroutes').route0.routes0[copyIndex('routes')].nexthop]"
+                        }
+                    }
+                }]
+            }
+        },
 
         {
             "type": "Microsoft.Network/routeTables",
@@ -664,6 +718,8 @@
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_TRANS2a_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_MGMT_name'))]",
                 "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_RT_HUB_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_RT_GW_name'))]",
+                "[resourceId('Microsoft.Network/routeTables', parameters('routeTables_RT_LAN_name'))]",
                 "CREATE_NATGW"
             ],
             "properties": {
@@ -679,6 +735,9 @@
                             "addressPrefix": "[parameters('LAN-subnet-address-space')]",
                             "networkSecurityGroup": {
                                 "id": "[resourceId(parameters('NSG_RG_NAME'),'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_NSG_HUB_LAN_name'))]"
+                            },
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',parameters('routeTables_RT_LAN_name'))]"
                             },
                             "serviceEndpoints": [
                                 {
@@ -890,6 +949,7 @@
                         "name": "GatewaySubnet",
                         "properties": {
                             "addressPrefix": "[parameters('gatewaysubnet-address-space')]",
+                            "routeTable": "[parameters('routeTables_RT_GW_name')]",
                             "delegations": []
                         }
                     }
