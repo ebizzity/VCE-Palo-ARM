@@ -760,10 +760,10 @@
                     "routeTables_MGMT_name": {
                         "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'MGMT')]"
                     },
-                    "routeTables_LAN_name": {
+                    "routeTables_RT_LAN_name": {
                         "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'LAN')]"
                     },
-                    "routeTables_GW_name": {
+                    "routeTables_RT_GW_name": {
                         "value": "[replace(variables('global_RT_HUB_name'),'HUB', 'GW')]"
                     },
                     "Palo_ILB_Static_IP": {
