@@ -949,7 +949,9 @@
                         "name": "GatewaySubnet",
                         "properties": {
                             "addressPrefix": "[parameters('gatewaysubnet-address-space')]",
-                            "routeTable": "[parameters('routeTables_RT_GW_name')]",
+                            "routeTable": {
+                                "id": "[resourceId('Microsoft.Network/routeTables',parameters('routeTables_RT_GW_name'))]"
+                            },
                             "delegations": []
                         }
                     }
