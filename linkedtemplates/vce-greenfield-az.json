@@ -242,7 +242,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "privateIPAddress": "[parameters('VCE01_MGMT_Static_IP')]",
-                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAllocationMethod": "Static",
                             "subnet": {
                                 "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_MGMT_Name'))]"
                             },
@@ -597,7 +597,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "privateIPAddress": "[parameters('VCE02_MGMT_Static_IP')]",
-                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAllocationMethod": "Static",
                             "subnet": {
                                 "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_MGMT_Name'))]"
                             },
@@ -850,7 +850,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "privateIPAddress": "[parameters('VCE01_MGMT_Static_IP')]",
-                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAllocationMethod": "Static",
                             "subnet": {
                                 "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_MGMT_Name'))]"
                             },
@@ -1166,7 +1166,7 @@
                         "name": "ipconfig1",
                         "properties": {
                             "privateIPAddress": "[parameters('VCE02_MGMT_Static_IP')]",
-                            "privateIPAllocationMethod": "Dynamic",
+                            "privateIPAllocationMethod": "Static",
                             "subnet": {
                                 "id": "[concat(resourceId(parameters('global_vnet_resource_group'),'Microsoft.Network/virtualNetworks', parameters('global_vnet_name')), '/subnets/', parameters('global_SN_HUB_MGMT_Name'))]"
                             },
