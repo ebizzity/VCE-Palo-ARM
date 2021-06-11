@@ -469,7 +469,7 @@
       "publicLb_probe_protocol": "Tcp",
       "publicLb_probe_intervalInSeconds": 5,
       "publicLb_probe_numberOfProbes": 2,
-      "publicLb_pip_name": "[take(replace(concat(parameters('publicLBName'), '-pip', variables('global_var_appendedString')), ' ', ''), 80)]",
+      "publicLb_pip_name": "[take(replace(concat('PIP-', parameters('publicLBName'), variables('global_var_appendedString')), ' ', ''), 80)]",
   
       "COMMENT_internalLb": "INTERNAL LB TEMPLATE VARIABLES",
       "internalLb_name": "[take(replace(concat(parameters('internalLBName'), variables('global_var_appendedString')), ' ', ''), 80)]",
