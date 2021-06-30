@@ -1598,7 +1598,7 @@
                         "value": "[variables('global_paloASName')]"
                     },
                     "acceleratedNetworking": {
-                        "value": "disable"
+                        "value": "enable"
                     },
                     "applyPublicIPToManagement": {
                         "value": "Yes"
@@ -1744,7 +1744,7 @@
                         "value": "Standard_LRS"
                     },
                     "acceleratedNetworking": {
-                        "value": "disable"
+                        "value": "enable"
                     },
                     "applyPublicIPToManagement": {
                         "value": "Yes"
@@ -1946,7 +1946,7 @@
                         "value": "[variables('global_paloASName')]"
                     },
                     "acceleratedNetworking": {
-                        "value": "disable"
+                        "value": "enable"
                     },
                     "applyPublicIPToManagement": {
                         "value": "Yes"
@@ -2089,7 +2089,7 @@
                         "value": "Standard_LRS"
                     },
                     "acceleratedNetworking": {
-                        "value": "disable"
+                        "value": "enable"
                     },
                     "applyPublicIPToManagement": {
                         "value": "Yes"
