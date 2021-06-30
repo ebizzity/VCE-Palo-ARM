@@ -403,6 +403,9 @@
       "subnetName-TRANS2a": {
         "type": "string"
       },
+      "publicLBRuleName": {
+        "type": "string"
+      },
      "global_storageAccounts_palo_diagnostics_name": {
       "type": "string"
       }
@@ -456,7 +459,7 @@
       "publicLb_resource_group": "[resourceGroup().name]",
       "publicLb_frontend_name": "LoadBalancerFrontEnd",
       "publicLb_pool_name": "LoadBalancerBackendPool",
-      "publicLb_rule_name": "rule-",
+      "publicLb_rule_name": "[parameters('publicLBRuleName')]",
       "publicLb_rule_delimiters": [",", ";" ],
       "publicLb_rule_port": "[split(parameters('publicLBAllowedPorts'),variables('publicLb_rule_delimiters'))]",
       "publicLb_rule_protocol": "Tcp",
@@ -622,7 +625,7 @@
                       "name": "loadBalancingRules",
                       "count": "[length(variables('publicLb_rule_port'))]",
                       "input": {
-                        "name": "[concat(variables('publicLb_rule_name'), copyIndex('loadBalancingRules'))]",
+                        "name": "[variables('publicLb_rule_name')]",
                         "properties": {
                           "frontendIPConfiguration": {
                             "id": "[concat(resourceId(variables('publicLb_resource_group'), 'Microsoft.Network/loadBalancers', variables('publicLb_name')), '/frontendIPConfigurations/', variables('publicLb_frontend_name'))]"
