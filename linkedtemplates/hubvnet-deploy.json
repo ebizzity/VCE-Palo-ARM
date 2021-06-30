@@ -682,6 +682,14 @@
                 "disableBgpRoutePropagation": true,
                 "routes": [
                     {
+                        "name": "Internet",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
+                        }
+                    },
+                    {
                         "name": "RFC1918-1",
                         "properties": {
                             "addressPrefix": "10.0.0.0/8",
