@@ -421,9 +421,16 @@
         },*/
         "PublicLBAllowedPorts": {
             "type": "string",
-            "defaultValue": "80, 443, 22, 3389",
+            "defaultValue": "80",
             "metadata": {
-                "description": "Ports allowed inbound from Public LB infront of palo Untrust."
+                "description": "Port allowed inbound from Public LB infront of palo Untrust. For Ingress"
+            }
+        },
+        "publicLBRuleName": {
+            "type": "string",
+            "defaultValue": "REPLACEME-AppName",
+            "metadata": {
+                "description": "PLB Rule Name for App Ingress (Initial Rule)"
             }
         },
         "PaloMGMTNSGAllowFrom": {
@@ -1518,6 +1525,9 @@
                     "publicLBAllowedPorts": {
                         "value": "[parameters('publicLBAllowedPorts')]"
                     },
+                    "publicLBRuleName": {
+                        "value": "[parameters('publicLBRuleName')]"
+                    },
                     "internalLBName": {
                         "value": "[variables('global_ilb_name')]"
                     },
@@ -1678,6 +1688,9 @@
                     },
                     "publicLBAllowedPorts": {
                         "value": "[parameters('publicLBAllowedPorts')]"
+                    },
+                    "publicLBRuleName": {
+                        "value": "[parameters('publicLBRuleName')]"
                     },
                     "internalLBName": {
                         "value": "[variables('global_ilb_name')]"
