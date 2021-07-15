@@ -337,7 +337,7 @@
       "type": "string",
       "defaultValue": "disable",
       "allowedValues": [
-        "enable (Only supported on PAN-OS 9.0 or greater)",
+        "enable",
         "disable"
       ],
       "metadata": {
@@ -469,7 +469,7 @@
     "global_fw_version": "[parameters('PANOSVersion')]",
     "global_fw_product": "vmseries1",
     "global_fw_vmSize": "[parameters('VMSize')]",
-    "global_fw_enableAcceleratedNetworking": "[if(equals(parameters('acceleratedNetworking'), 'enable (Only supported on PAN-OS 9.0 or greater)'), 'true', 'false')]",
+    "global_fw_enableAcceleratedNetworking": "[if(equals(parameters('acceleratedNetworking'), 'enable'), 'true', 'false')]",
     "global_fw_avset_option": "[parameters('availabilitySetOption')]",
     "global_fw_avset_name": "[if(equals(parameters('availabilitySetOption'), 'Use existing availability set - Must be in firewall/main resource group'), parameters('availabilitySetName'), take(replace(concat(parameters('availabilitySetName'), variables('global_var_appendedString')), ' ', ''), 80))]",
     "global_fw_avset_id": { "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('global_fw_avset_name'))]"},
