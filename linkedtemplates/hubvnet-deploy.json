@@ -680,39 +680,71 @@
             "location": "[resourceGroup().location]",
             "properties": {
                 "disableBgpRoutePropagation": true,
-                "routes": [
-                    {
-                        "name": "Internet",
-                        "properties": {
-                            "addressPrefix": "0.0.0.0/0",
+                    "copy": [{
+                    "name": "routes",
+                    "count": "[length(parameters('spokes').vnet.subnets)]",
+                    "input": {
+                        "name": "[parameters('spokes').vnet.subnets[copyIndex('routes')].name]",
+                        "properties":{
+                            "addressPrefix": "[parameters('spokes').vnet.subnets[copyIndex('routes')].addressPrefix]",
                             "nextHopType": "VirtualAppliance",
                             "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
-                    },
-                    {
-                        "name": "RFC1918-1",
-                        "properties": {
-                            "addressPrefix": "10.0.0.0/8",
-                            "nextHopType": "VirtualNetworkGateway"
-                        }
-                    },
-                    {
-                        "name": "RFC1918-2",
-                        "properties": {
-                            "addressPrefix": "172.16.0.0/12",
-                            "nextHopType": "VirtualNetworkGateway"
-                        }
-                    },
-                    {
-                        "name": "RFC1918-3",
-                        "properties": {
-                            "addressPrefix": "192.168.0.0/16",
-                            "nextHopType": "VirtualNetworkGateway"
-                        }
-                    } 
-                ]
+                    }
+                }]
             }
         },
+        
+        {
+            "name": "[concat(parameters('routeTables_MGMT_name'),'/','Default')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[parameters('routeTables_MGMT_name')]"
+            ],
+            "properties": {
+                "addressPrefix": "0.0.0.0/0",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_MGMT_name'),'/','RFC1918-1')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_MGMT_name')), '/routes/', 'Default')]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.0.0/8",
+                "nextHopType": "VirtualNetworkGateway"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_MGMT_name'),'/','RFC1918-2')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_MGMT_name')), '/routes/', 'RFC1918-1')]"
+            ],
+            "properties": {
+                "addressPrefix": "172.16.0.0/12",
+                "nextHopType": "VirtualNetworkGateway"
+            }
+        },
+        {
+            "name": "[concat(parameters('routeTables_MGMT_name'),'/','RFC1918-3')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[concat(resourceId('Microsoft.Network/routeTables',parameters('routeTables_MGMT_name')), '/routes/', 'RFC1918-2')]"
+            ],
+            "properties": {
+                "addressPrefix": "192.168.0.0/16",
+                "nextHopType": "VirtualNetworkGateway"
+            }
+        },
+
 
         {
             "type": "Microsoft.Network/virtualNetworks",
