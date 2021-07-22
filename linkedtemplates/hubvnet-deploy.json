@@ -328,6 +328,20 @@
         },
 
         {
+            "name": "[concat(parameters('routeTables_RT_HUB_name'),'/','MGMT')]",
+            "type": "Microsoft.Network/routeTables/routes",
+            "apiVersion": "2019-11-01",
+            "dependsOn": [
+                "[parameters('routeTables_RT_HUB_name')]"
+            ],
+            "properties": {
+                "addressPrefix": "[parameters('MGMT-subnet-address-space')]",
+                "nextHopType": "VirtualAppliance",
+                "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
+            }
+        },
+
+        {
             "type": "Microsoft.Network/routeTables",
             "apiVersion": "2019-09-01",
             "name": "[parameters('routeTables_RT_LAN_name')]",
