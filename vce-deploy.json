@@ -492,6 +492,21 @@
         }
         }
         },
+        "mgmtroutes": {
+        "type": "object",
+        "defaultValue": {
+            "route0": {
+            "routes0": [
+            { "name": "RFC-1918-10", "addressPrefix": "10.0.0.0/8" },
+            { "name": "RFC-1918-172", "addressPrefix": "172.16.0.0/12" },
+            { "name": "RFC-1918-192", "addressPrefix": "192.168.0.0/16" }
+            ]
+        },
+        "metadata": {
+            "description": "Prefixes for Hub RT"
+        }
+        }
+        },
         "lanroutes": {
         "type": "object",
         "defaultValue": {
@@ -832,6 +847,9 @@
                     },
                     "hubroutes": {
                         "value": "[parameters('hubroutes')]"
+                    },
+                    "mgmtroutes": {
+                        "value": "[parameters('mgmtroutes')]"
                     },
                     "lanroutes": {
                         "value": "[parameters('lanroutes')]"

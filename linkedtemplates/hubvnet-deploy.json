@@ -183,6 +183,9 @@
         "lanroutes": {
             "type": "object"
         },
+        "mgmtroutes": {
+            "type": "object"
+        },
         "gwroutes": {
             "type": "object"
         }
@@ -696,11 +699,11 @@
                 "disableBgpRoutePropagation": true,
                     "copy": [{
                     "name": "routes",
-                    "count": "[length(parameters('spokes').vnet.subnets)]",
+                    "count": "[length(parameters('mgmtroutes').route0.routes0)]",
                     "input": {
-                        "name": "[parameters('spokes').vnet.subnets[copyIndex('routes')].name]",
+                        "name": "[parameters('mgmtroutes').route0.routes0[copyIndex('routes')].name]",
                         "properties":{
-                            "addressPrefix": "[parameters('spokes').vnet.subnets[copyIndex('routes')].addressPrefix]",
+                            "addressPrefix": "[parameters('mgmtroutes').route0.routes0[copyIndex('routes')].addressPrefix]",
                             "nextHopType": "VirtualAppliance",
                             "nextHopIpAddress": "[parameters('Palo_ILB_Static_IP')]"
                         }
