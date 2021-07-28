@@ -497,9 +497,9 @@
         "defaultValue": {
             "route0": {
             "routes0": [
-            { "name": "RFC-1918-10", "addressPrefix": "10.0.0.0/8" },
-            { "name": "RFC-1918-172", "addressPrefix": "172.16.0.0/12" },
-            { "name": "RFC-1918-192", "addressPrefix": "192.168.0.0/16" }
+            { "name": "spoke1", "addressPrefix": "10.99.0.0/24" },
+            { "name": "spoke2", "addressPrefix": "10.99.1.0/24" },
+            { "name": "spoke3", "addressPrefix": "10.99.2.0/24" }
             ]
         },
         "metadata": {
