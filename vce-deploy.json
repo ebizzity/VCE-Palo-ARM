@@ -644,6 +644,12 @@
                     },
                     "global_storageAccounts_nsgflologs_name":{
                         "value": "[variables('global_storageAccounts_nsgflologs_name')]"
+                    },
+                    "inboundLBRuleName": {
+                       "value": "[parameters('publicLBRuleName')]"
+                    },
+                    "inboundLBRulePort": {
+                        "value": "[parameters('PublicLBAllowedPorts')]"
                     }
 
 

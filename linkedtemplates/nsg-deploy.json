@@ -35,6 +35,12 @@
         },
         "networkSecurityGroups_NSG_HUB_DNS_name": {
             "type": "string"
+        },
+        "inboundLBRuleName": {
+            "type": "string"
+        },
+        "inboundLBRulePort": {
+            "type": "string"
         }
     },
     "functions": [],
@@ -693,11 +699,11 @@
             "properties": {
                 "securityRules": [
                     {
-                    "name": "Inbound-to-Palo",
+                    "name": "[parameters('inboundLBRuleName')]",
                     "properties": {
                       "protocol": "*",
                       "sourcePortRange": "*",
-                      "destinationPortRange": "*",
+                      "destinationPortRange": "[parameters('inboundLBRulePort')]",
                       "sourceAddressPrefix": "*",
                       "destinationAddressPrefix": "*",
                       "access": "Allow",
