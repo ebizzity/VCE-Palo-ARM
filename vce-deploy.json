@@ -522,7 +522,7 @@
         }
         },
         "dns-servers": {
-            "type": "object",
+            "type": "array",
             "defaultValue": [
                 "168.63.129.16",
                 "10.122.1.7"
