@@ -188,6 +188,9 @@
         },
         "gwroutes": {
             "type": "object"
+        },
+        "dns-servers": {
+            "type": "object"
         }
     },
     "functions": [],
@@ -783,6 +786,11 @@
                 "addressSpace": {
                     "addressPrefixes": [
                         "[parameters('address-space')]"
+                    ]
+                },
+                "dhcpOptions": {
+                    "dnsServers": [
+                        "[parameters('dns-servers')]"
                     ]
                 },
                 "subnets": [
