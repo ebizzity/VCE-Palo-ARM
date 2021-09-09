@@ -789,10 +789,8 @@
                     ]
                 },
                 "dhcpOptions": {
-                    "dnsServers": [
-                        "[parameters('dns-servers')]"
-                    ]
-                },
+                    "dnsServers": "[parameters('dns-servers')]"
+                    },
                 "subnets": [
                     {
                         "name": "[parameters('LAN-subnet-name')]",
