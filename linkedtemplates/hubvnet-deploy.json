@@ -995,6 +995,30 @@
                                     "locations": [
                                         "[resourceGroup().location]"
                                     ]
+                                },
+                                {
+                                    "service": "Microsoft.EventHub",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                },
+                                {
+                                    "service": "Microsoft.KeyVault",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                },
+                                {
+                                    "service": "Microsoft.Sql",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
+                                },
+                                {
+                                    "service": "Microsoft.Web",
+                                    "locations": [
+                                        "[resourceGroup().location]"
+                                    ]
                                 }
                             ],
                             "delegations": [],
