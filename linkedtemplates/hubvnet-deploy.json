@@ -190,7 +190,7 @@
             "type": "object"
         },
         "dns-servers": {
-            "type": "object"
+            "type": "array"
         }
     },
     "functions": [],
