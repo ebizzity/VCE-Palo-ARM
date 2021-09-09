@@ -520,6 +520,13 @@
             "description": "Prefixes for LAN RT"
         }
         }
+        },
+        "dns-servers": {
+            "type": "object",
+            "defaultValue": [
+                "168.63.129.16",
+                "10.122.1.7"
+            ]
         }
     },
 
@@ -862,6 +869,9 @@
                     },
                     "gwroutes": {
                         "value": "[parameters('gwroutes')]"
+                    },
+                    "dns-servers": {
+                        "value": "[parameters('dns-servers')]"
                     }
                 }
             }
